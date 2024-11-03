@@ -2,13 +2,18 @@ package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "tb_users")
 public class User implements Serializable {
@@ -29,6 +34,10 @@ public class User implements Serializable {
 
     @CreationTimestamp
     private Instant createdAt;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private Set<Address> addresses = new HashSet<>();
 
     public User() {
     }
@@ -106,6 +115,10 @@ public class User implements Serializable {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
     @Override
