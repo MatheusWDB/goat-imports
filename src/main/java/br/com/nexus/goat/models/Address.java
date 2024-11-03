@@ -37,7 +37,9 @@ public class Address implements Serializable {
     @JoinColumn(name = "id_user")
     private User user;
 
-    
+    @JsonIgnore
+    @OneToMany(mappedBy = "address")
+    private List<Order> orders = new ArrayList<>();
 
     public Address() {
     }
@@ -103,7 +105,9 @@ public class Address implements Serializable {
         this.user = user;
     }
 
-    
+    public List<Order> getOrders() {
+        return orders;
+    }
 
     @Override
     public int hashCode() {

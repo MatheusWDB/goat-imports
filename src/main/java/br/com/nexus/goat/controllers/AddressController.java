@@ -14,7 +14,6 @@ import br.com.nexus.goat.models.Address;
 import br.com.nexus.goat.models.User;
 import br.com.nexus.goat.repositories.AddressRepository;
 import br.com.nexus.goat.repositories.UserRepository;
-import br.com.nexus.goat.services.AddressService;
 
 @RestController
 @RequestMapping("/addresses")
@@ -22,9 +21,6 @@ public class AddressController {
 
     @Autowired
     private AddressRepository repository;
-
-    @Autowired
-    private AddressService service;
 
     @Autowired
     UserRepository userRepository;
