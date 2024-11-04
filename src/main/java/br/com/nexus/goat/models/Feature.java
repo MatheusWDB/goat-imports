@@ -10,28 +10,33 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
-@Entity(name = "tb_categories")
-public class Category implements Serializable {
+@Entity(name = "tb_features")
+public class Feature implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String mark;
+    private String model;
+    private String composition;
+    private String color;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "features")
     private Set<Product> products = new HashSet<>();
 
-    public Category(){
+    public Feature() {
     }
 
-    public Category(Long id, String name) {
+    public Feature(Long id, String mark, String model, String composition, String color) {
         this.id = id;
-        this.name = name;
+        this.mark = mark;
+        this.model = model;
+        this.composition = composition;
+        this.color = color;
     }
 
     public Long getId() {
@@ -42,15 +47,40 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getMark() {
+        return mark;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMark(String mark) {
+        this.mark = mark;
     }
 
-    public Set<Product> getProducts() {
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getComposition() {
+        return composition;
+    }
+
+    public void setComposition(String composition) {
+        this.composition = composition;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @JsonIgnore
+    public Set<Product> getProduct() {
         return products;
     }
 
@@ -70,7 +100,7 @@ public class Category implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Category other = (Category) obj;
+        Feature other = (Feature) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -81,6 +111,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "Category [id=" + id + ", name=" + name + "]";
-    }    
+        return "Feature [id=" + id + ", mark=" + mark + ", model=" + model + ", composition=" + composition + ", color="
+                + color + "]";
+    }
 }

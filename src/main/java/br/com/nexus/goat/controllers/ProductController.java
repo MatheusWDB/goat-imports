@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.nexus.goat.models.Category;
+import br.com.nexus.goat.models.Feature;
 import br.com.nexus.goat.models.Product;
 import br.com.nexus.goat.models.dto.ProductDTO;
 import br.com.nexus.goat.repositories.CategoryRepository;
+import br.com.nexus.goat.repositories.FeatureRepository;
 import br.com.nexus.goat.repositories.ProductRepository;
 import br.com.nexus.goat.services.ProductService;
 
@@ -32,18 +34,32 @@ public class ProductController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private FeatureRepository featureRepository;
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ProductDTO obj) {
         Product product = this.service.product(obj);
         List<Category> categories = this.service.categories(obj);
         product = this.repository.save(product);
+        Feature feature = this.service.feature(obj);
+
+        Feature verifyFeature = this.featureRepository.findByMarkAndModelAndColorAndComposition(feature.getMark(),
+                feature.getModel(), feature.getColor(), feature.getComposition());
+
+        if (verifyFeature == null)
+            feature = this.featureRepository.save(feature);
+        else
+            feature = verifyFeature;
+
+        product.setFeatures(feature);
 
         for (Category category : categories) {
-            Category verify = this.categoryRepository.findByName(category.getName());
-            if (verify == null)
+            Category verifyCategory = this.categoryRepository.findByName(category.getName());
+            if (verifyCategory == null)
                 category = this.categoryRepository.save(category);
             else
-                category = verify;
+                category = verifyCategory;
 
             product.getCategories().add(category);
         }

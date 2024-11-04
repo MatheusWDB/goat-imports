@@ -61,7 +61,8 @@ public class OrderController {
     @GetMapping("/{id_address}")
     public ResponseEntity<?> create(@PathVariable Long id_address) {
         Address address = this.addressRepository.findById(id_address).orElse(null);
-        Order order = this.repository.findByAddress(address);
+
+        List<Order> order = this.repository.findAllByAddress(address);
 
         return ResponseEntity.ok().body(order);
     }

@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity(name = "tb_products")
@@ -37,15 +38,17 @@ public class Product implements Serializable {
     private Instant createdAt;
 
     @ManyToMany
-    @JoinTable(name = "tb_product_categories", 
-    joinColumns = @JoinColumn(name = "id_product"), 
-    inverseJoinColumns = @JoinColumn(name = "id_category"))
+    @JoinTable(name = "tb_product_categories", joinColumns = @JoinColumn(name = "id_product"), inverseJoinColumns = @JoinColumn(name = "id_category"))
     private Set<Category> categories = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_features", referencedColumnName = "id")
+    private Feature features;
 
     @OneToMany(mappedBy = "id.product")
     private Set<OrderProduct> products = new HashSet<>();
 
-    public Product(){        
+    public Product() {
     }
 
     public Product(Long id, String name, String description, Double price, String size, Integer stock, String imgUrl) {
@@ -118,10 +121,18 @@ public class Product implements Serializable {
         return categories;
     }
 
+    public Feature getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(Feature feature) {
+        this.features = feature;
+    }
+
     @JsonIgnore
     public Set<Order> getProducts() {
         Set<Order> set = new HashSet<>();
-        for(OrderProduct x : products){
+        for (OrderProduct x : products) {
             set.add(x.getOrder());
         }
         return set;
@@ -155,6 +166,7 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", size="
-                + size + ", stock=" + stock + ", imgUrl=" + imgUrl + ", createdAt=" + createdAt + "]";
-    } 
+                + size + ", stock=" + stock + ", imgUrl=" + imgUrl + ", createdAt=" + createdAt + ", categories="
+                + categories + ", features=" + features + "]";
+    }
 }

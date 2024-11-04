@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.com.nexus.goat.models.Category;
+import br.com.nexus.goat.models.Feature;
 import br.com.nexus.goat.models.Product;
 import br.com.nexus.goat.models.dto.ProductDTO;
 import br.com.nexus.goat.models.dto.ProductDTO.Categories;
@@ -27,5 +28,11 @@ public class ProductService {
             categories.add(category);
         }
         return categories; 
+    }
+
+    public Feature feature(ProductDTO obj){
+        Feature feature = new Feature(null, obj.getFeatures().getMark(), obj.getFeatures().getModel(), obj.getFeatures().getComposition(), obj.getFeatures().getColor());
+
+        return feature;
     }
 }

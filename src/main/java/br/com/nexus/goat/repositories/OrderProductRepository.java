@@ -6,5 +6,4 @@ import br.com.nexus.goat.models.OrderProduct;
 import br.com.nexus.goat.models.pk.OrderProductPK;
 
 public interface OrderProductRepository extends JpaRepository<OrderProduct, OrderProductPK> {
-    
 }
