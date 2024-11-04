@@ -1,6 +1,6 @@
 package br.com.nexus.goat.models.dto;
 
-import java.util.List;
+import java.util.Set;
 
 import lombok.Data;
 
@@ -13,7 +13,7 @@ public class ProductDTO {
     private Integer stock;
     private String imgUrl;
     private Features features;
-    private List<Categories> categories;
+    private Set<Categories> categories;
 
     @Data
     public static class Features {

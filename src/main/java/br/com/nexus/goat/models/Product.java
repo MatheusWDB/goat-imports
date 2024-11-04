@@ -13,6 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity(name = "tb_products")
@@ -32,6 +35,12 @@ public class Product implements Serializable {
 
     @CreationTimestamp
     private Instant createdAt;
+
+    @ManyToMany
+    @JoinTable(name = "tb_product_categories", 
+    joinColumns = @JoinColumn(name = "id_product"), 
+    inverseJoinColumns = @JoinColumn(name = "id_category"))
+    private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "id.product")
     private Set<OrderProduct> products = new HashSet<>();
@@ -103,6 +112,10 @@ public class Product implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
     }
 
     @JsonIgnore

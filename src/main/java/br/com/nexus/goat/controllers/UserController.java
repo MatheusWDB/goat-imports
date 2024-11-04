@@ -71,6 +71,9 @@ public class UserController {
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserDTO obj) {
         User currentUser = this.repository.findById(id).orElse(null);
 
+        if (currentUser == null)
+            return ResponseEntity.badRequest().body(null);
+
         var passwordVerify = BCrypt.verifyer().verify(obj.getPassword().toCharArray(), currentUser.getPassword());
         if (!passwordVerify.verified)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha incorreta!");

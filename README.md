@@ -61,8 +61,10 @@ cd frontend
 
 # Autores
 
-Matheus Wendell Dantas Bezerra e Luiz Felipe Dantas Bezerra
-
+## Back end
+Matheus Wendell Dantas Bezerra:
 https://www.linkedin.com/in/mwdb1703
 
+## Front end
+Luiz Felipe Dantas Bezerra:
 https://www.linkedin.com/in/luiz-felipe-dantas-2385aa268/
