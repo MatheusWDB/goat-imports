@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody User newUser) {
         Boolean emailVerify = this.service.verifyEmail(newUser.getEmail());
         if (!emailVerify)

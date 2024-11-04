@@ -25,7 +25,7 @@ public class AddressController {
     @Autowired
     UserRepository userRepository;
 
-    @PostMapping("/create/{id_user}")
+    @PostMapping("/{id_user}")
     public ResponseEntity<?> create(@PathVariable Long id_user, @RequestBody Address obj) {
         User user = userRepository.findById(id_user).orElse(null);
 
@@ -35,7 +35,7 @@ public class AddressController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         this.repository.deleteById(id);
 

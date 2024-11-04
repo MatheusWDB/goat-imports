@@ -2,6 +2,8 @@ package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -11,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "tb_orders")
 public class Order implements Serializable {
@@ -30,6 +33,9 @@ public class Order implements Serializable {
     @ManyToOne
     private Address address;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderProduct> products = new HashSet<>();
+
     public Order() {
     }
 
@@ -38,10 +44,6 @@ public class Order implements Serializable {
         setStatus(status);
         this.paymentMethod = paymentMethod;
         this.orderNumber = orderNumber;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public Long getId() {
@@ -85,6 +87,18 @@ public class Order implements Serializable {
         this.address = address;
     }
 
+    public Set<OrderProduct> getProducts(){
+        return products;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderProduct x : products) {
+            sum += x.getSubTotal();
+        }
+        return sum;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -108,5 +122,11 @@ public class Order implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Order [id=" + id + ", status=" + status + ", paymentMethod=" + paymentMethod + ", orderNumber="
+                + orderNumber + ", orderDate=" + orderDate + ", address=" + address + ", products=" + products + "]";
     }
 }
