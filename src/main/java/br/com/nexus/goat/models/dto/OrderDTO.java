@@ -3,12 +3,13 @@ package br.com.nexus.goat.models.dto;
 import java.util.List;
 
 import br.com.nexus.goat.enums.OrderStatus;
+import br.com.nexus.goat.enums.PaymentMethod;
 import lombok.Data;
 
 @Data
 public class OrderDTO {
     private Integer status;
-    private String paymentMethod;
+    private PaymentMethod paymentMethod;
     private Long orderNumber;
     private List<Products> products;
 

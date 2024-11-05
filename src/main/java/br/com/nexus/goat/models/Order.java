@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.nexus.goat.enums.OrderStatus;
+import br.com.nexus.goat.enums.PaymentMethod;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Order implements Serializable {
     private Long id;
 
     private Integer status;
-    private String paymentMethod;
+    private Integer paymentMethod;
     private Long orderNumber;
 
     @CreationTimestamp
@@ -44,10 +45,10 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(Long id, OrderStatus status, String paymentMethod, Long orderNumber) {
+    public Order(Long id, OrderStatus status, PaymentMethod paymentMethod, Long orderNumber) {
         this.id = id;
         setStatus(status);
-        this.paymentMethod = paymentMethod;
+        setPaymentMethod(paymentMethod);
         this.orderNumber = orderNumber;
     }
 
@@ -64,12 +65,13 @@ public class Order implements Serializable {
             this.status = status.getCode();
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public PaymentMethod getPaymentMethod() {
+        return PaymentMethod.valueOf(paymentMethod);
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        if (paymentMethod != null)
+            this.paymentMethod = paymentMethod.getCode();
     }
 
     public Long getOrderNumber() {
