@@ -2,14 +2,15 @@ package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -49,8 +50,8 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "id.product")
     private Set<OrderProduct> products = new HashSet<>();
 
-    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
-    private Set<WishList> wishes = new HashSet<>();
+    @ManyToMany(mappedBy = "wishes")
+    private Set<User> wishes = new HashSet<>();
 
     public Product() {
     }
@@ -121,10 +122,20 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
+    @JsonIgnore
     public Set<Category> getCategories() {
         return categories;
     }
 
+    public List<Long> getIdCategories() {
+        List<Long> idCategories = new ArrayList<>();
+        for (Category category : categories) {
+            idCategories.add(category.getId());
+        }
+        return idCategories;
+    }
+
+    @JsonIgnore
     public Feature getFeatures() {
         return features;
     }
@@ -133,8 +144,12 @@ public class Product implements Serializable {
         this.features = feature;
     }
 
+    public Long getIdFeature(){
+        return features.getId();
+    }
+
     @JsonIgnore
-    public Set<WishList> getWishes() {
+    public Set<User> getWishes() {
         return wishes;
     }
 

@@ -2,17 +2,19 @@ package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.nexus.goat.enums.OrderStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -32,6 +34,8 @@ public class Order implements Serializable {
     private Instant orderDate;
 
     @ManyToOne
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
+    @JoinColumn(name = "id_address", referencedColumnName = "id")
     private Address address;
 
     @OneToMany(mappedBy = "id.order")
@@ -80,6 +84,7 @@ public class Order implements Serializable {
         return orderDate;
     }
 
+    @JsonIgnore
     public Address getAddress() {
         return address;
     }
@@ -88,7 +93,15 @@ public class Order implements Serializable {
         this.address = address;
     }
 
-    public Set<OrderProduct> getProducts(){
+    public Long getIdAddress() {
+        return address.getId();
+    }
+
+    public Long getIdUser() {
+        return address.getIdUser();
+    }
+
+    public Set<OrderProduct> getProducts() {
         return products;
     }
 

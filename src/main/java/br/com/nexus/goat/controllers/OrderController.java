@@ -16,9 +16,8 @@ import br.com.nexus.goat.models.Address;
 import br.com.nexus.goat.models.Order;
 import br.com.nexus.goat.models.OrderProduct;
 import br.com.nexus.goat.models.dto.OrderDTO;
-import br.com.nexus.goat.repositories.AddressRepository;
-import br.com.nexus.goat.repositories.OrderProductRepository;
-import br.com.nexus.goat.repositories.OrderRepository;
+import br.com.nexus.goat.services.AddressService;
+import br.com.nexus.goat.services.OrderProductService;
 import br.com.nexus.goat.services.OrderService;
 
 @RestController
@@ -26,50 +25,47 @@ import br.com.nexus.goat.services.OrderService;
 public class OrderController {
 
     @Autowired
-    private OrderRepository repository;
-
-    @Autowired
     private OrderService service;
 
     @Autowired
-    private AddressRepository addressRepository;
+    private AddressService addressService;
 
     @Autowired
-    private OrderProductRepository orderProductRepository;
+    private OrderProductService orderProductService;
 
-    @PostMapping("/{id_address}")
-    public ResponseEntity<?> create(@PathVariable Long id_address, @RequestBody OrderDTO obj) {
-        Address address = this.addressRepository.findById(id_address).orElse(null);
+    @PostMapping("/{idAddress}")
+    public ResponseEntity<Order> create(@PathVariable Long idAddress, @RequestBody OrderDTO obj) {
+        Address address = this.addressService.findById(idAddress);
 
         Order order = this.service.order(obj);
         order.setAddress(address);
-        order = this.repository.save(order);
+        order = this.service.save(order);
 
         List<OrderProduct> orderProducts = this.service.orderProducts(obj);
 
         for (OrderProduct orderProduct : orderProducts) {
             orderProduct.setOrder(order);
-            orderProduct = this.orderProductRepository.save(orderProduct);
+            orderProduct = this.orderProductService.save(orderProduct);
             order.getProducts().add(orderProduct);
         }
 
-        order = this.repository.save(order);
+        order = this.service.save(order);
 
         return ResponseEntity.ok().body(order);
     }
 
-    @GetMapping("/{id_address}")
-    public ResponseEntity<?> create(@PathVariable Long id_address) {
-        Address address = this.addressRepository.findById(id_address).orElse(null);
+    @GetMapping("/{idAddress}")
+    public ResponseEntity<List<Order>> create(@PathVariable Long idAddress) {
+        Address address = this.addressService.findById(idAddress);
 
-        List<Order> order = this.repository.findAllByAddress(address);
+        List<Order> orders = this.service.findAllByAddress(address);
 
-        return ResponseEntity.ok().body(order);
+        return ResponseEntity.ok().body(orders);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        this.repository.deleteById(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.service.deleteById(id);
         return ResponseEntity.ok().body("O pedido foi deletado");
     }
 

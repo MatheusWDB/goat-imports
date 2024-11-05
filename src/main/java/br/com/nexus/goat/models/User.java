@@ -14,6 +14,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity(name = "tb_users")
@@ -35,13 +38,14 @@ public class User implements Serializable {
 
     @CreationTimestamp
     private Instant createdAt;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "id.user", cascade = CascadeType.ALL)
-    private Set<WishList> wishes = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "tb_wishes", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_product"))
+    private Set<Product> wishes = new HashSet<>();
 
     public User() {
     }
@@ -125,8 +129,17 @@ public class User implements Serializable {
         return addresses;
     }
 
-    public Set<WishList> getWishes() {
+    @JsonIgnore
+    public Set<Product> getWishes() {
         return wishes;
+    }
+
+    public Set<Long> getIdWishes() {
+        Set<Long> idProducts = new HashSet<>();
+        for (Product product : wishes) {
+            idProducts.add(product.getId());
+        }
+        return idProducts;
     }
 
     @Override
@@ -175,7 +188,8 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", phone=" + phone
-                + ", dateForBirth=" + dateForBirth + ", password=" + password + ", deleted=" + deleted + ", wishes=" + wishes + ", createdAt="
+                + ", dateForBirth=" + dateForBirth + ", password=" + password + ", deleted=" + deleted + ", wishes="
+                + wishes + ", createdAt="
                 + createdAt + "]";
     }
 }

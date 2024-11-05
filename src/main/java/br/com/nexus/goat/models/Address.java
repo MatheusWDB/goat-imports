@@ -33,8 +33,9 @@ public class Address implements Serializable {
     @CreationTimestamp
     private Instant createdAt;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     private User user;
 
     @JsonIgnore
@@ -103,6 +104,10 @@ public class Address implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getIdUser(){
+        return user.getId();
     }
 
     public List<Order> getOrders() {

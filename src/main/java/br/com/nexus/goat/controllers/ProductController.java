@@ -16,9 +16,8 @@ import br.com.nexus.goat.models.Category;
 import br.com.nexus.goat.models.Feature;
 import br.com.nexus.goat.models.Product;
 import br.com.nexus.goat.models.dto.ProductDTO;
-import br.com.nexus.goat.repositories.CategoryRepository;
-import br.com.nexus.goat.repositories.FeatureRepository;
-import br.com.nexus.goat.repositories.ProductRepository;
+import br.com.nexus.goat.services.CategoryService;
+import br.com.nexus.goat.services.FeatureService;
 import br.com.nexus.goat.services.ProductService;
 
 @RestController
@@ -26,64 +25,61 @@ import br.com.nexus.goat.services.ProductService;
 public class ProductController {
 
     @Autowired
-    private ProductRepository repository;
-
-    @Autowired
     private ProductService service;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @Autowired
-    private FeatureRepository featureRepository;
+    private FeatureService featureService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ProductDTO obj) {
+    public ResponseEntity<Product> create(@RequestBody ProductDTO obj) {
         Product product = this.service.product(obj);
         List<Category> categories = this.service.categories(obj);
-        product = this.repository.save(product);
+        product = this.service.save(product);
         Feature feature = this.service.feature(obj);
 
-        Feature verifyFeature = this.featureRepository.findByMarkAndModelAndColorAndComposition(feature.getMark(),
+        Feature verifyFeature = this.featureService.findByMarkAndModelAndColorAndComposition(feature.getMark(),
                 feature.getModel(), feature.getColor(), feature.getComposition());
 
         if (verifyFeature == null)
-            feature = this.featureRepository.save(feature);
+            feature = this.featureService.save(feature);
         else
             feature = verifyFeature;
 
         product.setFeatures(feature);
 
         for (Category category : categories) {
-            Category verifyCategory = this.categoryRepository.findByName(category.getName());
+            Category verifyCategory = this.categoryService.findByName(category.getName());
             if (verifyCategory == null)
-                category = this.categoryRepository.save(category);
+                category = this.categoryService.save(category);
             else
                 category = verifyCategory;
 
             product.getCategories().add(category);
         }
 
-        product = this.repository.save(product);
+        product = this.service.save(product);
 
         return ResponseEntity.ok().body(product);
     }
 
     @GetMapping
     public ResponseEntity<List<Product>> getAll() {
-        List<Product> products = this.repository.findAll();
+        List<Product> products = this.service.findAll();
         return ResponseEntity.ok().body(products);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
-        Product product = this.repository.findById(id).orElse(null);
+    public ResponseEntity<Product> get(@PathVariable Long id) {
+        Product product = this.service.findById(id);
         return ResponseEntity.ok().body(product);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        this.repository.deleteById(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.service.deleteById(id);
         return ResponseEntity.ok().body("Produto deletado!");
     }
 }

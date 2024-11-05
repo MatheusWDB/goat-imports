@@ -1,5 +1,7 @@
 package br.com.nexus.goat.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import br.com.nexus.goat.models.Product;
 import br.com.nexus.goat.models.User;
 import br.com.nexus.goat.models.dto.UserDTO;
-import br.com.nexus.goat.repositories.UserRepository;
+import br.com.nexus.goat.services.ProductService;
 import br.com.nexus.goat.services.UserService;
 
 @RestController
@@ -22,60 +25,61 @@ import br.com.nexus.goat.services.UserService;
 public class UserController {
 
     @Autowired
-    private UserRepository repository;
-
-    @Autowired
     private UserService service;
 
-    @PostMapping
+    @Autowired
+    private ProductService productService;
+
+    @PostMapping("/register")
     public ResponseEntity<?> create(@RequestBody User newUser) {
         Boolean emailVerify = this.service.verifyEmail(newUser.getEmail());
-        if (!emailVerify)
+        if (emailVerify == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("E-mail já cadastrado");
 
         Boolean phoneVerify = this.service.verifyPhone(newUser.getPhone());
-        if (!phoneVerify)
+        if (phoneVerify == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Telefone já cadastrado");
 
         String passwordHashred = BCrypt.withDefaults().hashToString(12, newUser.getPassword().toCharArray());
 
         newUser.setPassword(passwordHashred);
 
-        User userCreated = this.repository.save(newUser);
+        User userCreated = this.service.save(newUser);
 
-        return ResponseEntity.ok().body(this.repository.save(userCreated));
+        return ResponseEntity.ok().body(userCreated);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User obj) {
-        var userVerify = this.repository.findByEmail(obj.getEmail());
+        User userVerify = this.service.findByEmail(obj.getEmail());
 
-        if (userVerify == null || userVerify.getDeleted() == true) {
+        if (userVerify == null || userVerify.getDeleted()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não cadastrado!");
         }
 
         var passwordVerify = BCrypt.verifyer().verify(obj.getPassword().toCharArray(), userVerify.getPassword());
-        if (!passwordVerify.verified)
+
+        if (passwordVerify.verified == false)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha incorreta!");
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userVerify);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> userById(@PathVariable Long id) {
-        User user = this.repository.findById(id).orElse(null);
+    @GetMapping("/get/{id}")
+    public ResponseEntity<User> get(@PathVariable Long id) {
+        User user = this.service.findById(id);
         return ResponseEntity.ok().body(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserDTO obj) {
-        User currentUser = this.repository.findById(id).orElse(null);
+        User currentUser = this.service.findById(id);
 
         if (currentUser == null)
             return ResponseEntity.badRequest().body(null);
 
         var passwordVerify = BCrypt.verifyer().verify(obj.getPassword().toCharArray(), currentUser.getPassword());
-        if (!passwordVerify.verified)
+        if (passwordVerify.verified == false)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha incorreta!");
 
         if (obj.getNewPassword() != null) {
@@ -97,8 +101,22 @@ public class UserController {
 
         User nonNullUser = this.service.notNull(currentUser, obj);
 
-        User updatedUser = this.repository.save(nonNullUser);
+        User updatedUser = this.service.save(nonNullUser);
 
         return ResponseEntity.ok().body(updatedUser);
+    }
+
+    @PostMapping("/add-wish/{id}")
+    public ResponseEntity<User> addWish(@PathVariable Long id, @RequestBody List<Long> idProducts) {
+        User user = this.service.findById(id);
+
+        for (Long idProduct : idProducts) {
+            Product product = this.productService.findById(idProduct);
+            user.getWishes().add(product);
+            this.productService.save(product);
+        }
+        user = this.service.save(user);
+
+        return ResponseEntity.ok().body(user);
     }
 }

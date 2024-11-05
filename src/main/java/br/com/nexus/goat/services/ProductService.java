@@ -3,6 +3,7 @@ package br.com.nexus.goat.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nexus.goat.models.Category;
@@ -10,15 +11,34 @@ import br.com.nexus.goat.models.Feature;
 import br.com.nexus.goat.models.Product;
 import br.com.nexus.goat.models.dto.ProductDTO;
 import br.com.nexus.goat.models.dto.ProductDTO.Categories;
+import br.com.nexus.goat.repositories.ProductRepository;
 
 @Service
 public class ProductService {
 
-    public Product product(ProductDTO obj) {
-        Product product = new Product(null, obj.getName(), obj.getDescription(), obj.getPrice(), obj.getSize(),
-                obj.getStock(), obj.getImgUrl());
+    @Autowired
+    private ProductRepository repository;
 
+    public Product findById(Long id) {
+        return this.repository.findById(id).orElse(null);
+    }
+
+    public List<Product> findAll() {
+        return this.repository.findAll();
+    }
+
+    public Product save(Product product) {
+        product = this.repository.save(product);
         return product;
+    }
+
+    public void deleteById(Long id) {
+        this.repository.deleteById(id);
+    }
+
+    public Product product(ProductDTO obj) {
+        return new Product(null, obj.getName(), obj.getDescription(), obj.getPrice(), obj.getSize(),
+                obj.getStock(), obj.getImgUrl());
     }
 
     public List<Category> categories(ProductDTO obj) {
@@ -27,12 +47,11 @@ public class ProductService {
             Category category = new Category(null, x.getName());
             categories.add(category);
         }
-        return categories; 
+        return categories;
     }
 
-    public Feature feature(ProductDTO obj){
-        Feature feature = new Feature(null, obj.getFeatures().getMark(), obj.getFeatures().getModel(), obj.getFeatures().getComposition(), obj.getFeatures().getColor());
-
-        return feature;
+    public Feature feature(ProductDTO obj) {
+        return new Feature(null, obj.getFeatures().getMark(), obj.getFeatures().getModel(),
+                obj.getFeatures().getComposition(), obj.getFeatures().getColor());
     }
 }

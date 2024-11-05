@@ -12,39 +12,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.nexus.goat.models.Address;
 import br.com.nexus.goat.models.User;
-import br.com.nexus.goat.repositories.AddressRepository;
-import br.com.nexus.goat.repositories.UserRepository;
+import br.com.nexus.goat.services.AddressService;
+import br.com.nexus.goat.services.UserService;
 
 @RestController
 @RequestMapping("/addresses")
 public class AddressController {
 
     @Autowired
-    private AddressRepository repository;
+    private AddressService service;
 
     @Autowired
-    UserRepository userRepository;
+    private UserService userService;
 
-    @PostMapping("/{id_user}")
-    public ResponseEntity<?> create(@PathVariable Long id_user, @RequestBody Address obj) {
-        User user = userRepository.findById(id_user).orElse(null);
+    @PostMapping("/{idUser}")
+    public ResponseEntity<Address> create(@PathVariable Long idUser, @RequestBody Address obj) {
+        User user = this.userService.findById(idUser);
 
-        obj.setUser(user);
-        obj = repository.save(obj);
+        obj.setUser(user);        
+        obj = service.save(obj);
+        
+        user.getAddresses().add(obj);
 
+        this.userService.save(user);
         return ResponseEntity.ok().body(obj);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        this.repository.deleteById(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.service.deleteById(id);
 
         return ResponseEntity.ok().body("O endereço foi deletado");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id){
-        Address address = this.repository.findById(id).orElse(null);
+    public ResponseEntity<Address> get(@PathVariable Long id) {
+        Address address = this.service.findById(id);
 
         return ResponseEntity.ok().body(address);
     }

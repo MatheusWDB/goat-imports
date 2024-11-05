@@ -6,32 +6,52 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.nexus.goat.models.Address;
 import br.com.nexus.goat.models.Order;
 import br.com.nexus.goat.models.OrderProduct;
 import br.com.nexus.goat.models.Product;
 import br.com.nexus.goat.models.dto.OrderDTO;
 import br.com.nexus.goat.models.dto.OrderDTO.Products;
-import br.com.nexus.goat.repositories.ProductRepository;
+import br.com.nexus.goat.repositories.OrderRepository;
 
 @Service
 public class OrderService {
 
-    @Autowired 
-    private ProductRepository productRepository;
+    @Autowired
+    private OrderRepository repository;
 
-    public Order order(OrderDTO obj){
-        Order order = new Order(null, obj.getStatus(), obj.getPaymentMethod(), obj.getOrderNumber());
+    @Autowired
+    private ProductService productService;
+
+    public Order findAllById(Long id) {
+        return this.repository.findById(id).orElse(null);
+    }
+
+    public List<Order> findAllByAddress(Address address) {
+        return this.repository.findAllByAddress(address);
+    }
+
+    public Order save(Order order) {
+        order = this.repository.save(order);
         return order;
     }
 
-    public List<OrderProduct> orderProducts(OrderDTO obj){        
+    public void deleteById(Long id) {
+        this.repository.deleteById(id);
+    }
+
+    public Order order(OrderDTO obj) {
+        return new Order(null, obj.getStatus(), obj.getPaymentMethod(), obj.getOrderNumber());
+    }
+
+    public List<OrderProduct> orderProducts(OrderDTO obj) {
         List<OrderProduct> orderProducts = new ArrayList<>();
 
         for (Products x : obj.getProducts()) {
             OrderProduct orderProduct = new OrderProduct();
 
-            Product product = this.productRepository.findById(x.getId()).orElse(null);     
-            orderProduct.setProduct(product);;
+            Product product = this.productService.findById(x.getId());
+            orderProduct.setProduct(product);
             orderProduct.setQuantity(x.getQuantity());
 
             orderProducts.add(orderProduct);

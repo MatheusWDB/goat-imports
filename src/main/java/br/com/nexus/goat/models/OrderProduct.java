@@ -35,8 +35,13 @@ public class OrderProduct implements Serializable {
         id.setOrder(order);
     }
 
+    @JsonIgnore
     public Product getProduct() {
         return id.getProduct();
+    }
+
+    public Long getIdProduct(){
+        return id.getProduct().getId();
     }
 
     public void setProduct(Product product) {
