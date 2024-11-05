@@ -1,5 +1,5 @@
 # Goat Imports 
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/MatheusWDB/goatimports/blob/main/LICENSE) 
 
 # Sobre o projeto
 
@@ -15,7 +15,8 @@ A aplicação consiste em um mvp de um site de vendas de roupas e acessórios, o
 ![Web 2]
 
 ## Modelo conceitual
-![Modelo Conceitual]
+![GOAT drawio](https://github.com/user-attachments/assets/e754d029-b2eb-4798-991c-bfa03b9740d8)
+
 
 # Tecnologias utilizadas
 ## Back end
@@ -46,7 +47,8 @@ git clone https://github.com/MatheusWDB/goatimports
 cd backend
 
 # executar o projeto
-./mvnw spring-boot:run
+mvn clean install
+java -jar target/goat-0.0.1-SNAPSHOT.jar
 ```
 
 ## Front end web
@@ -54,9 +56,6 @@ cd backend
 ```bash
 # clonar repositório
 git clone https://github.com/MatheusWDB/goatimports
-
-# entrar na pasta do projeto front end web
-cd frontend
 ```
 
 # Autores
