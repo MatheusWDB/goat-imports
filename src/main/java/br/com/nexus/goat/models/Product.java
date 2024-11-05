@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,6 +48,9 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "id.product")
     private Set<OrderProduct> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
+    private Set<WishList> wishes = new HashSet<>();
 
     public Product() {
     }
@@ -127,6 +131,11 @@ public class Product implements Serializable {
 
     public void setFeatures(Feature feature) {
         this.features = feature;
+    }
+
+    @JsonIgnore
+    public Set<WishList> getWishes() {
+        return wishes;
     }
 
     @JsonIgnore

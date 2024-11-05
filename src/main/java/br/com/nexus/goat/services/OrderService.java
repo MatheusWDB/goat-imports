@@ -30,10 +30,7 @@ public class OrderService {
         for (Products x : obj.getProducts()) {
             OrderProduct orderProduct = new OrderProduct();
 
-            Product product = this.productRepository.findById(x.getId()).orElse(null);            
-
-            System.out.println(product);
-
+            Product product = this.productRepository.findById(x.getId()).orElse(null);     
             orderProduct.setProduct(product);;
             orderProduct.setQuantity(x.getQuantity());
 

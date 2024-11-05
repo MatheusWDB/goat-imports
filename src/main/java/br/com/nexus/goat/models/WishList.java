@@ -1,38 +1,42 @@
 package br.com.nexus.goat.models;
 
 import java.io.Serializable;
+import java.time.Instant;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.nexus.goat.models.pk.OrderProductPK;
+import br.com.nexus.goat.models.pk.WishListPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
-@Entity(name = "tb_order_products")
-public class OrderProduct implements Serializable {
+@Entity(name = "tb_wish_lists")
+public class WishList implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrderProductPK id = new OrderProductPK();
+    private WishListPK id = new WishListPK();
 
-    private Integer quantity;
+    @CreationTimestamp
+    private Instant modificationDate;
 
-    public OrderProduct(){
+    public WishList() {
     }
 
-    public OrderProduct(Order order, Product product, Integer quantity) {
-        id.setOrder(order);
+    public WishList(User user, Product product, Instant modificationDate) {
+        id.setUser(user);
         id.setProduct(product);
-        this.quantity = quantity;
+        this.modificationDate = modificationDate;
     }
 
     @JsonIgnore
-    public Order getOrder() {
-        return id.getOrder();
+    public User getUser() {
+        return id.getUser();
     }
 
-    public void setOrder(Order order) {
-        id.setOrder(order);
+    public void setUser(User user) {
+        id.setUser(user);;
     }
 
     public Product getProduct() {
@@ -43,16 +47,12 @@ public class OrderProduct implements Serializable {
         id.setProduct(product);
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Instant getModificationDate() {
+        return modificationDate;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getSubTotal(){
-        return quantity * this.getProduct().getPrice();
+    public void setModificationDate(Instant modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class OrderProduct implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        OrderProduct other = (OrderProduct) obj;
+        WishList other = (WishList) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -82,6 +82,7 @@ public class OrderProduct implements Serializable {
 
     @Override
     public String toString() {
-        return "OrderProduct [id_Order=" + id.getOrder().getId() + ", id_Product=" + id.getProduct().getId() + ", quantity=" + quantity + "]";
-    }     
+        return "WishList [modificationDate=" + modificationDate + ", getUser()=" + getUser()
+                + ", getProduct()=" + getProduct() + "]";
+    }    
 }

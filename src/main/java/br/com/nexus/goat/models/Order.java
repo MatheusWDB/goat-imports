@@ -1,6 +1,7 @@
 package br.com.nexus.goat.models;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class Order implements Serializable {
     private Long orderNumber;
 
     @CreationTimestamp
-    private LocalDateTime orderDate;
+    private Instant orderDate;
 
     @ManyToOne
     private Address address;
@@ -75,7 +76,7 @@ public class Order implements Serializable {
         this.orderNumber = orderNumber;
     }
 
-    public LocalDateTime getOrderDate() {
+    public Instant getOrderDate() {
         return orderDate;
     }
 

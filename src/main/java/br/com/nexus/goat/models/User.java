@@ -40,6 +40,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.user", cascade = CascadeType.ALL)
+    private Set<WishList> wishes = new HashSet<>();
+
     public User() {
     }
 
@@ -122,6 +125,10 @@ public class User implements Serializable {
         return addresses;
     }
 
+    public Set<WishList> getWishes() {
+        return wishes;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -168,7 +175,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", phone=" + phone
-                + ", dateForBirth=" + dateForBirth + ", password=" + password + ", deleted=" + deleted + ", createdAt="
+                + ", dateForBirth=" + dateForBirth + ", password=" + password + ", deleted=" + deleted + ", wishes=" + wishes + ", createdAt="
                 + createdAt + "]";
     }
 }
