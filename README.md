@@ -5,7 +5,7 @@
 
 LINK
 
-Goat Importes é uma aplicação full stack web construída para um trabalho em grupo da faculdade.
+Goat Imports é uma aplicação full stack web construída para um trabalho em grupo da faculdade.
 
 A aplicação consiste em um mvp de um site de vendas de roupas e acessórios, onde uma pessoa poderá se cadastrar e realizar compras (fictícias).
 
