@@ -31,7 +31,7 @@ public class User implements Serializable {
     private String surname;
     private String email;
     private String phone;
-    private String dateForBirth;
+    private String dateOfBirth;
     private String password;
 
     private Boolean deleted = false;
@@ -50,14 +50,14 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Long id, String name, String surname, String email, String phone, String dateForBirth,
+    public User(Long id, String name, String surname, String email, String phone, String dateOfBirth,
             String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
-        this.dateForBirth = dateForBirth;
+        this.dateOfBirth = dateOfBirth;
         this.password = password;
     }
 
@@ -97,12 +97,12 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public String getDateForBirth() {
-        return dateForBirth;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDateForBirth(String dateForBirth) {
-        this.dateForBirth = dateForBirth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getPassword() {
@@ -188,7 +188,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", phone=" + phone
-                + ", dateForBirth=" + dateForBirth + ", password=" + password + ", deleted=" + deleted + ", wishes="
+                + ", dateOfBirth=" + dateOfBirth + ", password=" + password + ", deleted=" + deleted + ", wishes="
                 + wishes + ", createdAt="
                 + createdAt + "]";
     }

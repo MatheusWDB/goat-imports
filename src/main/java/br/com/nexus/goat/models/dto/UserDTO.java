@@ -8,14 +8,7 @@ public class UserDTO extends User {
     public String getNewPassword() {
         return newPassword;
     }
-
-    @Override
-    public String toString() {
-        return "UserDTO [newPassword=" + newPassword + ", getName()=" + getName() + ", getSurname()=" + getSurname()
-                + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone() + ", getDateForBirth()="
-                + getDateForBirth() + ", getPassword()=" + getPassword() + ", getCreatedAt()=" + getCreatedAt() + "]";
-    }
-
+    
     @Override
     public int hashCode() {
         final int prime = 31;

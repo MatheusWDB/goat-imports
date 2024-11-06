@@ -47,8 +47,8 @@ public class UserService {
         if (updatedUser.getPhone() != null) {
             user.setPhone(updatedUser.getPhone());
         }
-        if (updatedUser.getDateForBirth() != null) {
-            user.setDateForBirth(updatedUser.getDateForBirth());
+        if (updatedUser.getDateOfBirth() != null) {
+            user.setDateOfBirth(updatedUser.getDateOfBirth());
         }
 
         return user;
