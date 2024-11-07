@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.nexus.goat.entities.pk.OrderProductPK;
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
@@ -15,6 +16,7 @@ public class OrderProduct implements Serializable {
     @EmbeddedId
     private OrderProductPK id = new OrderProductPK();
 
+    @Column(nullable = false)
     private Integer quantity;
 
     public OrderProduct(){

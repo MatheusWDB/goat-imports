@@ -31,14 +31,9 @@ public class UserController {
     private ProductService productService;
 
     @PostMapping("/register")
-    public ResponseEntity<Object> create(@RequestBody User newUser) {
-        Boolean emailVerify = this.service.verifyEmail(newUser.getEmail());
-        if (Boolean.FALSE.equals(emailVerify))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("E-mail já cadastrado");
-
-        Boolean phoneVerify = this.service.verifyPhone(newUser.getPhone());
-        if (Boolean.FALSE.equals(phoneVerify))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Telefone já cadastrado");
+    public ResponseEntity<User> create(@RequestBody User newUser) {
+        this.service.verifyEmail(newUser.getEmail());
+        this.service.verifyPhone(newUser.getPhone());
 
         String passwordHashred = BCrypt.withDefaults().hashToString(12, newUser.getPassword().toCharArray());
 
@@ -72,31 +67,20 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody UserDTO obj) {
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserDTO obj) {
         User currentUser = this.service.findById(id);
 
-        if (currentUser == null)
-            return ResponseEntity.badRequest().body(null);
-
-        var passwordVerify = BCrypt.verifyer().verify(obj.getPassword().toCharArray(), currentUser.getPassword());
-        if (Boolean.FALSE.equals(passwordVerify.verified))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha incorreta!");
+        this.service.verifyPassword(obj.getPassword(), currentUser.getPassword());
 
         if (obj.getNewPassword() != null) {
             String newPassword = obj.getNewPassword();
 
-            if (newPassword.equals(obj.getPassword())) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A nova senha não pode ser igual a atual!");
-            }
+            this.service.verifyNewAndCurrentPassword(newPassword, obj.getPassword());
+
             currentUser.setPassword(BCrypt.withDefaults().hashToString(12, newPassword.toCharArray()));
         } else {
-            Boolean emailVerify = this.service.verifyEmail(obj.getEmail());
-            if (Boolean.FALSE.equals(emailVerify))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("E-mail já cadastrado");
-
-            Boolean phoneVerify = this.service.verifyPhone(obj.getPhone());
-            if (Boolean.FALSE.equals(phoneVerify))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Telefone já cadastrado");
+            this.service.verifyEmail(obj.getEmail());
+            this.service.verifyPhone(obj.getPhone());
         }
 
         User nonNullUser = this.service.notNull(currentUser, obj);

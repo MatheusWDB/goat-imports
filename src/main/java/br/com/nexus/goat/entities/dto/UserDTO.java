@@ -2,7 +2,7 @@ package br.com.nexus.goat.entities.dto;
 
 import br.com.nexus.goat.entities.User;
 
-public abstract class UserDTO extends User {
+public class UserDTO extends User {
     private String newPassword;
 
     public String getNewPassword() {

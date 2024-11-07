@@ -1,8 +1,10 @@
 package br.com.nexus.goat.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.entities.dto.UserDTO;
 import br.com.nexus.goat.repositories.UserRepository;
@@ -14,7 +16,7 @@ public class UserService {
     private UserRepository repository;
 
     public User findById(Long id) {
-        return this.repository.findById(id).orElse(null);
+        return this.repository.findById(id).orElseThrow(null);
     }
 
     public User save(User user) {
@@ -25,12 +27,31 @@ public class UserService {
         return this.repository.findByEmail(email);
     }
 
-    public Boolean verifyEmail(String email) {
-        return this.repository.findByEmail(email) == null;
+    public void verifyPassword(String newPassword, String currentPassword) {
+        var passwordVerify = BCrypt.verifyer().verify(newPassword.toCharArray(), currentPassword);
+        if (Boolean.FALSE.equals(passwordVerify.verified)) {
+            throw new IllegalArgumentException("Senha incorreta!");
+        }
     }
 
-    public Boolean verifyPhone(String phone) {
-        return this.repository.findByPhone(phone) == null;
+    public void verifyEmail(String email) {
+        User user = this.repository.findByEmail(email);
+        if (user != null) {
+            throw new DuplicateKeyException("E-mail já cadastrado");
+        }
+    }
+
+    public void verifyPhone(String phone) {
+        User user = this.repository.findByPhone(phone);
+        if (user != null) {
+            throw new DuplicateKeyException("Telefone já cadastrado");
+        }
+    }
+
+    public void verifyNewAndCurrentPassword(String newPassword, String currentPassword) {
+        if (newPassword.equals(currentPassword)) {
+                throw new IllegalArgumentException("A nova senha não pode ser igual a atual!");
+            }
     }
 
     public User notNull(User user, UserDTO updatedUser) {
