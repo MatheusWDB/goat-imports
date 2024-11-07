@@ -5,7 +5,7 @@ import java.util.Set;
 import lombok.Data;
 
 @Data
-public class ProductDTO {
+public abstract class ProductDTO {
     private String name;
     private String description;
     private String size;

@@ -33,7 +33,7 @@ public class OrderController {
     @Autowired
     private OrderProductService orderProductService;
 
-    @PostMapping("/{idAddress}")
+    @PostMapping("/create/{idAddress}")
     public ResponseEntity<Order> create(@PathVariable Long idAddress, @RequestBody OrderDTO obj) {
         Address address = this.addressService.findById(idAddress);
 
@@ -54,8 +54,8 @@ public class OrderController {
         return ResponseEntity.ok().body(order);
     }
 
-    @GetMapping("/{idAddress}")
-    public ResponseEntity<List<Order>> create(@PathVariable Long idAddress) {
+    @GetMapping("/get-all/{idAddress}")
+    public ResponseEntity<List<Order>> getAll(@PathVariable Long idAddress) {
         Address address = this.addressService.findById(idAddress);
 
         List<Order> orders = this.service.findAllByAddress(address);
@@ -63,7 +63,7 @@ public class OrderController {
         return ResponseEntity.ok().body(orders);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         this.service.deleteById(id);
         return ResponseEntity.ok().body("O pedido foi deletado");

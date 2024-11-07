@@ -33,7 +33,7 @@ public class ProductController {
     @Autowired
     private FeatureService featureService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Product> create(@RequestBody ProductDTO obj) {
         Product product = this.service.product(obj);
         List<Category> categories = this.service.categories(obj);
@@ -65,19 +65,19 @@ public class ProductController {
         return ResponseEntity.ok().body(product);
     }
 
-    @GetMapping
+    @GetMapping("/get-all")
     public ResponseEntity<List<Product>> getAll() {
         List<Product> products = this.service.findAll();
         return ResponseEntity.ok().body(products);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Product> get(@PathVariable Long id) {
         Product product = this.service.findById(id);
         return ResponseEntity.ok().body(product);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         this.service.deleteById(id);
         return ResponseEntity.ok().body("Produto deletado!");

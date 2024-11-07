@@ -7,7 +7,7 @@ import br.com.nexus.goat.enums.PaymentMethod;
 import lombok.Data;
 
 @Data
-public class OrderDTO {
+public abstract class OrderDTO {
     private Integer status;
     private PaymentMethod paymentMethod;
     private Long orderNumber;
