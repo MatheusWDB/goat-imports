@@ -1,6 +1,6 @@
-package br.com.nexus.goat.models.dto;
+package br.com.nexus.goat.entities.dto;
 
-import br.com.nexus.goat.models.User;
+import br.com.nexus.goat.entities.User;
 
 public abstract class UserDTO extends User {
     private String newPassword;

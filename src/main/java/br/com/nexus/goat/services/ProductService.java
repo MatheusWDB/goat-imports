@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nexus.goat.models.Category;
-import br.com.nexus.goat.models.Feature;
-import br.com.nexus.goat.models.Product;
-import br.com.nexus.goat.models.dto.ProductDTO;
-import br.com.nexus.goat.models.dto.ProductDTO.Categories;
+import br.com.nexus.goat.entities.Category;
+import br.com.nexus.goat.entities.Feature;
+import br.com.nexus.goat.entities.Product;
+import br.com.nexus.goat.entities.dto.ProductDTO;
+import br.com.nexus.goat.entities.dto.ProductDTO.Categories;
 import br.com.nexus.goat.repositories.ProductRepository;
 
 @Service

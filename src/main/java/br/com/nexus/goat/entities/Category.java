@@ -1,4 +1,4 @@
-package br.com.nexus.goat.models;
+package br.com.nexus.goat.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;

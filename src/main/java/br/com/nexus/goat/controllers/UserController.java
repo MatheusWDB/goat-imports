@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import br.com.nexus.goat.models.Product;
-import br.com.nexus.goat.models.User;
-import br.com.nexus.goat.models.dto.UserDTO;
+import br.com.nexus.goat.entities.Product;
+import br.com.nexus.goat.entities.User;
+import br.com.nexus.goat.entities.dto.UserDTO;
 import br.com.nexus.goat.services.ProductService;
 import br.com.nexus.goat.services.UserService;
 
@@ -44,9 +44,9 @@ public class UserController {
 
         newUser.setPassword(passwordHashred);
 
-        User userCreated = this.service.save(newUser);
+        newUser = this.service.save(newUser);
 
-        return ResponseEntity.ok().body(userCreated);
+        return ResponseEntity.ok().body(newUser);
     }
 
     @PostMapping("/login")

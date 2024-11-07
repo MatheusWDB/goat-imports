@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nexus.goat.models.Address;
-import br.com.nexus.goat.models.Order;
-import br.com.nexus.goat.models.OrderProduct;
-import br.com.nexus.goat.models.dto.OrderDTO;
+import br.com.nexus.goat.entities.Address;
+import br.com.nexus.goat.entities.Order;
+import br.com.nexus.goat.entities.OrderProduct;
+import br.com.nexus.goat.entities.dto.OrderDTO;
 import br.com.nexus.goat.services.AddressService;
 import br.com.nexus.goat.services.OrderProductService;
 import br.com.nexus.goat.services.OrderService;
