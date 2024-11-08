@@ -1,5 +1,7 @@
 package br.com.nexus.goat.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,4 +52,13 @@ public class AddressController {
 
         return ResponseEntity.ok().body(address);
     }
+
+    @GetMapping("/list/{idUser}")
+    public ResponseEntity<List<Address>> list(@PathVariable Long idUser) {
+        List<Address> addresses = this.service.findAllByUserId(idUser);
+
+        return ResponseEntity.ok().body(addresses);
+    }
+
+
 }

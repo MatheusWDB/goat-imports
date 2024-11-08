@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nexus.goat.entities.Address;
 import br.com.nexus.goat.entities.Order;
 import br.com.nexus.goat.entities.OrderProduct;
 import br.com.nexus.goat.entities.Product;
@@ -28,8 +27,8 @@ public class OrderService {
         return this.repository.findById(id).orElse(null);
     }
 
-    public List<Order> findAllByAddress(Address address) {
-        return this.repository.findAllByAddress(address);
+    public List<Order> findAllByAddressId(Long idAddress) {
+        return this.repository.findAllByAddressId(idAddress);
     }
 
     public Order save(Order order) {

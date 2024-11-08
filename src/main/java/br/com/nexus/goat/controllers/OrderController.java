@@ -47,7 +47,7 @@ public class OrderController {
         for (OrderProduct orderProduct : orderProducts) {
             orderProduct.setOrder(order);
             orderProduct = this.orderProductService.save(orderProduct);
-            
+
             order.getProducts().add(orderProduct);
         }
 
@@ -56,11 +56,9 @@ public class OrderController {
         return ResponseEntity.ok().body(order);
     }
 
-    @GetMapping("/get-all/{idAddress}")
-    public ResponseEntity<List<Order>> getAll(@PathVariable Long idAddress) {
-        Address address = this.addressService.findById(idAddress);
-
-        List<Order> orders = this.service.findAllByAddress(address);
+    @GetMapping("/list/{idAddress}")
+    public ResponseEntity<List<Order>> list(@PathVariable Long idAddress) {
+        List<Order> orders = this.service.findAllByAddressId(idAddress);
 
         return ResponseEntity.ok().body(orders);
     }

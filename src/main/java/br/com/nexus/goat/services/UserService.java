@@ -16,7 +16,11 @@ public class UserService {
     private UserRepository repository;
 
     public User findById(Long id) {
-        return this.repository.findById(id).orElseThrow();
+        User user = this.repository.findById(id).orElseThrow();
+        if (user.getDeleted()) {
+            throw new IllegalArgumentException("Usuário deletado!");
+        }
+        return user;
     }
 
     public User save(User user) {

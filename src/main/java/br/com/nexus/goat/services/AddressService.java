@@ -1,5 +1,7 @@
 package br.com.nexus.goat.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class AddressService {
 
     public Address findById(Long id){
         return this.repository.findById(id).orElse(null);
+    }
+
+    public List<Address> findAllByUserId(Long idUser){
+        return this.repository.findAllByUserId(idUser);
     }
 
     public Address save(Address address){

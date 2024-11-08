@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -60,7 +61,7 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "id.product")
     private Set<OrderProduct> products = new HashSet<>();
 
-    @ManyToMany(mappedBy = "wishes")
+    @ManyToMany(mappedBy = "wishes", cascade = CascadeType.REMOVE)
     private Set<User> wishes = new HashSet<>();
 
     public Product() {

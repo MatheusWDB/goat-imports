@@ -46,18 +46,14 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody User obj) {
-        User userVerify = this.service.findByEmail(obj.getEmail());
+        User user = this.service.findByEmail(obj.getEmail());
 
-        if (userVerify == null || userVerify.getDeleted()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não cadastrado!");
-        }
-
-        var passwordVerify = BCrypt.verifyer().verify(obj.getPassword().toCharArray(), userVerify.getPassword());
+        var passwordVerify = BCrypt.verifyer().verify(obj.getPassword().toCharArray(), user.getPassword());
 
         if (Boolean.FALSE.equals(passwordVerify.verified))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha incorreta!");
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userVerify);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
     }
 
     @GetMapping("/get/{id}")
@@ -102,5 +98,26 @@ public class UserController {
         user = this.service.save(user);
 
         return ResponseEntity.ok().body(user);
+    }
+
+    @PostMapping("/remove-wish/{id}")
+    public ResponseEntity<?> removeWish(@PathVariable Long id, @RequestBody Set<Long> idProducts) {
+        User user = this.service.findById(id);
+        for (Long idProduct : idProducts) {
+            Product product = this.productService.findById(idProduct);
+            user.getWishes().remove(product);
+            this.productService.save(product);
+        }
+        user = this.service.save(user);
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PutMapping("/delete/{id}")
+    public ResponseEntity<Object> fakeDelete(@PathVariable Long id) {
+        User user = this.service.findById(id);
+        user.setDeleted(true);
+        this.service.save(user);
+
+        return ResponseEntity.ok().body("Usuário deletado, Id: " + id);
     }
 }
