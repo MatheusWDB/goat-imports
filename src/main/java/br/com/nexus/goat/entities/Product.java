@@ -2,14 +2,13 @@ package br.com.nexus.goat.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -138,8 +137,13 @@ public class Product implements Serializable {
         return categories;
     }
 
-    public List<Long> getIdCategories() {
-        List<Long> idCategories = new ArrayList<>();
+    @JsonProperty("categories")
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Set<Long> getIdCategories() {
+        Set<Long> idCategories = new HashSet<>();
         for (Category category : categories) {
             idCategories.add(category.getId());
         }
@@ -151,11 +155,12 @@ public class Product implements Serializable {
         return features;
     }
 
-    public void setFeatures(Feature feature) {
-        this.features = feature;
+    @JsonProperty("features")
+    public void setFeatures(Feature features) {
+        this.features = features;
     }
 
-    public Long getIdFeature(){
+    public Long getIdFeature() {
         return features.getId();
     }
 

@@ -1,6 +1,6 @@
 package br.com.nexus.goat.controllers;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -91,7 +91,7 @@ public class UserController {
     }
 
     @PostMapping("/add-wish/{id}")
-    public ResponseEntity<User> addWish(@PathVariable Long id, @RequestBody List<Long> idProducts) {
+    public ResponseEntity<User> addWish(@PathVariable Long id, @RequestBody Set<Long> idProducts) {
         User user = this.service.findById(id);
 
         for (Long idProduct : idProducts) {

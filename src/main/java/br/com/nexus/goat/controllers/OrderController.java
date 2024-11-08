@@ -1,6 +1,7 @@
 package br.com.nexus.goat.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,16 +37,17 @@ public class OrderController {
     @PostMapping("/create/{idAddress}")
     public ResponseEntity<Order> create(@PathVariable Long idAddress, @RequestBody OrderDTO obj) {
         Address address = this.addressService.findById(idAddress);
-
         Order order = this.service.order(obj);
+
         order.setAddress(address);
         order = this.service.save(order);
 
-        List<OrderProduct> orderProducts = this.service.orderProducts(obj);
+        Set<OrderProduct> orderProducts = this.service.orderProducts(obj);
 
         for (OrderProduct orderProduct : orderProducts) {
             orderProduct.setOrder(order);
             orderProduct = this.orderProductService.save(orderProduct);
+            
             order.getProducts().add(orderProduct);
         }
 

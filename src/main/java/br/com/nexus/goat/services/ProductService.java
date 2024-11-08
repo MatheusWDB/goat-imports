@@ -1,7 +1,8 @@
 package br.com.nexus.goat.services;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,6 @@ import org.springframework.stereotype.Service;
 import br.com.nexus.goat.entities.Category;
 import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.entities.Product;
-import br.com.nexus.goat.entities.dto.ProductDTO;
-import br.com.nexus.goat.entities.dto.ProductDTO.Categories;
 import br.com.nexus.goat.repositories.ProductRepository;
 
 @Service
@@ -36,21 +35,21 @@ public class ProductService {
         this.repository.deleteById(id);
     }
 
-    public Product product(ProductDTO obj) {
+    public Product product(Product obj) {
         return new Product(null, obj.getName(), obj.getDescription(), obj.getPrice(), obj.getSize(),
                 obj.getStock(), obj.getImgUrl());
     }
 
-    public List<Category> categories(ProductDTO obj) {
-        List<Category> categories = new ArrayList<>();
-        for (Categories x : obj.getCategories()) {
+    public Set<Category> categories(Product obj) {
+        Set<Category> categories = new HashSet<>();
+        for (Category x : obj.getCategories()) {
             Category category = new Category(null, x.getName());
             categories.add(category);
         }
         return categories;
     }
 
-    public Feature feature(ProductDTO obj) {
+    public Feature feature(Product obj) {
         return new Feature(null, obj.getFeatures().getMark(), obj.getFeatures().getModel(),
                 obj.getFeatures().getComposition(), obj.getFeatures().getColor());
     }

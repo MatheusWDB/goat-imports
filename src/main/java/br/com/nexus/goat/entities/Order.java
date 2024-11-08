@@ -34,6 +34,7 @@ public class Order implements Serializable {
     @CreationTimestamp
     private Instant orderDate;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @JoinColumn(name = "id_address", referencedColumnName = "id")
@@ -86,7 +87,6 @@ public class Order implements Serializable {
         return orderDate;
     }
 
-    @JsonIgnore
     public Address getAddress() {
         return address;
     }

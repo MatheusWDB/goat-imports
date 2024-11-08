@@ -3,7 +3,9 @@ package br.com.nexus.goat.entities.dto;
 import br.com.nexus.goat.entities.User;
 
 public class UserDTO extends User {
-    private String newPassword;
+	private static final long serialVersionUID = 1L;
+	
+	private String newPassword;
 
     public String getNewPassword() {
         return newPassword;

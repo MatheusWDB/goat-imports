@@ -1,6 +1,7 @@
 package br.com.nexus.goat.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.nexus.goat.entities.Category;
 import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.entities.Product;
-import br.com.nexus.goat.entities.dto.ProductDTO;
 import br.com.nexus.goat.services.CategoryService;
 import br.com.nexus.goat.services.FeatureService;
 import br.com.nexus.goat.services.ProductService;
@@ -34,11 +34,12 @@ public class ProductController {
     private FeatureService featureService;
 
     @PostMapping("/create")
-    public ResponseEntity<Product> create(@RequestBody ProductDTO obj) {
+    public ResponseEntity<Product> create(@RequestBody Product obj) {
+        System.out.println("AQUI PELO MENOS PASSOU: " + obj);
         Product product = this.service.product(obj);
-        List<Category> categories = this.service.categories(obj);
+        Set<Category> categories = this.service.categories(obj);
         Feature feature = this.service.feature(obj);
-
+        
         product = this.service.save(product);
 
         Feature verifyFeature = this.featureService.findByMarkAndModelAndColorAndComposition(feature.getMark(),

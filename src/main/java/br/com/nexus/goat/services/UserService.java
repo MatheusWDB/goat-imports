@@ -16,15 +16,23 @@ public class UserService {
     private UserRepository repository;
 
     public User findById(Long id) {
-        return this.repository.findById(id).orElseThrow(null);
+        return this.repository.findById(id).orElseThrow();
     }
 
     public User save(User user) {
-        return this.repository.save(user);
+        try {
+            return this.repository.save(user);
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public User findByEmail(String email) {
-        return this.repository.findByEmail(email);
+        try {
+            return this.repository.findByEmail(email);
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void verifyPassword(String newPassword, String currentPassword) {
@@ -50,8 +58,8 @@ public class UserService {
 
     public void verifyNewAndCurrentPassword(String newPassword, String currentPassword) {
         if (newPassword.equals(currentPassword)) {
-                throw new IllegalArgumentException("A nova senha não pode ser igual a atual!");
-            }
+            throw new IllegalArgumentException("A nova senha não pode ser igual a atual!");
+        }
     }
 
     public User notNull(User user, UserDTO updatedUser) {

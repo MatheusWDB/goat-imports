@@ -1,30 +1,53 @@
 package br.com.nexus.goat.entities.dto;
 
-import java.util.List;
+import java.util.Set;
 
-import br.com.nexus.goat.enums.OrderStatus;
-import br.com.nexus.goat.enums.PaymentMethod;
-import lombok.Data;
+import br.com.nexus.goat.entities.Order;
 
-@Data
-public class OrderDTO {
-    private Integer status;
-    private PaymentMethod paymentMethod;
-    private Long orderNumber;
-    private List<Products> products;
+public class OrderDTO extends Order {
+    private static final long serialVersionUID = 1L;
 
-    @Data
-    public static class Products {
-        private Long id;
+    private Set<Items> items;
+
+    public static class Items {
+        private Long idProduct;
         private Integer quantity;
+
+        public Long getIdProduct() {
+            return idProduct;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
     }
 
-    public OrderStatus getStatus() {
-        return OrderStatus.valueOf(status);
+    public Set<Items> getItems() {
+        return items;
     }
 
-    public void setStatus(OrderStatus status) {
-        if (status != null)
-            this.status = status.getCode();
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((items == null) ? 0 : items.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OrderDTO other = (OrderDTO) obj;
+        if (items == null) {
+            if (other.items != null)
+                return false;
+        } else if (!items.equals(other.items))
+            return false;
+        return true;
     }
 }
