@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nexus.goat.entities.Address;
+import br.com.nexus.goat.exceptions.address.AddressNotFoundException;
 import br.com.nexus.goat.repositories.AddressRepository;
 
 @Service
@@ -15,7 +16,7 @@ public class AddressService {
     private AddressRepository repository;
 
     public Address findById(Long id){
-        return this.repository.findById(id).orElse(null);
+        return this.repository.findById(id).orElseThrow(new AddressNotFoundException());
     }
 
     public List<Address> findAllByUserId(Long idUser){
@@ -28,6 +29,10 @@ public class AddressService {
     }
 
     public void deleteById(Long id){
+        Address address = this.repository.findById(id);
+        if(address == null){
+            throw new AddressNotFoundException();
+        }
         this.repository.deleteById(id);
     }
 }

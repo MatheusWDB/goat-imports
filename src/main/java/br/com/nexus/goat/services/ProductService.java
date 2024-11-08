@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.nexus.goat.entities.Category;
 import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.entities.Product;
+import br.com.nexus.goat.exceptions.product.ProductNotFoundException;
 import br.com.nexus.goat.repositories.ProductRepository;
 
 @Service
@@ -19,11 +20,15 @@ public class ProductService {
     private ProductRepository repository;
 
     public Product findById(Long id) {
-        return this.repository.findById(id).orElse(null);
+        return this.repository.findById(id).orElseThrow(new ProductNotFoundException());
     }
 
     public List<Product> findAll() {
-        return this.repository.findAll();
+        List<Product> products = this.repository.findAll()
+        if (products == null){
+            throw new ProductNotFoundException();
+        }
+        return products;
     }
 
     public Product save(Product product) {
@@ -32,7 +37,11 @@ public class ProductService {
     }
 
     public void deleteById(Long id) {
-        this.repository.deleteById(id);
+        Product product = this.repository.findById(id);
+        if (product == null){
+            throw new ProductNotFoundException()
+        }
+        this.repository.deleteById(id)
     }
 
     public Product product(Product obj) {

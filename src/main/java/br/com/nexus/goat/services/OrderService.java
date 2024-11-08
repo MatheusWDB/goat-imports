@@ -12,6 +12,7 @@ import br.com.nexus.goat.entities.OrderProduct;
 import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.entities.dto.OrderDTO;
 import br.com.nexus.goat.entities.dto.OrderDTO.Items;
+import br.com.nexus.goat.exceptions.order.OrderNotFoundException;
 import br.com.nexus.goat.repositories.OrderRepository;
 
 @Service
@@ -23,20 +24,28 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
-    public Order findAllById(Long id) {
-        return this.repository.findById(id).orElse(null);
+    public Order findById(Long id) {
+        return this.repository.findById(id).orElseThrow(new OrderNotFoundException());
     }
 
     public List<Order> findAllByAddressId(Long idAddress) {
-        return this.repository.findAllByAddressId(idAddress);
+        List<Order> orders = this.repository.findAllByAddressId(idAddress);
+        if (orders == null){
+            throw new OrderNotFoundException();
+        }
+        return orders;
     }
 
     public Order save(Order order) {
         order = this.repository.save(order);
+        if(order == null){
+            throw new IncompleteDataException();
+        }
         return order;
     }
 
     public void deleteById(Long id) {
+        Order order = this.repository.findById(id).orElseThrow(new OrderNotFoundException());
         this.repository.deleteById(id);
     }
 

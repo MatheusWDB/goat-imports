@@ -13,6 +13,9 @@ import br.com.nexus.goat.exceptions.user.SamePasswordException;
 import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;
 import br.com.nexus.goat.exceptions.user.UserDeletedException;
 import br.com.nexus.goat.exceptions.user.UserNotFoundException;
+import br.com.nexus.goat.exceptions.user.ProductNotFoundException;
+import br.com.nexus.goat.exceptions.user.OrderNotFoundException;
+import br.com.nexus.goat.exceptions.user.AddressNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
@@ -68,6 +71,36 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<StandardError> userAlreadyExistsException(UserAlreadyExistsException e,
+            HttpServletRequest request) {
+        String error = "Database error";
+        HttpStatus status = HttpStatus.CONFLICT;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<StandardError> productNotFoundException(ProductNotFoundException e,
+            HttpServletRequest request) {
+        String error = "Database error";
+        HttpStatus status = HttpStatus.CONFLICT;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<StandardError> orderNotFoundException(OrderNotFoundException e,
+            HttpServletRequest request) {
+        String error = "Database error";
+        HttpStatus status = HttpStatus.CONFLICT;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    public ResponseEntity<StandardError> addressNotFoundException(AddressNotFoundException e,
             HttpServletRequest request) {
         String error = "Database error";
         HttpStatus status = HttpStatus.CONFLICT;
