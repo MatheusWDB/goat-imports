@@ -1,12 +1,17 @@
 package br.com.nexus.goat.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.entities.dto.UserDTO;
+import br.com.nexus.goat.exceptions.user.IncompleteDataException;
+import br.com.nexus.goat.exceptions.user.IncorrectPasswordException;
+import br.com.nexus.goat.exceptions.user.SamePasswordException;
+import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;
+import br.com.nexus.goat.exceptions.user.UserDeletedException;
+import br.com.nexus.goat.exceptions.user.UserNotFoundException;
 import br.com.nexus.goat.repositories.UserRepository;
 
 @Service
@@ -16,9 +21,9 @@ public class UserService {
     private UserRepository repository;
 
     public User findById(Long id) {
-        User user = this.repository.findById(id).orElseThrow();
+        User user = this.repository.findById(id).orElseThrow(() -> new UserNotFoundException());
         if (user.getDeleted()) {
-            throw new IllegalArgumentException("Usuário deletado!");
+            throw new UserDeletedException();
         }
         return user;
     }
@@ -26,43 +31,43 @@ public class UserService {
     public User save(User user) {
         try {
             return this.repository.save(user);
-        } catch (Exception e) {
-            throw new IllegalArgumentException();
+        } catch (IncompleteDataException e) {
+            throw new IncompleteDataException();
         }
     }
 
     public User findByEmail(String email) {
-        try {
-            return this.repository.findByEmail(email);
-        } catch (Exception e) {
-            throw new IllegalArgumentException();
+        User user = this.repository.findByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
         }
+        return user;
     }
 
     public void verifyPassword(String newPassword, String currentPassword) {
         var passwordVerify = BCrypt.verifyer().verify(newPassword.toCharArray(), currentPassword);
         if (Boolean.FALSE.equals(passwordVerify.verified)) {
-            throw new IllegalArgumentException("Senha incorreta!");
+            throw new IncorrectPasswordException();
         }
     }
 
     public void verifyEmail(String email) {
         User user = this.repository.findByEmail(email);
         if (user != null) {
-            throw new DuplicateKeyException("E-mail já cadastrado");
+            throw new UserAlreadyExistsException("Já existe um usuário com esse e-mail!");
         }
     }
 
     public void verifyPhone(String phone) {
         User user = this.repository.findByPhone(phone);
         if (user != null) {
-            throw new DuplicateKeyException("Telefone já cadastrado");
+            throw new UserAlreadyExistsException("Já existe um usuário com esse telefone!");
         }
     }
 
     public void verifyNewAndCurrentPassword(String newPassword, String currentPassword) {
         if (newPassword.equals(currentPassword)) {
-            throw new IllegalArgumentException("A nova senha não pode ser igual a atual!");
+            throw new SamePasswordException();
         }
     }
 
@@ -82,7 +87,6 @@ public class UserService {
         if (updatedUser.getDateOfBirth() != null) {
             user.setDateOfBirth(updatedUser.getDateOfBirth());
         }
-
         return user;
     }
 }
