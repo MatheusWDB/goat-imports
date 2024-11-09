@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.entities.dto.UserDTO;
-import br.com.nexus.goat.exceptions.user.IncompleteDataException;
+import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.user.IncorrectPasswordException;
 import br.com.nexus.goat.exceptions.user.SamePasswordException;
 import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;

@@ -31,9 +31,9 @@ public class AddressController {
     public ResponseEntity<Address> create(@PathVariable Long idUser, @RequestBody Address obj) {
         User user = this.userService.findById(idUser);
 
-        obj.setUser(user);        
+        obj.setUser(user);
         obj = service.save(obj);
-        
+
         user.getAddresses().add(obj);
 
         this.userService.save(user);
@@ -59,6 +59,5 @@ public class AddressController {
 
         return ResponseEntity.ok().body(addresses);
     }
-
 
 }

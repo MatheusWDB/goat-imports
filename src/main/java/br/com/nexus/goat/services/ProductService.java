@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import br.com.nexus.goat.entities.Category;
 import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.entities.Product;
-import br.com.nexus.goat.exceptions.product.ProductNotFoundException;
+import br.com.nexus.goat.exceptions.IncompleteDataException;
+import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.repositories.ProductRepository;
 
 @Service
@@ -20,28 +21,28 @@ public class ProductService {
     private ProductRepository repository;
 
     public Product findById(Long id) {
-        return this.repository.findById(id).orElseThrow(new ProductNotFoundException());
+        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
     }
 
     public List<Product> findAll() {
-        List<Product> products = this.repository.findAll()
-        if (products == null){
-            throw new ProductNotFoundException();
+        List<Product> products = this.repository.findAll();
+        if (products.isEmpty()) {
+            throw new NotFoundException("Produto");
         }
         return products;
     }
 
     public Product save(Product product) {
-        product = this.repository.save(product);
-        return product;
+        try {
+            return this.repository.save(product);
+        } catch (Exception e) {
+            throw new IncompleteDataException();
+        }
     }
 
     public void deleteById(Long id) {
-        Product product = this.repository.findById(id);
-        if (product == null){
-            throw new ProductNotFoundException()
-        }
-        this.repository.deleteById(id)
+        this.repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
+        this.repository.deleteById(id);
     }
 
     public Product product(Product obj) {

@@ -4,16 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nexus.goat.entities.OrderProduct;
+import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.repositories.OrderProductRepository;
 
 @Service
 public class OrderProductService {
-    
+
     @Autowired
     private OrderProductRepository repository;
 
-    public OrderProduct save(OrderProduct orderProduct){
-        orderProduct = this.repository.save(orderProduct);
-        return orderProduct;
+    public OrderProduct save(OrderProduct orderProduct) {
+        try {
+            return this.repository.save(orderProduct);
+        } catch (Exception e) {
+            throw new IncompleteDataException();
+        }
     }
 }

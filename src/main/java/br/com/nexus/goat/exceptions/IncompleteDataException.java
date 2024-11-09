@@ -1,4 +1,4 @@
-package br.com.nexus.goat.exceptions.user;
+package br.com.nexus.goat.exceptions;
 
 public class IncompleteDataException extends RuntimeException {
     private static final long serialVersionUID = 1L;
@@ -6,5 +6,4 @@ public class IncompleteDataException extends RuntimeException {
     public IncompleteDataException() {
         super("Os dados estão incompletos!");
     }
-    
 }

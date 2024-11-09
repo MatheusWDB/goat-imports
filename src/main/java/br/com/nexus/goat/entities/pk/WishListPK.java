@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 @Embeddable
 public class WishListPK implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
@@ -69,5 +69,5 @@ public class WishListPK implements Serializable {
         } else if (!product.equals(other.product))
             return false;
         return true;
-    }    
+    }
 }

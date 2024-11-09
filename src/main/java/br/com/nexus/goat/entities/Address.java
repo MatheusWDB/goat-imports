@@ -28,7 +28,7 @@ public class Address implements Serializable {
 
     @Column(nullable = false)
     private String zipCode;
-    
+
     private String number;
     private String reference;
     private String type;
@@ -109,7 +109,7 @@ public class Address implements Serializable {
         this.user = user;
     }
 
-    public Long getIdUser(){
+    public Long getIdUser() {
         return user.getId();
     }
 

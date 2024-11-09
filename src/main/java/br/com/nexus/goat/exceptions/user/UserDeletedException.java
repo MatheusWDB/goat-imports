@@ -6,5 +6,4 @@ public class UserDeletedException extends RuntimeException {
     public UserDeletedException() {
         super("Usuário deletado!");
     }
-    
 }

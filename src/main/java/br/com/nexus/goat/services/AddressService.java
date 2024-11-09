@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nexus.goat.entities.Address;
-import br.com.nexus.goat.exceptions.address.AddressNotFoundException;
+import br.com.nexus.goat.exceptions.IncompleteDataException;
+import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.repositories.AddressRepository;
 
 @Service
@@ -15,24 +16,28 @@ public class AddressService {
     @Autowired
     private AddressRepository repository;
 
-    public Address findById(Long id){
-        return this.repository.findById(id).orElseThrow(new AddressNotFoundException());
+    public Address findById(Long id) {
+        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Endereço"));
     }
 
-    public List<Address> findAllByUserId(Long idUser){
-        return this.repository.findAllByUserId(idUser);
-    }
-
-    public Address save(Address address){
-        address = this.repository.save(address);
-        return address;
-    }
-
-    public void deleteById(Long id){
-        Address address = this.repository.findById(id);
-        if(address == null){
-            throw new AddressNotFoundException();
+    public List<Address> findAllByUserId(Long idUser) {
+        List<Address> addresses = this.repository.findAllByUserId(idUser);
+        if (addresses.isEmpty()) {
+            throw new NotFoundException("Endereço");
         }
+        return addresses;
+    }
+
+    public Address save(Address address) {
+        try {
+            return this.repository.save(address);
+        } catch (Exception e) {
+            throw new IncompleteDataException();
+        }
+    }
+
+    public void deleteById(Long id) {
+        this.repository.findById(id).orElseThrow(() -> new NotFoundException("Endereço"));
         this.repository.deleteById(id);
     }
 }

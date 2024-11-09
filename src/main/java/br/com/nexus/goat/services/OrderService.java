@@ -12,7 +12,8 @@ import br.com.nexus.goat.entities.OrderProduct;
 import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.entities.dto.OrderDTO;
 import br.com.nexus.goat.entities.dto.OrderDTO.Items;
-import br.com.nexus.goat.exceptions.order.OrderNotFoundException;
+import br.com.nexus.goat.exceptions.IncompleteDataException;
+import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.repositories.OrderRepository;
 
 @Service
@@ -25,27 +26,27 @@ public class OrderService {
     private ProductService productService;
 
     public Order findById(Long id) {
-        return this.repository.findById(id).orElseThrow(new OrderNotFoundException());
+        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
     }
 
     public List<Order> findAllByAddressId(Long idAddress) {
         List<Order> orders = this.repository.findAllByAddressId(idAddress);
-        if (orders == null){
-            throw new OrderNotFoundException();
+        if (orders == null) {
+            throw new NotFoundException("Pedido");
         }
         return orders;
     }
 
     public Order save(Order order) {
-        order = this.repository.save(order);
-        if(order == null){
+        try {
+            return this.repository.save(order);
+        } catch (Exception e) {
             throw new IncompleteDataException();
         }
-        return order;
     }
 
     public void deleteById(Long id) {
-        Order order = this.repository.findById(id).orElseThrow(new OrderNotFoundException());
+        this.repository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
         this.repository.deleteById(id);
     }
 

@@ -19,7 +19,7 @@ public class OrderProduct implements Serializable {
     @Column(nullable = false)
     private Integer quantity;
 
-    public OrderProduct(){
+    public OrderProduct() {
     }
 
     public OrderProduct(Order order, Product product, Integer quantity) {
@@ -42,7 +42,7 @@ public class OrderProduct implements Serializable {
         return id.getProduct();
     }
 
-    public Long getIdProduct(){
+    public Long getIdProduct() {
         return id.getProduct().getId();
     }
 
@@ -58,7 +58,7 @@ public class OrderProduct implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getSubTotal(){
+    public Double getSubTotal() {
         return quantity * this.getProduct().getPrice();
     }
 
@@ -89,6 +89,7 @@ public class OrderProduct implements Serializable {
 
     @Override
     public String toString() {
-        return "OrderProduct [id_Order=" + id.getOrder().getId() + ", id_Product=" + id.getProduct().getId() + ", quantity=" + quantity + "]";
-    }     
+        return "OrderProduct [id_Order=" + id.getOrder().getId() + ", id_Product=" + id.getProduct().getId()
+                + ", quantity=" + quantity + "]";
+    }
 }

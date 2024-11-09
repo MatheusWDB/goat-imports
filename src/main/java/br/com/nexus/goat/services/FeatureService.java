@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nexus.goat.entities.Feature;
+import br.com.nexus.goat.exceptions.IncompleteDataException;
+import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.repositories.FeatureRepository;
 
 @Service
@@ -12,13 +14,24 @@ public class FeatureService {
     @Autowired
     private FeatureRepository repository;
 
+    public Feature findById(Long id) {
+        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Caracaterística"));
+    }
+
     public Feature findByMarkAndModelAndColorAndComposition(String mark, String model, String color,
             String composition) {
-        return this.repository.findByMarkAndModelAndColorAndComposition(mark, model, color, composition);
+        Feature feature = this.repository.findByMarkAndModelAndColorAndComposition(mark, model, color, composition);
+        if (feature == null) {
+            throw new NotFoundException("Característica");
+        }
+        return feature;
     }
 
     public Feature save(Feature feature) {
-        feature = this.repository.save(feature);
-        return feature;
+        try {
+            return this.repository.save(feature);
+        } catch (Exception e) {
+            throw new IncompleteDataException();
+        }
     }
 }

@@ -39,7 +39,7 @@ public class ProductController {
         Product product = this.service.product(obj);
         Set<Category> categories = this.service.categories(obj);
         Feature feature = this.service.feature(obj);
-        
+
         product = this.service.save(product);
 
         Feature verifyFeature = this.featureService.findByMarkAndModelAndColorAndComposition(feature.getMark(),
