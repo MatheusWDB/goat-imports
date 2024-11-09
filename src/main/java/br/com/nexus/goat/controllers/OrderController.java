@@ -37,7 +37,7 @@ public class OrderController {
     @PostMapping("/create/{idAddress}")
     public ResponseEntity<Order> create(@PathVariable Long idAddress, @RequestBody OrderDTO obj) {
         Address address = this.addressService.findById(idAddress);
-        Order order = this.service.order(obj);
+        Order order = new Order();
 
         order.setAddress(address);
         order = this.service.save(order);

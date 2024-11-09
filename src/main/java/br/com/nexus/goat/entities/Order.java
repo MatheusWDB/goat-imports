@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.nexus.goat.enums.OrderStatus;
 import br.com.nexus.goat.enums.PaymentMethod;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,8 +28,12 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Integer status;
+
     private Integer paymentMethod;
+
+    @Column(nullable = false)
     private Long orderNumber;
 
     @CreationTimestamp
@@ -44,13 +49,6 @@ public class Order implements Serializable {
     private Set<OrderProduct> products = new HashSet<>();
 
     public Order() {
-    }
-
-    public Order(Long id, OrderStatus status, PaymentMethod paymentMethod, Long orderNumber) {
-        this.id = id;
-        setStatus(status);
-        setPaymentMethod(paymentMethod);
-        this.orderNumber = orderNumber;
     }
 
     public Long getId() {
@@ -71,8 +69,9 @@ public class Order implements Serializable {
     }
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
-        if (paymentMethod != null)
+        if (paymentMethod != null) {
             this.paymentMethod = paymentMethod.getCode();
+        }
     }
 
     public Long getOrderNumber() {

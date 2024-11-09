@@ -19,11 +19,7 @@ public class CategoryService {
     }
 
     public Category findByName(String name) {
-        Category category = this.repository.findByName(name);
-        if (category == null) {
-            throw new NotFoundException("Categoria");
-        }
-        return category;
+        return this.repository.findByName(name);
     }
 
     public Category save(Category category) {

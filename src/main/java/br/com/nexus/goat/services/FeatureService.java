@@ -20,11 +20,7 @@ public class FeatureService {
 
     public Feature findByMarkAndModelAndColorAndComposition(String mark, String model, String color,
             String composition) {
-        Feature feature = this.repository.findByMarkAndModelAndColorAndComposition(mark, model, color, composition);
-        if (feature == null) {
-            throw new NotFoundException("Característica");
-        }
-        return feature;
+        return this.repository.findByMarkAndModelAndColorAndComposition(mark, model, color, composition);
     }
 
     public Feature save(Feature feature) {

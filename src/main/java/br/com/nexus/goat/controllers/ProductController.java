@@ -35,7 +35,6 @@ public class ProductController {
 
     @PostMapping("/create")
     public ResponseEntity<Product> create(@RequestBody Product obj) {
-        System.out.println("AQUI PELO MENOS PASSOU: " + obj);
         Product product = this.service.product(obj);
         Set<Category> categories = this.service.categories(obj);
         Feature feature = this.service.feature(obj);
