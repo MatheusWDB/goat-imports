@@ -17,6 +17,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.entities.dto.UserDTO;
+import br.com.nexus.goat.exceptions.user.IncorrectPasswordException;
 import br.com.nexus.goat.services.ProductService;
 import br.com.nexus.goat.services.UserService;
 
@@ -45,13 +46,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody User obj) {
+    public ResponseEntity<User> login(@RequestBody User obj) {
         User user = this.service.findByEmail(obj.getEmail());
 
         var passwordVerify = BCrypt.verifyer().verify(obj.getPassword().toCharArray(), user.getPassword());
 
-        if (Boolean.FALSE.equals(passwordVerify.verified))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha incorreta!");
+        if (Boolean.FALSE.equals(passwordVerify.verified)) {
+            throw new IncorrectPasswordException();
+        }
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
     }
@@ -113,11 +115,11 @@ public class UserController {
     }
 
     @PutMapping("/delete/{id}")
-    public ResponseEntity<Object> fakeDelete(@PathVariable Long id) {
+    public ResponseEntity<String> fakeDelete(@PathVariable Long id) {
         User user = this.service.findById(id);
         user.setDeleted(true);
         this.service.save(user);
 
-        return ResponseEntity.ok().body("Usuário deletado, Id: " + id);
+        return ResponseEntity.ok().body("Usuário deletado");
     }
 }

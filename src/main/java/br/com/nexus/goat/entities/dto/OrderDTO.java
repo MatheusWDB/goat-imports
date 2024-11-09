@@ -2,10 +2,7 @@ package br.com.nexus.goat.entities.dto;
 
 import java.util.Set;
 
-import br.com.nexus.goat.entities.Order;
-
-public class OrderDTO extends Order {
-    private static final long serialVersionUID = 1L;
+public class OrderDTO {
 
     private Set<Items> items;
 

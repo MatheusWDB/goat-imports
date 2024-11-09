@@ -1,10 +1,10 @@
 package br.com.nexus.goat.enums;
 
-public enum OrderStatus {
-    WAITING_PAYMENT(1),
-    PAID(2),
-    SHIPPED(3),
-    DELIVERED(4);
+public enum OrderStatus {    
+    PAID(1),
+    SHIPPED(2),
+    DELIVERED(3),
+    WAITING_PAYMENT(4);
 
     private int code;
 
