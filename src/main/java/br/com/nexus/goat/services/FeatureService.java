@@ -20,7 +20,7 @@ public class FeatureService {
 
     public Feature findByMarkAndModelAndColorAndComposition(String mark, String model, String color,
             String composition) {
-        return this.repository.findByMarkAndModelAndColorAndComposition(mark, model, color, composition);
+        return this.repository.findByMarkAndModelAndColorAndComposition(mark, model, color, composition).orElse(null);
     }
 
     public Feature save(Feature feature) {

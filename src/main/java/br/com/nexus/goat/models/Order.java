@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.nexus.goat.enums.OrderStatus;
@@ -37,6 +38,7 @@ public class Order implements Serializable {
     private Long orderNumber;
 
     @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss", timezone = "GMT-03:00")
     private Instant orderDate;
 
     @JsonIgnore

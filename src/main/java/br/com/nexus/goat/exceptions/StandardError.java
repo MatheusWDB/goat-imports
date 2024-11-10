@@ -1,4 +1,4 @@
-package br.com.nexus.goat.infra;
+package br.com.nexus.goat.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;

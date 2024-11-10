@@ -21,11 +21,7 @@ public class AddressService {
     }
 
     public List<Address> findAllByUserId(Long idUser) {
-        List<Address> addresses = this.repository.findAllByUserId(idUser);
-        if (addresses.isEmpty()) {
-            throw new NotFoundException("Endereço");
-        }
-        return addresses;
+        return this.repository.findAllByUserId(idUser).orElseThrow(() -> new NotFoundException("Endereço"));
     }
 
     public Address save(Address address) {

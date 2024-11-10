@@ -37,11 +37,7 @@ public class UserService {
     }
 
     public User findByEmail(String email) {
-        User user = this.repository.findByEmail(email);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user;
+        return this.repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
     }
 
     public void verifyPassword(String newPassword, String currentPassword) {
@@ -52,17 +48,13 @@ public class UserService {
     }
 
     public void verifyEmail(String email) {
-        User user = this.repository.findByEmail(email);
-        if (user != null) {
-            throw new UserAlreadyExistsException("Já existe um usuário com esse e-mail!");
-        }
+        this.repository.findByEmail(email)
+                .orElseThrow(() -> new UserAlreadyExistsException("Já existe um usuário com esse e-mail!"));
     }
 
     public void verifyPhone(String phone) {
-        User user = this.repository.findByPhone(phone);
-        if (user != null) {
-            throw new UserAlreadyExistsException("Já existe um usuário com esse telefone!");
-        }
+        this.repository.findByPhone(phone)
+                .orElseThrow(() -> new UserAlreadyExistsException("Já existe um usuário com esse telefone!"));
     }
 
     public void verifyNewAndCurrentPassword(String newPassword, String currentPassword) {

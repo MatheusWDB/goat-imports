@@ -33,11 +33,7 @@ public class OrderService {
     }
 
     public List<Order> findAllByAddressId(Long idAddress) {
-        List<Order> orders = this.repository.findAllByAddressId(idAddress);
-        if (orders == null) {
-            throw new NotFoundException("Pedido");
-        }
-        return orders;
+        return this.repository.findAllByAddressId(idAddress).orElseThrow(() -> new NotFoundException("Pedido"));
     }
 
     public Order save(Order order) {
@@ -50,10 +46,9 @@ public class OrderService {
             order.setStatus(status[r.nextInt(status.length)]);
             if (order.getStatus() == OrderStatus.WAITING_PAYMENT) {
                 order.setPaymentMethod(PaymentMethod.NULL);
-            } else{
+            } else {
                 order.setPaymentMethod(payment[r.nextInt(payment.length - 1)]);
             }
-            
 
             return this.repository.save(order);
         } catch (Exception e) {

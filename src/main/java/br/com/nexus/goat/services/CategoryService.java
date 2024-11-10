@@ -19,7 +19,7 @@ public class CategoryService {
     }
 
     public Category findByName(String name) {
-        return this.repository.findByName(name);
+        return this.repository.findByName(name).orElse(null);
     }
 
     public Category save(Category category) {

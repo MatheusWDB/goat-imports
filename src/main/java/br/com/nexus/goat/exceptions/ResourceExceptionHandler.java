@@ -1,4 +1,4 @@
-package br.com.nexus.goat.infra;
+package br.com.nexus.goat.exceptions;
 
 import java.time.Instant;
 
@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.nexus.goat.exceptions.IncompleteDataException;
-import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.exceptions.user.IncorrectPasswordException;
 import br.com.nexus.goat.exceptions.user.SamePasswordException;
 import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;

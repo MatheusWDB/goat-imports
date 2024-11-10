@@ -1,9 +1,13 @@
 package br.com.nexus.goat.models;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -23,6 +27,10 @@ public class Category implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss", timezone = "GMT-03:00")
+    private Instant createdAt;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "categories")
@@ -49,6 +57,10 @@ public class Category implements Serializable {
 
     public Set<Product> getProducts() {
         return products;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
     @Override
