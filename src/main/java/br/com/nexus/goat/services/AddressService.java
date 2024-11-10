@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nexus.goat.entities.Address;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
+import br.com.nexus.goat.models.Address;
 import br.com.nexus.goat.repositories.AddressRepository;
 
 @Service

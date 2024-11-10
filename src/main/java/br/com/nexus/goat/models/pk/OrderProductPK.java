@@ -1,9 +1,9 @@
-package br.com.nexus.goat.entities.pk;
+package br.com.nexus.goat.models.pk;
 
 import java.io.Serializable;
 
-import br.com.nexus.goat.entities.Order;
-import br.com.nexus.goat.entities.Product;
+import br.com.nexus.goat.models.Order;
+import br.com.nexus.goat.models.Product;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

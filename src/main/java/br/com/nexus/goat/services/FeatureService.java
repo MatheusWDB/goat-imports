@@ -3,9 +3,9 @@ package br.com.nexus.goat.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
+import br.com.nexus.goat.models.Feature;
 import br.com.nexus.goat.repositories.FeatureRepository;
 
 @Service

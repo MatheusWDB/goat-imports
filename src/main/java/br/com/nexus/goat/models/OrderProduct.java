@@ -1,10 +1,10 @@
-package br.com.nexus.goat.entities;
+package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.nexus.goat.entities.pk.OrderProductPK;
+import br.com.nexus.goat.models.pk.OrderProductPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

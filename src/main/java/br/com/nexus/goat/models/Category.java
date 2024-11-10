@@ -1,4 +1,4 @@
-package br.com.nexus.goat.entities;
+package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -31,17 +31,12 @@ public class Category implements Serializable {
     public Category() {
     }
 
-    public Category(Long id, String name) {
-        this.id = id;
+    public Category(String name) {
         this.name = name;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package br.com.nexus.goat.entities;
+package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -67,8 +67,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(Long id, String name, String description, Double price, String size, Integer stock, String imgUrl) {
-        this.id = id;
+    public Product(String name, String description, Double price, String size, Integer stock, String imgUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -79,10 +78,6 @@ public class Product implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

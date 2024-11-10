@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nexus.goat.entities.Feature;
+import br.com.nexus.goat.models.Feature;
 import br.com.nexus.goat.services.FeatureService;
 
 @RestController

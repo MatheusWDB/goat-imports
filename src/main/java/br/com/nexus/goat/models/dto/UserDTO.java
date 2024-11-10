@@ -1,6 +1,6 @@
-package br.com.nexus.goat.entities.dto;
+package br.com.nexus.goat.models.dto;
 
-import br.com.nexus.goat.entities.User;
+import br.com.nexus.goat.models.User;
 
 public class UserDTO extends User {
     private static final long serialVersionUID = 1L;

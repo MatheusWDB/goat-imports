@@ -8,15 +8,15 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nexus.goat.entities.Order;
-import br.com.nexus.goat.entities.OrderProduct;
-import br.com.nexus.goat.entities.Product;
-import br.com.nexus.goat.entities.dto.OrderDTO;
-import br.com.nexus.goat.entities.dto.OrderDTO.Items;
 import br.com.nexus.goat.enums.OrderStatus;
 import br.com.nexus.goat.enums.PaymentMethod;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
+import br.com.nexus.goat.models.Order;
+import br.com.nexus.goat.models.OrderProduct;
+import br.com.nexus.goat.models.Product;
+import br.com.nexus.goat.models.dto.OrderDTO;
+import br.com.nexus.goat.models.dto.OrderDTO.Items;
 import br.com.nexus.goat.repositories.OrderRepository;
 
 @Service

@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import br.com.nexus.goat.entities.User;
-import br.com.nexus.goat.entities.dto.UserDTO;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.user.IncorrectPasswordException;
 import br.com.nexus.goat.exceptions.user.SamePasswordException;
 import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;
 import br.com.nexus.goat.exceptions.user.UserDeletedException;
 import br.com.nexus.goat.exceptions.user.UserNotFoundException;
+import br.com.nexus.goat.models.User;
+import br.com.nexus.goat.models.dto.UserDTO;
 import br.com.nexus.goat.repositories.UserRepository;
 
 @Service

@@ -1,4 +1,4 @@
-package br.com.nexus.goat.entities;
+package br.com.nexus.goat.models;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -39,8 +39,7 @@ public class Feature implements Serializable {
     public Feature() {
     }
 
-    public Feature(Long id, String mark, String model, String composition, String color) {
-        this.id = id;
+    public Feature(String mark, String model, String composition, String color) {
         this.mark = mark;
         this.model = model;
         this.composition = composition;
