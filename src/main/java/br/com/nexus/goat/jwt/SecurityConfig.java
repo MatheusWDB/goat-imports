@@ -17,8 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -31,7 +29,8 @@ public class SecurityConfig {
         private static final String[] PUBLIC_MATCHERS = {
                         "/",
                         "/swagger/**",
-                        "h2-console/**"
+                        "/h2-console/**",
+                        "/products/get-all"
         };
 
         private static final String[] PUBLIC_MATCHERS_POST = {
@@ -48,7 +47,14 @@ public class SecurityConfig {
         @Bean
         SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
                 return httpSecurity
-                                .cors(cors -> cors.disable())
+                                .cors(cors -> cors.configurationSource(request -> {
+                                        CorsConfiguration configuration = new CorsConfiguration();
+                                        configuration.setAllowedOrigins(Arrays.asList("*"));
+                                        configuration.setAllowedMethods(
+                                                        Arrays.asList("*"));
+                                        configuration.setAllowedHeaders(Arrays.asList("*"));
+                                        return configuration;
+                                }))
                                 .csrf(csrf -> csrf.disable())
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -73,15 +79,4 @@ public class SecurityConfig {
         PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
         }
-
-        @Bean
-        CorsConfigurationSource corsConfigurationSource() {
-                CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-                configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE",
-                                "OPTIONS", "PATH"));
-                final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/", configuration);
-                return source;
-        }
-
 }

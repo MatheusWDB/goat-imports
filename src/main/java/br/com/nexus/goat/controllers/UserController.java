@@ -47,7 +47,7 @@ public class UserController {
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(newUser.getPassword());
         newUser.setPassword(encryptedPassword);
-        
+
         this.service.save(newUser);
 
         return ResponseEntity.ok().build();
