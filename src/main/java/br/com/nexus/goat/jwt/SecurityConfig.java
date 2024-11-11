@@ -29,7 +29,9 @@ public class SecurityConfig {
         private SecurityFilter securityFilter;
 
         private static final String[] PUBLIC_MATCHERS = {
-                        "/**"
+                        "/",
+                        "/swagger/**",
+                        "h2-console/**"
         };
 
         private static final String[] PUBLIC_MATCHERS_POST = {
