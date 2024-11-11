@@ -1,12 +1,13 @@
 package br.com.nexus.goat.repositories;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.nexus.goat.models.User;
 
+
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
-    Optional<User> findByPhone(String phone);
+    UserDetails findByEmail(String email);
+
+    User findByPhone(String phone);
 }

@@ -3,9 +3,7 @@ package br.com.nexus.goat.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
-import br.com.nexus.goat.exceptions.user.IncorrectPasswordException;
 import br.com.nexus.goat.exceptions.user.SamePasswordException;
 import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;
 import br.com.nexus.goat.exceptions.user.UserDeletedException;
@@ -37,24 +35,25 @@ public class UserService {
     }
 
     public User findByEmail(String email) {
-        return this.repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
-    }
-
-    public void verifyPassword(String newPassword, String currentPassword) {
-        var passwordVerify = BCrypt.verifyer().verify(newPassword.toCharArray(), currentPassword);
-        if (Boolean.FALSE.equals(passwordVerify.verified)) {
-            throw new IncorrectPasswordException();
+        User user = (User) this.repository.findByEmail(email);
+        if(user == null){
+            throw new UserNotFoundException();
         }
+        return user;
     }
 
     public void verifyEmail(String email) {
-        this.repository.findByEmail(email)
-                .orElseThrow(() -> new UserAlreadyExistsException("Já existe um usuário com esse e-mail!"));
+        User user = (User) this.repository.findByEmail(email);
+        if (user != null) {
+            throw new UserAlreadyExistsException("O email: " + email);
+        }
     }
 
     public void verifyPhone(String phone) {
-        this.repository.findByPhone(phone)
-                .orElseThrow(() -> new UserAlreadyExistsException("Já existe um usuário com esse telefone!"));
+        User user = this.repository.findByPhone(phone);
+        if (user != null) {
+            throw new UserAlreadyExistsException("O telefone: " + phone);
+        }
     }
 
     public void verifyNewAndCurrentPassword(String newPassword, String currentPassword) {

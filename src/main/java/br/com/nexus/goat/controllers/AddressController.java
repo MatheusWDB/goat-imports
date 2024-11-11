@@ -28,7 +28,7 @@ public class AddressController {
     private UserService userService;
 
     @PostMapping("/create/{idUser}")
-    public ResponseEntity<Address> create(@PathVariable Long idUser, @RequestBody Address obj) {
+    public ResponseEntity<Void> create(@PathVariable Long idUser, @RequestBody Address obj) {
         User user = this.userService.findById(idUser);
 
         obj.setUser(user);
@@ -37,13 +37,13 @@ public class AddressController {
         user.getAddresses().add(obj);
 
         this.userService.save(user);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.service.deleteById(id);
-        return ResponseEntity.ok().body("O endereço foi deletado");
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get/{id}")

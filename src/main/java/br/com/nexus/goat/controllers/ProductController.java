@@ -34,7 +34,7 @@ public class ProductController {
     private FeatureService featureService;
 
     @PostMapping("/create")
-    public ResponseEntity<Product> create(@RequestBody Product obj) {
+    public ResponseEntity<Void> create(@RequestBody Product obj) {
         Product product = this.service.product(obj);
         Set<Category> categories = this.service.categories(obj);
         Feature feature = this.service.feature(obj);
@@ -63,7 +63,7 @@ public class ProductController {
 
         product = this.service.save(product);
 
-        return ResponseEntity.ok().body(product);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get-all")
@@ -79,8 +79,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.service.deleteById(id);
-        return ResponseEntity.ok().body("Produto deletado!");
+        return ResponseEntity.ok().build();
     }
 }

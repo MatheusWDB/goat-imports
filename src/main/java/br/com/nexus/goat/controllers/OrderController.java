@@ -35,7 +35,7 @@ public class OrderController {
     private OrderProductService orderProductService;
 
     @PostMapping("/create/{idAddress}")
-    public ResponseEntity<Order> create(@PathVariable Long idAddress, @RequestBody OrderDTO obj) {
+    public ResponseEntity<Void> create(@PathVariable Long idAddress, @RequestBody OrderDTO obj) {
         Address address = this.addressService.findById(idAddress);
         Order order = new Order();
 
@@ -53,7 +53,7 @@ public class OrderController {
 
         order = this.service.save(order);
 
-        return ResponseEntity.ok().body(order);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/list/{idAddress}")
@@ -64,9 +64,9 @@ public class OrderController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.service.deleteById(id);
-        return ResponseEntity.ok().body("O pedido foi deletado");
+        return ResponseEntity.ok().build();
     }
 
 }
