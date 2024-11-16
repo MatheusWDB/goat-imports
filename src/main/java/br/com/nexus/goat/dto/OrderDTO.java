@@ -1,4 +1,4 @@
-package br.com.nexus.goat.models.dto;
+package br.com.nexus.goat.dto;
 
 import java.util.Set;
 

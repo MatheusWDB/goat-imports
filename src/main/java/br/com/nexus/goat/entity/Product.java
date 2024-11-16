@@ -1,4 +1,4 @@
-package br.com.nexus.goat.models;
+package br.com.nexus.goat.entity;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -8,12 +8,11 @@ import java.util.Set;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,14 +33,11 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String description;
 
     @Column(nullable = false)
     private Double price;
-
-    @Column(nullable = false)
-    private String size;
 
     @Column(nullable = false)
     private Integer stock;
@@ -60,7 +56,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "id_features", referencedColumnName = "id")
     private Feature features;
 
-    @OneToMany(mappedBy = "id.product")
+    @OneToMany(mappedBy = "id.product", fetch = FetchType.EAGER)
     private Set<OrderProduct> products = new HashSet<>();
 
     @ManyToMany(mappedBy = "wishes", cascade = CascadeType.REMOVE)
@@ -69,11 +65,10 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String name, String description, Double price, String size, Integer stock, String imgUrl) {
+    public Product(String name, String description, Double price, Integer stock, String imgUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.size = size;
         this.stock = stock;
         this.imgUrl = imgUrl;
     }
@@ -106,14 +101,6 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     public Integer getStock() {
         return stock;
     }
@@ -134,14 +121,8 @@ public class Product implements Serializable {
         return createdAt;
     }
 
-    @JsonIgnore
     public Set<Category> getCategories() {
         return categories;
-    }
-
-    @JsonProperty("categories")
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
     }
 
     public Set<Long> getIdCategories() {
@@ -152,12 +133,14 @@ public class Product implements Serializable {
         return idCategories;
     }
 
-    @JsonIgnore
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
     public Feature getFeatures() {
         return features;
     }
 
-    @JsonProperty("features")
     public void setFeatures(Feature features) {
         this.features = features;
     }
@@ -166,12 +149,10 @@ public class Product implements Serializable {
         return features.getId();
     }
 
-    @JsonIgnore
     public Set<User> getWishes() {
         return wishes;
     }
 
-    @JsonIgnore
     public Set<Order> getProducts() {
         Set<Order> set = new HashSet<>();
         for (OrderProduct x : products) {
@@ -203,12 +184,5 @@ public class Product implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", size="
-                + size + ", stock=" + stock + ", imgUrl=" + imgUrl + ", createdAt=" + createdAt + ", categories="
-                + categories + ", features=" + features + "]";
     }
 }

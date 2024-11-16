@@ -13,7 +13,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
-import br.com.nexus.goat.models.User;
+import br.com.nexus.goat.entity.User;
 
 @Service
 public class TokenService {

@@ -1,4 +1,4 @@
-package br.com.nexus.goat.models;
+package br.com.nexus.goat.entity;
 
 import java.io.Serializable;
 import java.time.Instant;

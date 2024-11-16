@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.nexus.goat.models.Address;
+import br.com.nexus.goat.entity.Address;
 
 public interface AddressRepository extends JpaRepository<Address, Long> {
     Optional<List<Address>> findAllByUserId(Long idUser);

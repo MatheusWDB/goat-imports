@@ -6,12 +6,14 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.nexus.goat.dto.ProductDTO;
+import br.com.nexus.goat.entity.Category;
+import br.com.nexus.goat.entity.Feature;
+import br.com.nexus.goat.entity.Product;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
-import br.com.nexus.goat.models.Category;
-import br.com.nexus.goat.models.Feature;
-import br.com.nexus.goat.models.Product;
 import br.com.nexus.goat.repositories.ProductRepository;
 
 @Service
@@ -20,18 +22,22 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Transactional
     public Product findById(Long id) {
         return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
     }
 
-    public List<Product> findAll() {
-        List<Product> products = this.repository.findAll();
-        if (products.isEmpty()) {
+    @Transactional
+    public List<ProductDTO> findAll() {
+        List<Product> results = this.repository.findAll();
+        if (results.isEmpty()) {
             throw new NotFoundException("Produto");
         }
+        List<ProductDTO> products = results.stream().map(x -> new ProductDTO(x)).toList();
         return products;
     }
 
+    @Transactional
     public Product save(Product product) {
         try {
             return this.repository.save(product);
@@ -40,13 +46,14 @@ public class ProductService {
         }
     }
 
+    @Transactional
     public void deleteById(Long id) {
         this.repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
         this.repository.deleteById(id);
     }
 
     public Product product(Product obj) {
-        return new Product(obj.getName(), obj.getDescription(), obj.getPrice(), obj.getSize(),
+        return new Product(obj.getName(), obj.getDescription(), obj.getPrice(),
                 obj.getStock(), obj.getImgUrl());
     }
 

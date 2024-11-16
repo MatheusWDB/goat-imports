@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nexus.goat.models.Address;
-import br.com.nexus.goat.models.User;
+import br.com.nexus.goat.entity.Address;
+import br.com.nexus.goat.entity.User;
 import br.com.nexus.goat.services.AddressService;
 import br.com.nexus.goat.services.UserService;
 

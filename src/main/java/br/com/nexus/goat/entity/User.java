@@ -1,4 +1,4 @@
-package br.com.nexus.goat.models;
+package br.com.nexus.goat.entity;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.nexus.goat.enums.UserRole;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,8 +49,6 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
-
-    private UserRole role = UserRole.USER;
 
     private Boolean deleted = false;
 
@@ -213,41 +210,31 @@ public class User implements UserDetails {
                 + createdAt + "]";
     }
 
-    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UserRole.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        } else {
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        }
     }
 
-    @JsonIgnore
     @Override
     public String getUsername() {
         return this.email;
     }
 
-    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

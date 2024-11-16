@@ -7,16 +7,17 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.nexus.goat.dto.OrderDTO;
+import br.com.nexus.goat.dto.OrderDTO.Items;
+import br.com.nexus.goat.entity.Order;
+import br.com.nexus.goat.entity.OrderProduct;
+import br.com.nexus.goat.entity.Product;
 import br.com.nexus.goat.enums.OrderStatus;
 import br.com.nexus.goat.enums.PaymentMethod;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
-import br.com.nexus.goat.models.Order;
-import br.com.nexus.goat.models.OrderProduct;
-import br.com.nexus.goat.models.Product;
-import br.com.nexus.goat.models.dto.OrderDTO;
-import br.com.nexus.goat.models.dto.OrderDTO.Items;
 import br.com.nexus.goat.repositories.OrderRepository;
 
 @Service
@@ -28,14 +29,17 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
+    @Transactional
     public Order findById(Long id) {
         return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
     }
 
+    @Transactional
     public List<Order> findAllByAddressId(Long idAddress) {
         return this.repository.findAllByAddressId(idAddress).orElseThrow(() -> new NotFoundException("Pedido"));
     }
 
+    @Transactional
     public Order save(Order order) {
         try {
             Random r = new Random();
@@ -56,6 +60,7 @@ public class OrderService {
         }
     }
 
+    @Transactional
     public void deleteById(Long id) {
         this.repository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
         this.repository.deleteById(id);

@@ -28,7 +28,7 @@ public class SecurityConfig {
 
         private static final String[] PUBLIC_MATCHERS = {
                         "/",
-                        "/swagger/**",
+                        "/swagger-ui/**",
                         "/h2-console/**",
                         "/products/get-all"
         };
@@ -38,20 +38,13 @@ public class SecurityConfig {
                         "/users/login"
         };
 
-        private static final String[] PRIVATE_MATCHERS_DELETE = {
-                        "/features/delete/**",
-                        "/categories/delete/**",
-                        "/products/delete/**"
-        };
-
         @Bean
         SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
                 return httpSecurity
                                 .cors(cors -> cors.configurationSource(request -> {
                                         CorsConfiguration configuration = new CorsConfiguration();
                                         configuration.setAllowedOrigins(Arrays.asList("*"));
-                                        configuration.setAllowedMethods(
-                                                        Arrays.asList("*"));
+                                        configuration.setAllowedMethods(Arrays.asList("*"));
                                         configuration.setAllowedHeaders(Arrays.asList("*"));
                                         return configuration;
                                 }))
@@ -61,10 +54,8 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
                                                 .requestMatchers(PUBLIC_MATCHERS).permitAll()
-                                                .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
-                                                .requestMatchers(HttpMethod.DELETE, PRIVATE_MATCHERS_DELETE)
-                                                .hasRole("ADMIN")
                                                 .anyRequest().authenticated())
+                                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                                 .build();
         }

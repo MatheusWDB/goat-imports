@@ -3,9 +3,11 @@ package br.com.nexus.goat.controllers;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.nexus.goat.dto.TokenDTO;
+import br.com.nexus.goat.dto.UserDTO;
+import br.com.nexus.goat.dto.UserPutDTO;
+import br.com.nexus.goat.entity.Product;
+import br.com.nexus.goat.entity.User;
 import br.com.nexus.goat.jwt.TokenService;
-import br.com.nexus.goat.models.Product;
-import br.com.nexus.goat.models.User;
-import br.com.nexus.goat.models.dto.LoginResponseDTO;
-import br.com.nexus.goat.models.dto.UserDTO;
 import br.com.nexus.goat.services.ProductService;
 import br.com.nexus.goat.services.UserService;
 import jakarta.validation.Valid;
@@ -41,53 +44,53 @@ public class UserController {
     private ProductService productService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> create(@RequestBody @Valid User newUser) {
-        this.service.verifyEmail(newUser.getEmail());
-        this.service.verifyPhone(newUser.getPhone());
+    public ResponseEntity<Void> register(@RequestBody @Valid User body) {
+        this.service.verifyEmail(body.getEmail());
+        this.service.verifyPhone(body.getPhone());
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(newUser.getPassword());
-        newUser.setPassword(encryptedPassword);
+        String encryptedPassword = new BCryptPasswordEncoder().encode(body.getPassword());
+        body.setPassword(encryptedPassword);
 
-        this.service.save(newUser);
+        this.service.save(body);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid User obj) {
-        var emailPassword = new UsernamePasswordAuthenticationToken(obj.getEmail(), obj.getPassword());
-        var auth = authenticationManager.authenticate(emailPassword);
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid User body) {
+        UsernamePasswordAuthenticationToken emailPassword = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
+        Authentication auth = authenticationManager.authenticate(emailPassword);
+        TokenDTO token = new TokenDTO(jwtUtil.generateToken((User) auth.getPrincipal()));
 
-        var token = jwtUtil.generateToken((User) auth.getPrincipal());
-
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<User> get(@PathVariable Long id) {
-        User user = this.service.findById(id);
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
+        User result = this.service.findById(id);
+        UserDTO user = new UserDTO(result);
         return ResponseEntity.ok().body(user);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserDTO obj) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserPutDTO body) {
         User currentUser = this.service.findById(id);
 
-        var emailPassword = new UsernamePasswordAuthenticationToken(obj.getEmail(), obj.getPassword());
+        var emailPassword = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
         authenticationManager.authenticate(emailPassword);
 
-        if (obj.getNewPassword() != null) {
-            String newPassword = obj.getNewPassword();
+        if (body.getNewPassword() != null) {
+            String newPassword = body.getNewPassword();
 
-            this.service.verifyNewAndCurrentPassword(newPassword, obj.getPassword());
+            this.service.verifyNewAndCurrentPassword(newPassword, body.getPassword());
 
             currentUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         } else {
-            this.service.verifyEmail(obj.getEmail());
-            this.service.verifyPhone(obj.getPhone());
+            this.service.verifyEmail(body.getEmail());
+            this.service.verifyPhone(body.getPhone());
         }
 
-        User nonNullUser = this.service.notNull(currentUser, obj);
+        User nonNullUser = this.service.notNull(currentUser, body);
 
         this.service.save(nonNullUser);
 

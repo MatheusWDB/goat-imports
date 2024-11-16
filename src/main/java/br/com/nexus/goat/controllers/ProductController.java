@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nexus.goat.models.Category;
-import br.com.nexus.goat.models.Feature;
-import br.com.nexus.goat.models.Product;
+import br.com.nexus.goat.dto.ProductDTO;
+import br.com.nexus.goat.entity.Category;
+import br.com.nexus.goat.entity.Feature;
+import br.com.nexus.goat.entity.Product;
 import br.com.nexus.goat.services.CategoryService;
 import br.com.nexus.goat.services.FeatureService;
 import br.com.nexus.goat.services.ProductService;
@@ -66,15 +67,16 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-all")
-    public ResponseEntity<List<Product>> getAll() {
-        List<Product> products = this.service.findAll();
+    @GetMapping("/findAll")
+    public ResponseEntity<List<ProductDTO>> findAll() {
+        List<ProductDTO> products = this.service.findAll();
         return ResponseEntity.ok().body(products);
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Product> get(@PathVariable Long id) {
-        Product product = this.service.findById(id);
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        Product result = this.service.findById(id);
+        ProductDTO product = new ProductDTO(result);
         return ResponseEntity.ok().body(product);
     }
 
