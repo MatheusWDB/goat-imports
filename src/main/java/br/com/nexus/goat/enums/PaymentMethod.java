@@ -7,7 +7,7 @@ public enum PaymentMethod {
     CASH(4),
     BANK_TRANSFER(5),
     PAYPAL(6),
-    NULL(7);
+    NULL(7); 
 
     private int code;
 

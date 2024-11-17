@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.nexus.goat.dto.TokenDTO;
 import br.com.nexus.goat.dto.UserDTO;
-import br.com.nexus.goat.dto.UserPutDTO;
-import br.com.nexus.goat.entity.Product;
-import br.com.nexus.goat.entity.User;
+import br.com.nexus.goat.dto.PutUserDTO;
+import br.com.nexus.goat.entities.Product;
+import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.jwt.TokenService;
 import br.com.nexus.goat.services.ProductService;
 import br.com.nexus.goat.services.UserService;
@@ -58,7 +58,8 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDTO> login(@RequestBody @Valid User body) {
-        UsernamePasswordAuthenticationToken emailPassword = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
+        UsernamePasswordAuthenticationToken emailPassword = new UsernamePasswordAuthenticationToken(body.getEmail(),
+                body.getPassword());
         Authentication auth = authenticationManager.authenticate(emailPassword);
         TokenDTO token = new TokenDTO(jwtUtil.generateToken((User) auth.getPrincipal()));
 
@@ -73,7 +74,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserPutDTO body) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody PutUserDTO body) {
         User currentUser = this.service.findById(id);
 
         var emailPassword = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
@@ -106,7 +107,7 @@ public class UserController {
             user.getWishes().add(product);
             this.productService.save(product);
         }
-        user = this.service.save(user);
+        this.service.save(user);
 
         return ResponseEntity.ok().build();
     }
@@ -119,12 +120,12 @@ public class UserController {
             user.getWishes().remove(product);
             this.productService.save(product);
         }
-        user = this.service.save(user);
+        this.service.save(user);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/delete/{id}")
-    public ResponseEntity<Void> fakeDelete(@PathVariable Long id) {
+    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
         User user = this.service.findById(id);
         user.setDeleted(true);
         this.service.save(user);

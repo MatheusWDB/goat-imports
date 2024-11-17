@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.nexus.goat.dto.OrderDTO;
-import br.com.nexus.goat.entity.Address;
-import br.com.nexus.goat.entity.Order;
-import br.com.nexus.goat.entity.OrderProduct;
+import br.com.nexus.goat.entities.Address;
+import br.com.nexus.goat.entities.Order;
+import br.com.nexus.goat.entities.OrderProduct;
 import br.com.nexus.goat.services.AddressService;
 import br.com.nexus.goat.services.OrderProductService;
 import br.com.nexus.goat.services.OrderService;
@@ -56,8 +56,8 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/list/{idAddress}")
-    public ResponseEntity<List<Order>> list(@PathVariable Long idAddress) {
+    @GetMapping("/findAll/{idAddress}")
+    public ResponseEntity<List<Order>> findAll(@PathVariable Long idAddress) {
         List<Order> orders = this.service.findAllByAddressId(idAddress);
 
         return ResponseEntity.ok().body(orders);

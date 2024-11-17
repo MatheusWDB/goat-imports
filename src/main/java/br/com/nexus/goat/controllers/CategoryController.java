@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.nexus.goat.dto.CategoryDTO;
-import br.com.nexus.goat.entity.Category;
+import br.com.nexus.goat.entities.Category;
 import br.com.nexus.goat.services.CategoryService;
 
 @RestController

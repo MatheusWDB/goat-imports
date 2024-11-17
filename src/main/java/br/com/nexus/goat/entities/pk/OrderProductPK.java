@@ -1,35 +1,31 @@
-package br.com.nexus.goat.entity.pk;
+package br.com.nexus.goat.entities.pk;
 
 import java.io.Serializable;
 
-import br.com.nexus.goat.entity.Product;
-import br.com.nexus.goat.entity.User;
+import br.com.nexus.goat.entities.Order;
+import br.com.nexus.goat.entities.Product;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Embeddable
-public class WishListPK implements Serializable {
+public class OrderProductPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
-    private User user;
+    @JoinColumn(name = "id_order")
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "id_product")
     private Product product;
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    public Order getOrder() {
+        return order;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {
@@ -44,7 +40,7 @@ public class WishListPK implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        result = prime * result + ((order == null) ? 0 : order.hashCode());
         result = prime * result + ((product == null) ? 0 : product.hashCode());
         return result;
     }
@@ -57,11 +53,11 @@ public class WishListPK implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        WishListPK other = (WishListPK) obj;
-        if (user == null) {
-            if (other.user != null)
+        OrderProductPK other = (OrderProductPK) obj;
+        if (order == null) {
+            if (other.order != null)
                 return false;
-        } else if (!user.equals(other.user))
+        } else if (!order.equals(other.order))
             return false;
         if (product == null) {
             if (other.product != null)

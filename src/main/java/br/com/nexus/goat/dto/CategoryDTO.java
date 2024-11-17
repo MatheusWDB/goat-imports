@@ -2,7 +2,7 @@ package br.com.nexus.goat.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import br.com.nexus.goat.entity.Category;
+import br.com.nexus.goat.entities.Category;
 
 public class CategoryDTO {
 

@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
-import br.com.nexus.goat.entity.Product;
+import br.com.nexus.goat.entities.Product;
 
 public class ProductDTO {
 
@@ -13,7 +13,6 @@ public class ProductDTO {
     private String name;
     private String description;
     private Double price;
-    private String size;
     private Integer stock;
     private String imgUrl;
     private Set<Long> categories = new HashSet<>();
@@ -55,14 +54,6 @@ public class ProductDTO {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public Integer getStock() {

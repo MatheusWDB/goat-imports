@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nexus.goat.entity.Feature;
+import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.services.FeatureService;
 
 @RestController
@@ -17,8 +17,8 @@ public class FeatureController {
     @Autowired
     private FeatureService service;
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Feature> get(@PathVariable Long id) {
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Feature> findById(@PathVariable Long id) {
         Feature feature = this.service.findById(id);
         return ResponseEntity.ok().body(feature);
     }

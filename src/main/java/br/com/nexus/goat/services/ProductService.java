@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.nexus.goat.dto.ProductDTO;
-import br.com.nexus.goat.entity.Category;
-import br.com.nexus.goat.entity.Feature;
-import br.com.nexus.goat.entity.Product;
+import br.com.nexus.goat.entities.Category;
+import br.com.nexus.goat.entities.Feature;
+import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.repositories.ProductRepository;

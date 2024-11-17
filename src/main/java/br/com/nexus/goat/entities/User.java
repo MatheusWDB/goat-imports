@@ -1,4 +1,4 @@
-package br.com.nexus.goat.entity;
+package br.com.nexus.goat.entities;
 
 import java.time.Instant;
 import java.util.Collection;

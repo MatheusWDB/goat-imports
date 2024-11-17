@@ -2,7 +2,7 @@ package br.com.nexus.goat.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import br.com.nexus.goat.entity.User;
+import br.com.nexus.goat.entities.User;
 
 public class UserDTO {
     

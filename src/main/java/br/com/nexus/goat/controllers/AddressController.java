@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nexus.goat.entity.Address;
-import br.com.nexus.goat.entity.User;
+import br.com.nexus.goat.entities.Address;
+import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.services.AddressService;
 import br.com.nexus.goat.services.UserService;
 
@@ -46,15 +46,15 @@ public class AddressController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Address> get(@PathVariable Long id) {
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Address> findById(@PathVariable Long id) {
         Address address = this.service.findById(id);
 
         return ResponseEntity.ok().body(address);
     }
 
-    @GetMapping("/list/{idUser}")
-    public ResponseEntity<List<Address>> list(@PathVariable Long idUser) {
+    @GetMapping("/findAll/{idUser}")
+    public ResponseEntity<List<Address>> findAll(@PathVariable Long idUser) {
         List<Address> addresses = this.service.findAllByUserId(idUser);
 
         return ResponseEntity.ok().body(addresses);

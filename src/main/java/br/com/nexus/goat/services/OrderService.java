@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.nexus.goat.dto.OrderDTO;
 import br.com.nexus.goat.dto.OrderDTO.Items;
-import br.com.nexus.goat.entity.Order;
-import br.com.nexus.goat.entity.OrderProduct;
-import br.com.nexus.goat.entity.Product;
+import br.com.nexus.goat.entities.Order;
+import br.com.nexus.goat.entities.OrderProduct;
+import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.enums.OrderStatus;
 import br.com.nexus.goat.enums.PaymentMethod;
 import br.com.nexus.goat.exceptions.IncompleteDataException;

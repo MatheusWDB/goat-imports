@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.nexus.goat.dto.UserPutDTO;
-import br.com.nexus.goat.entity.User;
+import br.com.nexus.goat.dto.PutUserDTO;
+import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.user.SamePasswordException;
 import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;
@@ -29,21 +29,12 @@ public class UserService {
     }
 
     @Transactional
-    public User save(User user) {
+    public void save(User user) {
         try {
-            return this.repository.save(user);
+            this.repository.save(user);
         } catch (IncompleteDataException e) {
             throw new IncompleteDataException();
         }
-    }
-
-    @Transactional
-    public User findByEmail(String email) {
-        User user = (User) this.repository.findByEmail(email);
-        if(user == null){
-            throw new UserNotFoundException();
-        }
-        return user;
     }
 
     @Transactional
@@ -68,7 +59,7 @@ public class UserService {
         }
     }
 
-    public User notNull(User user, UserPutDTO updatedUser) {
+    public User notNull(User user, PutUserDTO updatedUser) {
         if (updatedUser.getName() != null) {
             user.setName(updatedUser.getName());
         }

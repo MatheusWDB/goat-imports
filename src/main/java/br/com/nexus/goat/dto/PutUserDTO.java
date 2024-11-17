@@ -2,9 +2,9 @@ package br.com.nexus.goat.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import br.com.nexus.goat.entity.User;
+import br.com.nexus.goat.entities.User;
 
-public class UserPutDTO {
+public class PutUserDTO {
 
     private String name;
     private String surname;
@@ -14,10 +14,10 @@ public class UserPutDTO {
     private String password;
     private String newPassword;
 
-    public UserPutDTO() {
+    public PutUserDTO() {
     }
 
-    public UserPutDTO(User entity, String newPassword) {
+    public PutUserDTO(User entity, String newPassword) {
         BeanUtils.copyProperties(entity, this);
         this.newPassword = newPassword;
     }

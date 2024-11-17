@@ -7,9 +7,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import br.com.nexus.goat.entity.Category;
-import br.com.nexus.goat.entity.Feature;
-import br.com.nexus.goat.entity.Product;
+import br.com.nexus.goat.entities.Category;
+import br.com.nexus.goat.entities.Feature;
+import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.repositories.CategoryRepository;
 import br.com.nexus.goat.repositories.FeatureRepository;
 import br.com.nexus.goat.repositories.ProductRepository;
