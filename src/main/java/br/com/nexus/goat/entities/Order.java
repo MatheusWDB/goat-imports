@@ -32,6 +32,7 @@ public class Order implements Serializable {
     @Column(nullable = false)
     private Integer status;
 
+    @Column(nullable = false)
     private Integer paymentMethod;
 
     @Column(nullable = false)
