@@ -3,8 +3,7 @@ package br.com.nexus.goat.enums;
 public enum OrderStatus {    
     PAID(1),
     SHIPPED(2),
-    DELIVERED(3),
-    WAITING_PAYMENT(4);
+    DELIVERED(3);
 
     private int code;
 

@@ -16,7 +16,6 @@ import br.com.nexus.goat.entities.Order;
 import br.com.nexus.goat.entities.OrderProduct;
 import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.enums.OrderStatus;
-import br.com.nexus.goat.enums.PaymentMethod;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.repositories.OrderRepository;
@@ -57,14 +56,8 @@ public class OrderService {
             Random r = new Random();
             order.setOrderNumber(orderRepository.count());
             OrderStatus[] status = OrderStatus.values();
-            PaymentMethod[] payment = PaymentMethod.values();
 
             order.setStatus(status[r.nextInt(status.length)]);
-            if (order.getStatus() == OrderStatus.WAITING_PAYMENT) {
-                order.setPaymentMethod(PaymentMethod.NULL);
-            } else {
-                order.setPaymentMethod(payment[r.nextInt(payment.length - 1)]);
-            }
 
             return orderRepository.save(order);
         } catch (Exception e) {
