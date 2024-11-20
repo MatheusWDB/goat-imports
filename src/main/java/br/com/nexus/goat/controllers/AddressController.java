@@ -50,8 +50,8 @@ public class AddressController {
         return ResponseEntity.ok().body(address);
     }
 
-    @GetMapping("/findAll/{idUser}")
-    public ResponseEntity<List<Address>> findAll(@PathVariable Long idUser) {
+    @GetMapping("/findAllByUserId/{idUser}")
+    public ResponseEntity<List<Address>> findAllByUserId(@PathVariable Long idUser) {
         List<Address> addresses = addressService.findAllByUserId(idUser);
 
         return ResponseEntity.ok().body(addresses);

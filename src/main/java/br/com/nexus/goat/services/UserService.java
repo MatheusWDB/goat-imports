@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.nexus.goat.dto.UserDTO;
 import br.com.nexus.goat.entities.User;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
+import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.exceptions.user.UserAlreadyExistsException;
 import br.com.nexus.goat.exceptions.user.UserDeletedException;
-import br.com.nexus.goat.exceptions.user.UserNotFoundException;
 import br.com.nexus.goat.repositories.UserRepository;
 
 @Service
@@ -21,7 +21,7 @@ public class UserService {
 
     @Transactional
     public User findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário"));
         Hibernate.initialize(user.getWishes());
         if (user.getDeleted()) {
             throw new UserDeletedException();
@@ -32,6 +32,9 @@ public class UserService {
     @Transactional
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new NotFoundException("Usuário");
+        }
         if (user.getDeleted()) {
             throw new UserDeletedException();
         }
@@ -49,7 +52,7 @@ public class UserService {
 
     @Transactional
     public void verifyEmail(String email) {
-        User user = (User) userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user != null) {
             throw new UserAlreadyExistsException("O email: " + email);
         }
