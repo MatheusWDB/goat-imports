@@ -8,11 +8,10 @@ import java.util.Set;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -48,18 +47,22 @@ public class Product implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss", timezone = "GMT-03:00")
     private Instant createdAt;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tb_product_categories", joinColumns = @JoinColumn(name = "id_product"), inverseJoinColumns = @JoinColumn(name = "id_category"))
     private Set<Category> categories = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_features", referencedColumnName = "id")
     private Feature features;
 
-    @OneToMany(mappedBy = "id.product", fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.product")
     private Set<OrderProduct> products = new HashSet<>();
 
-    @ManyToMany(mappedBy = "wishes", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "wishes")
     private Set<User> wishes = new HashSet<>();
 
     public Product() {
@@ -125,28 +128,12 @@ public class Product implements Serializable {
         return categories;
     }
 
-    public Set<Long> getIdCategories() {
-        Set<Long> idCategories = new HashSet<>();
-        for (Category category : categories) {
-            idCategories.add(category.getId());
-        }
-        return idCategories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
     public Feature getFeatures() {
         return features;
     }
 
     public void setFeatures(Feature features) {
         this.features = features;
-    }
-
-    public Long getIdFeature() {
-        return features.getId();
     }
 
     public Set<User> getWishes() {

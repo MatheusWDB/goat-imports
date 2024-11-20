@@ -88,8 +88,8 @@ public class Order implements Serializable {
         return orderDate;
     }
 
-    public Address getAddress() {
-        return address;
+    public Long getAddress() {
+        return address.getId();
     }
 
     public void setAddress(Address address) {
@@ -101,7 +101,7 @@ public class Order implements Serializable {
     }
 
     public Long getIdUser() {
-        return address.getIdUser();
+        return address.getUser().getId();
     }
 
     public Set<OrderProduct> getProducts() {

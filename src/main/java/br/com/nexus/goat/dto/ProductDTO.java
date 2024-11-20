@@ -5,6 +5,8 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
+import br.com.nexus.goat.entities.Category;
+import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.entities.Product;
 
 public class ProductDTO {
@@ -15,13 +17,11 @@ public class ProductDTO {
     private Double price;
     private Integer stock;
     private String imgUrl;
-    private Set<Long> categories = new HashSet<>();
-    private Long features;
+    private Set<Category> categories = new HashSet<>();
+    private Feature features;
 
     public ProductDTO(Product entity) {
         BeanUtils.copyProperties(entity, this);
-        categories = entity.getIdCategories();
-        features = entity.getIdFeature();
     }
 
     public Long getId() {
@@ -73,18 +73,23 @@ public class ProductDTO {
     }
 
     public Set<Long> getCategories() {
-        return categories;
+        Set<Long> idCategories = new HashSet<>();
+        for (Category category : categories) {
+            Long idCategory = category.getId();
+            idCategories.add(idCategory);
+        }
+        return idCategories;
     }
 
-    public void setCategories(Set<Long> categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 
     public Long getFeatures() {
-        return features;
+        return features.getId();
     }
 
-    public void setFeatures(Long features) {
+    public void setFeatures(Feature features) {
         this.features = features;
     }
 }

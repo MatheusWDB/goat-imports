@@ -26,7 +26,7 @@ import br.com.nexus.goat.services.ProductService;
 public class ProductController {
 
     @Autowired
-    private ProductService service;
+    private ProductService productService;
 
     @Autowired
     private CategoryService categoryService;
@@ -36,53 +36,53 @@ public class ProductController {
 
     @PostMapping("/create")
     public ResponseEntity<Void> create(@RequestBody Product obj) {
-        Product product = this.service.product(obj);
-        Set<Category> categories = this.service.categories(obj);
-        Feature feature = this.service.feature(obj);
+        Product product = productService.product(obj);
+        Set<Category> categories = productService.categories(obj);
+        Feature feature = productService.feature(obj);
 
-        product = this.service.save(product);
+        product = productService.save(product);
 
-        Feature verifyFeature = this.featureService.findByMarkAndModelAndColorAndComposition(feature.getMark(),
+        Feature verifyFeature = featureService.findByMarkAndModelAndColorAndComposition(feature.getMark(),
                 feature.getModel(), feature.getColor(), feature.getComposition());
 
         if (verifyFeature == null)
-            feature = this.featureService.save(feature);
+            feature = featureService.save(feature);
         else
             feature = verifyFeature;
 
         product.setFeatures(feature);
 
         for (Category category : categories) {
-            Category verifyCategory = this.categoryService.findByName(category.getName());
+            Category verifyCategory = categoryService.findByName(category.getName());
             if (verifyCategory == null)
-                category = this.categoryService.save(category);
+                category = categoryService.save(category);
             else
                 category = verifyCategory;
 
             product.getCategories().add(category);
         }
 
-        product = this.service.save(product);
+        product = productService.save(product);
 
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/findAll")
     public ResponseEntity<List<ProductDTO>> findAll() {
-        List<ProductDTO> products = this.service.findAll();
+        List<ProductDTO> products = productService.findAll();
         return ResponseEntity.ok().body(products);
     }
 
     @GetMapping("/findById/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
-        Product result = this.service.findById(id);
+        Product result = productService.findById(id);
         ProductDTO product = new ProductDTO(result);
         return ResponseEntity.ok().body(product);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.service.deleteById(id);
+        productService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }

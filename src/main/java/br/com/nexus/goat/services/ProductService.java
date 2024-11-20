@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,17 +25,21 @@ public class ProductService {
 
     @Transactional
     public Product findById(Long id) {
-        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
+        Product product = repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
+        Hibernate.initialize(product.getCategories());
+        return product;
     }
 
     @Transactional
     public List<ProductDTO> findAll() {
         List<Product> results = this.repository.findAll();
+        for (Product product : results) {
+            Hibernate.initialize(product.getCategories());
+        }
         if (results.isEmpty()) {
             throw new NotFoundException("Produto");
         }
-        List<ProductDTO> products = results.stream().map(x -> new ProductDTO(x)).toList();
-        return products;
+        return results.stream().map(x -> new ProductDTO(x)).toList();
     }
 
     @Transactional

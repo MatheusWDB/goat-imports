@@ -18,18 +18,18 @@ import br.com.nexus.goat.services.CategoryService;
 public class CategoryController {
 
     @Autowired
-    private CategoryService service;
+    private CategoryService categoryService;
 
     @GetMapping("/findAll")
     public ResponseEntity<List<CategoryDTO>> findAll(){
-        List<Category> results = this.service.findAll();
+        List<Category> results = categoryService.findAll();
         List<CategoryDTO> categories = results.stream().map(x-> new CategoryDTO(x)).toList();
         return ResponseEntity.ok().body(categories);
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Category> findById(@PathVariable Long id) {
-        Category category = this.service.findById(id);
+    @GetMapping("/findAllByIdProduct/{idProduct}")
+    public ResponseEntity<List<CategoryDTO>> findAllByIdProduct(@PathVariable Long idProduct) {
+        List<CategoryDTO> category = categoryService.findAllByIdProduct(idProduct);
         return ResponseEntity.ok().body(category);
     }
 }

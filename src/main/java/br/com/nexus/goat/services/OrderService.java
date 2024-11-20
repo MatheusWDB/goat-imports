@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,26 +25,37 @@ import br.com.nexus.goat.repositories.OrderRepository;
 public class OrderService {
 
     @Autowired
-    private OrderRepository repository;
+    private OrderRepository orderRepository;
 
     @Autowired
     private ProductService productService;
 
     @Transactional
     public Order findById(Long id) {
-        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
+
+        Hibernate.initialize(order.getProducts());
+
+        return order;
     }
 
     @Transactional
     public List<Order> findAllByAddressId(Long idAddress) {
-        return this.repository.findAllByAddressId(idAddress).orElseThrow(() -> new NotFoundException("Pedido"));
+        List<Order> results = orderRepository.findAllByAddressId(idAddress)
+                .orElseThrow(() -> new NotFoundException("Pedido"));
+
+        for (Order order : results) {
+            Hibernate.initialize(order.getProducts());
+        }
+
+        return results;
     }
 
     @Transactional
     public Order save(Order order) {
         try {
             Random r = new Random();
-            order.setOrderNumber(this.repository.count());
+            order.setOrderNumber(orderRepository.count());
             OrderStatus[] status = OrderStatus.values();
             PaymentMethod[] payment = PaymentMethod.values();
 
@@ -54,7 +66,7 @@ public class OrderService {
                 order.setPaymentMethod(payment[r.nextInt(payment.length - 1)]);
             }
 
-            return this.repository.save(order);
+            return orderRepository.save(order);
         } catch (Exception e) {
             throw new IncompleteDataException();
         }
@@ -62,15 +74,15 @@ public class OrderService {
 
     @Transactional
     public void deleteById(Long id) {
-        this.repository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
-        this.repository.deleteById(id);
+        orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
+        orderRepository.deleteById(id);
     }
 
     public Set<OrderProduct> orderProducts(OrderDTO obj) {
         Set<OrderProduct> orderProducts = new HashSet<>();
 
         for (Items x : obj.getItems()) {
-            Product product = this.productService.findById(x.getIdProduct());
+            Product product = productService.findById(x.getIdProduct());
 
             OrderProduct orderProduct = new OrderProduct(null, product, x.getQuantity());
 

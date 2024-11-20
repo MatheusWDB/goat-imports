@@ -2,8 +2,8 @@ package br.com.nexus.goat.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -45,7 +45,7 @@ public class Address implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "address")
-    private List<Order> orders = new ArrayList<>();
+    private Set<Order> orders = new HashSet<>();
 
     public Address() {
     }
@@ -115,7 +115,7 @@ public class Address implements Serializable {
         return user.getId();
     }
 
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 

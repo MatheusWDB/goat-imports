@@ -26,7 +26,7 @@ import br.com.nexus.goat.services.OrderService;
 public class OrderController {
 
     @Autowired
-    private OrderService service;
+    private OrderService orderService;
 
     @Autowired
     private AddressService addressService;
@@ -35,37 +35,43 @@ public class OrderController {
     private OrderProductService orderProductService;
 
     @PostMapping("/create/{idAddress}")
-    public ResponseEntity<Void> create(@PathVariable Long idAddress, @RequestBody OrderDTO obj) {
-        Address address = this.addressService.findById(idAddress);
+    public ResponseEntity<Void> create(@PathVariable Long idAddress, @RequestBody OrderDTO body) {
+        Address address = addressService.findById(idAddress);
         Order order = new Order();
 
         order.setAddress(address);
-        order = this.service.save(order);
-
-        Set<OrderProduct> orderProducts = this.service.orderProducts(obj);
+        order = orderService.save(order);
+        Set<OrderProduct> orderProducts = orderService.orderProducts(body);
 
         for (OrderProduct orderProduct : orderProducts) {
             orderProduct.setOrder(order);
-            orderProduct = this.orderProductService.save(orderProduct);
+            orderProduct = orderProductService.save(orderProduct);
 
             order.getProducts().add(orderProduct);
         }
 
-        order = this.service.save(order);
+        order = orderService.save(order);
 
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Order> findById(@PathVariable Long id) {
+        Order order = orderService.findById(id);
+
+        return ResponseEntity.ok().body(order);
+    }
+
     @GetMapping("/findAll/{idAddress}")
     public ResponseEntity<List<Order>> findAll(@PathVariable Long idAddress) {
-        List<Order> orders = this.service.findAllByAddressId(idAddress);
+        List<Order> orders = orderService.findAllByAddressId(idAddress);
 
         return ResponseEntity.ok().body(orders);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.service.deleteById(id);
+        orderService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 

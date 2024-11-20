@@ -1,20 +1,16 @@
 package br.com.nexus.goat.entities;
 
+import java.io.Serializable;
 import java.time.Instant;
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +22,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity(name = "tb_users")
-public class User implements UserDetails {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -45,7 +41,7 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String phone;
 
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(nullable = false)
     private String password;
@@ -57,9 +53,10 @@ public class User implements UserDetails {
     private Instant createdAt;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tb_wishes", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_product"))
     private Set<Product> wishes = new HashSet<>();
@@ -67,7 +64,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String name, String surname, String email, String phone, String dateOfBirth,
+    public User(Long id, String name, String surname, String email, String phone, LocalDate dateOfBirth,
             String password) {
         this.id = id;
         this.name = name;
@@ -114,11 +111,11 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -146,17 +143,8 @@ public class User implements UserDetails {
         return addresses;
     }
 
-    @JsonIgnore
     public Set<Product> getWishes() {
         return wishes;
-    }
-
-    public Set<Long> getIdWishes() {
-        Set<Long> idProducts = new HashSet<>();
-        for (Product product : wishes) {
-            idProducts.add(product.getId());
-        }
-        return idProducts;
     }
 
     @Override
@@ -208,35 +196,5 @@ public class User implements UserDetails {
                 + ", dateOfBirth=" + dateOfBirth + ", password=" + password + ", deleted=" + deleted + ", wishes="
                 + wishes + ", createdAt="
                 + createdAt + "]";
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

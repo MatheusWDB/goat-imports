@@ -22,40 +22,37 @@ import br.com.nexus.goat.services.UserService;
 public class AddressController {
 
     @Autowired
-    private AddressService service;
+    private AddressService addressService;
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/create/{idUser}")
-    public ResponseEntity<Void> create(@PathVariable Long idUser, @RequestBody Address obj) {
-        User user = this.userService.findById(idUser);
+    public ResponseEntity<Void> create(@PathVariable Long idUser, @RequestBody Address body) {
+        User user = userService.findById(idUser);
 
-        obj.setUser(user);
-        obj = service.save(obj);
+        body.setUser(user);
+        body = addressService.save(body);
 
-        user.getAddresses().add(obj);
-
-        this.userService.save(user);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.service.deleteById(id);
+        addressService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/findById/{id}")
     public ResponseEntity<Address> findById(@PathVariable Long id) {
-        Address address = this.service.findById(id);
+        Address address = addressService.findById(id);
 
         return ResponseEntity.ok().body(address);
     }
 
     @GetMapping("/findAll/{idUser}")
     public ResponseEntity<List<Address>> findAll(@PathVariable Long idUser) {
-        List<Address> addresses = this.service.findAllByUserId(idUser);
+        List<Address> addresses = addressService.findAllByUserId(idUser);
 
         return ResponseEntity.ok().body(addresses);
     }

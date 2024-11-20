@@ -15,11 +15,11 @@ import br.com.nexus.goat.services.FeatureService;
 public class FeatureController {
 
     @Autowired
-    private FeatureService service;
+    private FeatureService featureService;
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Feature> findById(@PathVariable Long id) {
-        Feature feature = this.service.findById(id);
+    @GetMapping("/findByIdProduct/{idProduct}")
+    public ResponseEntity<Feature> findById(@PathVariable Long idProduct) {
+        Feature feature = featureService.findById(idProduct);
         return ResponseEntity.ok().body(feature);
     }
 }
