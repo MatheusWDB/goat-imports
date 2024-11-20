@@ -18,8 +18,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "tb_products")
 public class Product implements Serializable {
@@ -51,9 +51,8 @@ public class Product implements Serializable {
     @ManyToMany
     @JoinTable(name = "tb_product_categories", joinColumns = @JoinColumn(name = "id_product"), inverseJoinColumns = @JoinColumn(name = "id_category"))
     private Set<Category> categories = new HashSet<>();
-
-    @JsonIgnore
-    @ManyToOne
+    
+    @OneToOne
     @JoinColumn(name = "id_features", referencedColumnName = "id")
     private Feature features;
 

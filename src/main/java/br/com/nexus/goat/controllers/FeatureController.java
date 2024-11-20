@@ -17,9 +17,9 @@ public class FeatureController {
     @Autowired
     private FeatureService featureService;
 
-    @GetMapping("/findByIdProduct/{idProduct}")
-    public ResponseEntity<Feature> findById(@PathVariable Long idProduct) {
-        Feature feature = featureService.findById(idProduct);
+    @GetMapping("/findByProductId/{idProduct}")
+    public ResponseEntity<Feature> findByProductId(@PathVariable Long idProduct) {
+        Feature feature = featureService.findByProductId(idProduct);
         return ResponseEntity.ok().body(feature);
     }
 }

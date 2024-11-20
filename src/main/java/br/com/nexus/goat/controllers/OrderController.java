@@ -64,9 +64,9 @@ public class OrderController {
         return ResponseEntity.ok().body(order);
     }
 
-    @GetMapping("/findAll/{idAddress}")
-    public ResponseEntity<List<Order>> findAll(@PathVariable Long idAddress) {
-        List<Order> orders = orderService.findAllByAddressId(idAddress);
+    @GetMapping("/findAllByUserId/{userId}")
+    public ResponseEntity<List<Order>> findAll(@PathVariable Long userId) {
+        List<Order> orders = orderService.findAllByUserId(userId);
 
         return ResponseEntity.ok().body(orders);
     }

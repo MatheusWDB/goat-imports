@@ -13,23 +13,22 @@ import br.com.nexus.goat.repositories.FeatureRepository;
 public class FeatureService {
 
     @Autowired
-    private FeatureRepository repository;
+    private FeatureRepository featureRepository;
 
     @Transactional
     public Feature findById(Long id) {
-        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("Caracaterística"));
+        return featureRepository.findById(id).orElseThrow(() -> new NotFoundException("Caracaterística"));
     }
 
     @Transactional
-    public Feature findByMarkAndModelAndColorAndComposition(String mark, String model, String color,
-            String composition) {
-        return this.repository.findByMarkAndModelAndColorAndComposition(mark, model, color, composition).orElse(null);
+    public Feature findByProductId(Long productId) {
+        return featureRepository.findByProductId(productId).orElseThrow(() -> new NotFoundException("Caracaterística"));
     }
 
     @Transactional
     public Feature save(Feature feature) {
         try {
-            return this.repository.save(feature);
+            return featureRepository.save(feature);
         } catch (Exception e) {
             throw new IncompleteDataException();
         }

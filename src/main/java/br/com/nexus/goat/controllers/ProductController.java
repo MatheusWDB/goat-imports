@@ -18,7 +18,6 @@ import br.com.nexus.goat.entities.Category;
 import br.com.nexus.goat.entities.Feature;
 import br.com.nexus.goat.entities.Product;
 import br.com.nexus.goat.services.CategoryService;
-import br.com.nexus.goat.services.FeatureService;
 import br.com.nexus.goat.services.ProductService;
 
 @RestController
@@ -31,9 +30,6 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private FeatureService featureService;
-
     @PostMapping("/create")
     public ResponseEntity<Void> create(@RequestBody Product obj) {
         Product product = productService.product(obj);
@@ -41,14 +37,6 @@ public class ProductController {
         Feature feature = productService.feature(obj);
 
         product = productService.save(product);
-
-        Feature verifyFeature = featureService.findByMarkAndModelAndColorAndComposition(feature.getMark(),
-                feature.getModel(), feature.getColor(), feature.getComposition());
-
-        if (verifyFeature == null)
-            feature = featureService.save(feature);
-        else
-            feature = verifyFeature;
 
         product.setFeatures(feature);
 

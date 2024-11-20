@@ -2,8 +2,6 @@ package br.com.nexus.goat.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -15,7 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "tb_features")
 public class Feature implements Serializable {
@@ -41,8 +39,9 @@ public class Feature implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss", timezone = "GMT-03:00")
     private Instant createdAt;
 
-    @OneToMany(mappedBy = "features")
-    private Set<Product> products = new HashSet<>();
+    @JsonIgnore
+    @OneToOne(mappedBy = "features")
+    private Product product;
 
     public Feature() {
     }
@@ -98,9 +97,12 @@ public class Feature implements Serializable {
         return createdAt;
     }
 
-    @JsonIgnore
-    public Set<Product> getProduct() {
-        return products;
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override

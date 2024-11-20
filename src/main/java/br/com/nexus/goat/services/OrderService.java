@@ -39,8 +39,8 @@ public class OrderService {
     }
 
     @Transactional
-    public List<Order> findAllByAddressId(Long idAddress) {
-        List<Order> results = orderRepository.findAllByAddressId(idAddress)
+    public List<Order> findAllByUserId(Long userId) {
+        List<Order> results = orderRepository.findAllByAddressUserId(userId)
                 .orElseThrow(() -> new NotFoundException("Pedido"));
 
         for (Order order : results) {
