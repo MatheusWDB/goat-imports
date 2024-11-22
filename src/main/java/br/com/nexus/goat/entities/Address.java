@@ -30,8 +30,24 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String zipCode;
 
+    @Column(nullable = false)
     private String number;
-    private String reference;
+
+    @Column(nullable = false)
+    private String street;
+
+    @Column(nullable = false)
+    private String neighborhood;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String state;
+
+    private String complement;
+
+    @Column(nullable = false)
     private String type;
 
     @CreationTimestamp
@@ -47,16 +63,20 @@ public class Address implements Serializable {
     @OneToMany(mappedBy = "address")
     private Set<Order> orders = new HashSet<>();
 
-    public Address() {
-    }
-
-    public Address(Long id, String zipCode, String number, String reference, String type, User user) {
-        this.id = id;
+    public Address(String zipCode, String number, String street, String neighborhood, String city, String state,
+            String complement, String type, User user) {
         this.zipCode = zipCode;
         this.number = number;
-        this.reference = reference;
+        this.street = street;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
+        this.complement = complement;
         this.type = type;
         this.user = user;
+    }
+
+    public Address() {
     }
 
     public Long getId() {
@@ -75,6 +95,38 @@ public class Address implements Serializable {
         this.zipCode = zipCode;
     }
 
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+    
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public String getNumber() {
         return number;
     }
@@ -83,12 +135,12 @@ public class Address implements Serializable {
         this.number = number;
     }
 
-    public String getReference() {
-        return reference;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
     public String getType() {
@@ -152,7 +204,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "Address [id=" + id + ", zipCode=" + zipCode + ", number=" + number + ", reference=" + reference
+        return "Address [id=" + id + ", zipCode=" + zipCode + ", number=" + number + ", complement=" + complement
                 + ", type=" + type + ", createdAt=" + createdAt + ", user=" + user + "]";
     }
 }
