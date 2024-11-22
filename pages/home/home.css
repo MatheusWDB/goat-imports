@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+
+}
+
+.navbar {
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 4px 2px -2px gray;
+  
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+}
+
+.navbar a {
+  margin-right: 0;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: all 0.3s ease-in-out;
+  margin-right: 1px;
+  margin-left: 0px;
+}
+
+.navbar a:hover {
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+
+
+
+.navbar a img {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  border: 1;
+  border-color: white;
+
+
+}
+
+.logo {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-right: 1000px;
+}
+
+.logo img {
+  width: 72px;
+  height: 78px;
+}
+
+.logo p {
+  font-family: "Anton", sans-serif;
+  font-size: 36px;
+  margin-top: 18px;
+}
+
+.logo:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.catalogo-container {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 20px;
+  position: relative;
+}
+
+.catalogo {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  border: none;
+}
+
+
+.catalogo::-webkit-scrollbar {
+  display: none;
+  /* Webkit (Chrome, Safari, etc.) */
+}
+
+.card {
+  flex: 0 0 auto;
+  width: 200px;
+  margin: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0; 
+  border: none;
+  user-select: none;
+  z-index: 1;
+  background-color: transparent;
+  margin-right: 20px;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.button-card{
+  margin:10px;
+  background-color: transparent;
+  border: none;
+  
+  
+}
+
+.button-card:hover{
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+.button-card:first-child{
+  margin-left: 55px;
+}
+
+
+.button{
+  border: none;
+}
+

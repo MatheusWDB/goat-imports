@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="perfil.css">
+    <link rel="shortcut icon" href="/imagens/logo2.png" type="image/x-icon">
+</head>
+
+<body>
+    <nav class="navbar">
+
+        <div class="logo" onclick="voltarHome()">
+            <img src="../../imagens/logo2.png" alt="Goat">
+            <p>GOAT</p>
+        </div>
+
+        <a href="#"><img src="/imagens/perfil.jpeg" alt="perfil"></a>
+        <a href="#produtos">Carrinho</a>
+        <a href="../index.html">Sair</a>
+    </nav>
+
+    <main>
+        <h1>Atualização de Informações Pessoais</h1>
+        <form id="updateForm">
+            <div class="input-container">
+                <ul>
+
+                    <label for="Nome">Nome:</label>
+                    <input type="Nome" id="Nome" readonly>
+                    </li>
+                    <li><label for="Sobrenome">Sobrenome:</label>
+                        <input type="text" id="Sobrenome" readonly>
+                    </li>
+                    <li>
+                        <label for="e-mail">Email:</label>
+                        <input type="e-mail" id="e-mail" readonly>
+                    </li>
+                    <li><label for="telefone">Telefone:</label>
+                        <input type="tel" id="telefone" readonly>
+                    </li>
+                    <li><label for="DataNascimento">Data de Nascimento:</label>
+                        <input type="date" id="DataNascimento" readonly>
+                    </li>
+                    <Button class="btn-principal" onclick="OpenModal()" type="button">Atualizar</Button>
+
+                    <Button class="btn-principal" onclick="OpenModal3()" type="button">Endereços</Button>
+                </ul>
+
+            </div>
+        </form>
+
+
+        <!-- Modal de Confirmação -->
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+                <p>Informe as novas informações</p>
+                <form>
+                    <div class="input-modal">
+                        <ul>
+                            <li>
+                                <label for="name">Nome:</label>
+                                <input type="name" id="name">
+                            </li>
+                            <li><label for="surname">Sobrenome:</label>
+                                <input type="surname" id="surname">
+                            </li>
+                            <li>
+                                <label for="email">Email:</label>
+                                <input type="email" id="email">
+                            </li>
+                            <li><label for="phone">Telefone:</label>
+                                <input type="phone" id="phone">
+                            </li>
+                            <li>
+                                <label for="dateOfBirth">Data de Nascimento:</label>
+                                <input type="date" id="dateOfBirth">
+                            </li>
+                            <li>
+                                <Label for="password">Senha Atual</Label>
+                                <input type="password" id="password">
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+                <button class="btn-modal" onclick="atualizarUsuario()">Confirmar</button>
+
+                <button class="btn-modal" onclick="closeModal()">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Cadastras Endereço -->
+        <div id="Modal2" class="modal2">
+            <div class="modal-content2">
+                <p>Cadastre seu Endereço</p>
+                <form>
+                    <div class="input-modal">
+                        <ul>
+                            <li>
+                                <label for="zipCode">Informe o CEP</label>
+                                <input type="text" id="zipCode" required>
+                            </li>
+                            <li><label for="number">Informe o Número da casa</label>
+                                <input type="number" id="number">
+                            </li>
+                            <li>
+                                <label for="reference">Informe um ponto de referência</label>
+                                <input type="text" id="reference">
+                            </li>
+
+
+                        </ul>
+                        <div class="inputCheck">
+
+                            <input type="radio" id="casa" name="tipo" value="casa">
+                            <label for="casa">Casa</label>
+
+                            <input type="radio" id="apartamento" name="tipo" value="apartamento">
+                            <label for="apartamento">apartamento</label>
+
+                            <input type="radio" id="comercio" name="tipo" value="comercio">
+                            <label for="comercio">Comércio</label>
+
+                        </div>
+                    </div>
+                </form>
+                <button class="btn-modal" onclick="registrarEndereço()" type="button">Confirmar</button>
+
+                <button class="btn-modal" onclick="closeModal2()">Cancelar</button>
+
+                <button class="btn-modal" onclick="{
+                    OpenModal3() 
+                    closeModal2()}">Endereços</button>
+            </div>
+        </div>
+
+        <!-- Listar Endereços -->
+        <div id="Modal3" class="modal3">
+            <div class="modal-content3">
+                <div class="enderecos">
+                    
+                </div>
+                <Button class="btn-modal" onclick="{OpenModal2()
+                    closeModal3()
+                }" type="button">Cadastrar Endereço</Button>
+                <button class="btn-modal" onclick="closeModal3()">Fechar</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="perfil.js"></script>
+</body>
+
+</html>

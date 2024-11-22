@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    
+}
+
+
+
+
+.navbar a img {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    border: 1;
+    border-color: white;
+
+
+}
+
+.navimg {
+    width: 72px;
+    height: 98px;
+    border-radius: 100%;
+    margin-right: auto;
+    margin-left: 89px;
+
+
+}
+
+.navimg:hover {
+    scale: (1.1);
+    cursor: pointer;
+}
+
+.navbar {
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 4px 2px -2px gray;
+    position: fixed;
+    top: 0;
+    left: 0;
+   
+    
+}
+
+.navbar a {
+    margin-right: 0;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: all 0.3s ease-in-out;
+    margin-right: 1px;
+}
+
+.navbar a:hover {
+    transform: scale(1.1);
+    text-decoration: underline;
+}
+
+
+    
+.logo {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-right: 1200px;
+    margin-left: 50px;
+}
+
+.logo img {
+    width: 72px;
+    height: 78px;
+}
+
+.logo p {
+    font-family: "Anton", sans-serif;
+    font-size: 36px;
+    margin-top: 18px;
+}
+
+.logo:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.modal {
+    display: none;
+    /* Escondido por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    align-self: center;    
+    
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+
+    
+}
+
+
+.btn-modal{
+    background-color: black;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 5px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.btn-modal:hover{
+    cursor: pointer;
+}
+
+.btn-principal{
+    background-color: black;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+    
+}
+
+.btn-principal:hover{
+    cursor: pointer;
+}
+
+.input-container:first-child{
+    margin-top: 150px;
+}
+
+.input-container{
+    display: flex;
+    justify-content: center;
+    
+    
+}
+
+.input-container input{
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.input-container li{
+    list-style: none;
+}
+
+.input-container ul{
+    text-align: center; /* Centraliza horizontalmente os itens da lista */ list-style: none; /* Remove os marcadores da lista */ 
+    padding: 0;
+}
+
+.input-modal li {
+    
+    list-style: none;
+}
+
+
+
+.input-modal input{
+    margin-bottom: 10px;
+    width: 100%;
+    margin-right: 0%;
+}
+
+.input-modal ul{
+    text-align: center; /* Centraliza horizontalmente os itens da lista */ list-style: none; /* Remove os marcadores da lista */ 
+    padding: 0;
+}
+
+.inputCheck{
+    display: flex;
+    gap: 10px;
+    
+}
+
+.modal2 {
+    display: none;
+    /* Escondido por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    align-self: center;    
+   
+}
+
+.modal-content2 {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+   
+    
+}
+
+.modal3 {
+    display: none;
+    /* Escondido por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    align-self: center;    
+    
+   
+}
+
+.modal-content3 {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    text-align: center;
+   
+    
+}
+
+.enderecos{
+    border: 2px solid black; /* Adiciona uma borda preta de 2px */ 
+    padding: 20px; /* Adiciona espaço interno */ 
+    margin: 20px; /* Adiciona espaço externo */ 
+    width: 90%; /* Define a largura da div */ 
+    text-align: center;
+    border-radius: 8px;
+    justify-content: center;
+}
+
+.enderecos button{
+    border: none;
+    background-color: white;
+    font-size: 14px;
+    color: red;
+    cursor: pointer;
+}
