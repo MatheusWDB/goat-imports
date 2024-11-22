@@ -41,7 +41,7 @@ Pré-requisitos: Java 21
 
 ```bash
 # clonar repositório
-git clone https://github.com/MatheusWDB/goatimports
+git clone https://github.com/MatheusWDB/goatimports-backend.git
 
 # entrar na pasta do projeto back end
 cd backend
@@ -55,7 +55,7 @@ java -jar target/goat-0.0.1-SNAPSHOT.jar
 
 ```bash
 # clonar repositório
-git clone https://github.com/MatheusWDB/goatimports
+git clone https://github.com/MatheusWDB/goatimports-frontend.git
 ```
 
 # Autores
