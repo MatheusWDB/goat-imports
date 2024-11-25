@@ -6,10 +6,43 @@ var userId
 var user
 var enderecos
 
-const listaDeEndereco = document.getElementById('Modal3')
-listaDeEndereco.classList.add('modal3')
-const div = document.createElement('div')
-div.classList.add('modal-content3')
+const cep = document.querySelector('#zipCode')
+const rua = document.querySelector('#rua')
+const bairro = document.querySelector('#bairro')
+const cidade = document.querySelector('#cidade')
+const uf = document.querySelector('#uf')
+const complemento = document.querySelector('#complemento')
+
+
+cep.addEventListener('focusout', async () => {
+    try {
+        const onlyNumbers = /^[0-9]+$/
+        const cepValid = /^[0-9]{8}$/
+        if (!onlyNumbers.test(cep.value) || !cepValid.test(cep.value)) {
+            throw { cep_error: 'CEP inválido' }
+        }
+
+        const response = await fetch(`https://viacep.com.br/ws/${cep.value}/json/`)
+
+        if(!response.ok){
+            throw await response.json()
+        }
+
+        const responseCep = await response.json()
+
+        cep.value = responseCep.cep
+        rua.value = responseCep.logradouro
+        bairro.value = responseCep.bairro
+        cidade.value = responseCep.localidade
+        uf.value = responseCep.uf
+        complemento.value = responseCep.complemento
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+const lista = document.querySelector('#Modal3>.modal-content3')
 
 const button2 = document.createElement('button')
 button2.type = 'button'
@@ -77,9 +110,13 @@ async function buscarUsuarioPorId() {
 async function registrarEndereço() {
     const selected = document.querySelector('input[name="tipo"]:checked');
     const body = {
-        zipCode: document.getElementById('zipCode').value,
+        zipCode: cep.value,
+        street: rua.value,
         number: document.getElementById('number').value,
-        reference: document.getElementById('reference').value,
+        neighborhood: bairro.value,
+        city: cidade.value,
+        state: uf.value,
+        complement: document.getElementById('complemento').value,
         type: selected.value
     }
     try {
@@ -93,6 +130,7 @@ async function registrarEndereço() {
 
         if (response.ok) {
             alert("Endereço cadastrado com sucesso!")
+            closeModal2()
         } else {
             const error = await response.json();
             console.log(error)
@@ -126,37 +164,35 @@ async function buscarTodosEndereçosPorIdUsuario() {
 }
 
 async function renderizarEnderecos() {
-    div.innerHTML = ''
+    lista.innerHTML = ''
 
     enderecos.forEach(endereco => {
+        endereco.zipCode = endereco.zipCode.replace('-', '')
+
         const div2 = document.createElement('div')
         div2.classList.add('enderecos')
         div2.id = endereco.id
 
-        const cep = document.createElement('p')
-        cep.textContent = 'CEP: ' + endereco.zipCode
-        const numero = document.createElement('p')
-        numero.textContent = 'Nº: ' + endereco.number
-        const referencia = document.createElement('p')
-        referencia.textContent = 'Referência: ' + endereco.reference
+        const address = document.createElement('p')
+        address.textContent = `${endereco.street}, ${endereco.number} - ${endereco.neighborhood},  ${endereco.city} -  ${endereco.state}`
+        
+        const complemento = document.createElement('p')
+        complemento.textContent = 'Complemento: ' + endereco.complement
+        
         const tipo = document.createElement('p')
         tipo.textContent = 'Tipo de Endereço: ' + endereco.type
+        
         const button = document.createElement('button')
         button.type = 'button'
         button.textContent = 'Excluir'
         button.onclick = () => deletarEndereçoPorId(div2.id)
 
-        div2.appendChild(cep)
-        div2.appendChild(numero)
-        div2.appendChild(referencia)
+        div2.appendChild(address)
+        div2.appendChild(complemento)
         div2.appendChild(tipo)
         div2.appendChild(button)
 
-        div.appendChild(div2)
-        div.appendChild(button3)
-        div.appendChild(button2)
-
-        listaDeEndereco.appendChild(div)
+        lista.appendChild(div2)
     });
 }
 
