@@ -31,10 +31,10 @@ public class Address implements Serializable {
     private String zipCode;
 
     @Column(nullable = false)
-    private String number;
+    private String streetNumber;
 
     @Column(nullable = false)
-    private String street;
+    private String streetName;
 
     @Column(nullable = false)
     private String neighborhood;
@@ -43,7 +43,7 @@ public class Address implements Serializable {
     private String city;
 
     @Column(nullable = false)
-    private String state;
+    private String federalUnit;
 
     private String complement;
 
@@ -63,14 +63,14 @@ public class Address implements Serializable {
     @OneToMany(mappedBy = "address")
     private Set<Order> orders = new HashSet<>();
 
-    public Address(String zipCode, String number, String street, String neighborhood, String city, String state,
+    public Address(String zipCode, String streetNumber, String streetName, String neighborhood, String city, String federalUnit,
             String complement, String type, User user) {
         this.zipCode = zipCode;
-        this.number = number;
-        this.street = street;
+        this.streetNumber = streetNumber;
+        this.streetName = streetName;
         this.neighborhood = neighborhood;
         this.city = city;
-        this.state = state;
+        this.federalUnit = federalUnit;
         this.complement = complement;
         this.type = type;
         this.user = user;
@@ -96,11 +96,11 @@ public class Address implements Serializable {
     }
 
     public String getStreet() {
-        return street;
+        return streetName;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStreet(String streetName) {
+        this.streetName = streetName;
     }
 
     public String getNeighborhood() {
@@ -120,19 +120,19 @@ public class Address implements Serializable {
     }
 
     public String getState() {
-        return state;
+        return federalUnit;
     }
     
-    public void setState(String state) {
-        this.state = state;
+    public void setState(String federalUnit) {
+        this.federalUnit = federalUnit;
     }
 
     public String getNumber() {
-        return number;
+        return streetNumber;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
     }
 
     public String getComplement() {
@@ -204,7 +204,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "Address [id=" + id + ", zipCode=" + zipCode + ", number=" + number + ", complement=" + complement
+        return "Address [id=" + id + ", zipCode=" + zipCode + ", streetNumber=" + streetNumber + ", complement=" + complement
                 + ", type=" + type + ", createdAt=" + createdAt + ", user=" + user + "]";
     }
 }
