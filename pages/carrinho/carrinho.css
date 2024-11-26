@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    
+}
+
+
+
+
+.navbar a img {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    border: 1;
+    border-color: white;
+
+
+}
+
+.navimg {
+    width: 72px;
+    height: 98px;
+    border-radius: 100%;
+    margin-right: auto;
+    margin-left: 89px;
+
+
+}
+
+.navimg:hover {
+    scale: (1.1);
+    cursor: pointer;
+}
+
+.navbar {
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 4px 2px -2px gray;
+   
+    top: 0;
+    left: 0;
+   
+    
+}
+
+.navbar a {
+    margin-right: 0;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: all 0.3s ease-in-out;
+    margin-right: 1px;
+}
+
+.navbar a:hover {
+    transform: scale(1.1);
+    text-decoration: underline;
+}
+
+
+    
+.logo {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-right: 1200px;
+    margin-left: 50px;
+}
+
+.logo img {
+    width: 72px;
+    height: 78px;
+}
+
+.logo p {
+    font-family: "Anton", sans-serif;
+    font-size: 36px;
+    margin-top: 18px;
+}
+
+.logo:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.imagem{
+    background-color: gray;
+    width:300px;   
+    height: 300px;
+    justify-items: center;
+    justify-self: center
+}
+
+.content{
+    justify-self: center;
+    
+    
+    
+    
+   
+    
+    
+}
+
+.botao {
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    justify-self: center;
+}
+
+

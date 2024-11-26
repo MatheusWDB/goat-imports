@@ -167,3 +167,32 @@ body {
   border: none;
 }
 
+
+.button-categoria{
+  margin-inline: 10px;
+  border: none;
+  background-color: transparent;
+  
+  
+}
+
+.button-categoria button{
+  cursor: pointer;
+ 
+  
+  
+}
+
+.categoria{
+  
+  
+  justify-self: center;
+}
+
+.categoria-container p{
+  font-size: 30px;
+  margin-left: 10px;
+  font-family: "Anton", sans-serif;
+  
+
+}

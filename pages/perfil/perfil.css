@@ -237,8 +237,7 @@ body {
 }
 
 .modal3 {
-    display: none;
-    /* Escondido por padrão */
+    display: none; /* Modal oculto por padrão */
     position: fixed;
     z-index: 1;
     left: 0;
@@ -247,11 +246,9 @@ body {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+    
     justify-content: center;
     align-items: center;
-    align-self: center;    
-    
-   
 }
 
 .modal-content3 {
@@ -260,11 +257,11 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 800px;
+    max-width: 800px; /* Ajuste de largura */
     text-align: center;
-   
     
 }
+
 
 .enderecos{
     border: 2px solid black; /* Adiciona uma borda preta de 2px */ 
@@ -283,3 +280,4 @@ body {
     color: red;
     cursor: pointer;
 }
+

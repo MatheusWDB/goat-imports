@@ -70,8 +70,9 @@ async function buscarTodosProdutos() {
 const renderizarListaCategorias = (categories) => {
     categories.forEach(category => {
         const button = document.createElement('button')
-        button.style.marginInline = "10px"
-        button.onclick = () => filtro(category.userId)
+        button.classList.add('button-categoria')
+        
+        button.onclick = () => filtro(category.id)
 
         const card = document.createElement('button')
         card.classList.add('card')

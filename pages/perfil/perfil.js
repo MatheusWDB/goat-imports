@@ -24,7 +24,7 @@ cep.addEventListener('focusout', async () => {
 
         const response = await fetch(`https://viacep.com.br/ws/${cep.value}/json/`)
 
-        if(!response.ok){
+        if (!response.ok) {
             throw await response.json()
         }
 
@@ -111,11 +111,11 @@ async function registrarEndereço() {
     const selected = document.querySelector('input[name="tipo"]:checked');
     const body = {
         zipCode: cep.value,
-        street: rua.value,
-        number: document.getElementById('number').value,
+        streetName: rua.value,
+        streetNumber: document.getElementById('number').value,
         neighborhood: bairro.value,
         city: cidade.value,
-        state: uf.value,
+        federalUnit: uf.value,
         complement: document.getElementById('complemento').value,
         type: selected.value
     }
@@ -174,14 +174,14 @@ async function renderizarEnderecos() {
         div2.id = endereco.id
 
         const address = document.createElement('p')
-        address.textContent = `${endereco.street}, ${endereco.number} - ${endereco.neighborhood},  ${endereco.city} -  ${endereco.state}`
-        
+        address.textContent = `${endereco.streetName}, ${endereco.streetNumber} - ${endereco.neighborhood},  ${endereco.city} -  ${endereco.federalUnit} - ${endereco.zipCode}`
+
         const complemento = document.createElement('p')
         complemento.textContent = 'Complemento: ' + endereco.complement
-        
+
         const tipo = document.createElement('p')
         tipo.textContent = 'Tipo de Endereço: ' + endereco.type
-        
+
         const button = document.createElement('button')
         button.type = 'button'
         button.textContent = 'Excluir'
