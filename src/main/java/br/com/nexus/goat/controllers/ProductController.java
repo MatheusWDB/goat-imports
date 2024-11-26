@@ -50,7 +50,7 @@ public class ProductController {
             product.getCategories().add(category);
         }
 
-        product = productService.save(product);
+        productService.save(product);
 
         return ResponseEntity.ok().build();
     }

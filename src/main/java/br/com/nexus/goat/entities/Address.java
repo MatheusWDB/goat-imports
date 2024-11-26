@@ -63,8 +63,8 @@ public class Address implements Serializable {
     @OneToMany(mappedBy = "address")
     private Set<Order> orders = new HashSet<>();
 
-    public Address(String zipCode, String streetNumber, String streetName, String neighborhood, String city, String federalUnit,
-            String complement, String type, User user) {
+    public Address(String zipCode, String streetNumber, String streetName, String neighborhood, String city,
+            String federalUnit, String complement, String type, User user) {
         this.zipCode = zipCode;
         this.streetNumber = streetNumber;
         this.streetName = streetName;
@@ -95,11 +95,19 @@ public class Address implements Serializable {
         this.zipCode = zipCode;
     }
 
-    public String getStreet() {
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getStreetName() {
         return streetName;
     }
 
-    public void setStreet(String streetName) {
+    public void setStreetName(String streetName) {
         this.streetName = streetName;
     }
 
@@ -119,20 +127,12 @@ public class Address implements Serializable {
         this.city = city;
     }
 
-    public String getState() {
+    public String getFederalUnit() {
         return federalUnit;
     }
-    
-    public void setState(String federalUnit) {
+
+    public void setFederalUnit(String federalUnit) {
         this.federalUnit = federalUnit;
-    }
-
-    public String getNumber() {
-        return streetNumber;
-    }
-
-    public void setNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
     }
 
     public String getComplement() {
@@ -200,11 +200,5 @@ public class Address implements Serializable {
         } else if (!user.equals(other.user))
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Address [id=" + id + ", zipCode=" + zipCode + ", streetNumber=" + streetNumber + ", complement=" + complement
-                + ", type=" + type + ", createdAt=" + createdAt + ", user=" + user + "]";
     }
 }

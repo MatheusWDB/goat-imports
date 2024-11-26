@@ -43,7 +43,7 @@ public class CategoryService {
                     .orElseThrow(() -> new NotFoundException("Categoria"));
             categories.add(category);
         }
-        return categories.stream().map(x -> new CategoryDTO(x)).toList();
+        return categories.stream().map(CategoryDTO::new).toList();
     }
 
     @Transactional

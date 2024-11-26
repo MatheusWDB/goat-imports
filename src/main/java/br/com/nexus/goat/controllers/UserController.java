@@ -88,8 +88,7 @@ public class UserController {
     @PostMapping("/add-wish/{id}")
     public ResponseEntity<Void> addWish(@PathVariable Long id, @RequestBody Set<Long> body) {
         User user = userService.findById(id);
-
-        System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        
         for (Long idProduct : body) {
             Product product = productService.findById(idProduct);
             user.getWishes().add(product);

@@ -31,7 +31,7 @@ import br.com.nexus.goat.dto.PaymentDTO;
 public class PaymentController {
 
     @PostMapping
-    public ResponseEntity<?> payment(@RequestBody PaymentDTO request) {
+    public ResponseEntity<Payment> payment(@RequestBody PaymentDTO request) {
 
         Map<String, String> customHeaders = new HashMap<>();
         customHeaders.put("x-idempotency-key", UUID.randomUUID().toString());
@@ -62,10 +62,10 @@ public class PaymentController {
         OffsetDateTime offsetDateTime = expirationDate.atStartOfDay().atOffset(ZoneOffset.UTC);
 
         PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
-                .transactionAmount(request.getTransaction_amount())
+                .transactionAmount(request.getTransactionAmount())
                 .token(request.getToken())
                 .installments(request.getInstallments())
-                .paymentMethodId(request.getPayment_method_id())
+                .paymentMethodId(request.getPaymentMethodId())
                 .dateOfExpiration(offsetDateTime)
                 .payer(
                         PaymentPayerRequest.builder()
@@ -83,7 +83,7 @@ public class PaymentController {
             Payment payment = client.create(paymentCreateRequest, requestOptions);
             return ResponseEntity.ok().body(payment);
         } catch (MPApiException ex) {
-            System.out.printf(
+            System.err.printf(
                     "MercadoPago Error. Status: %s, Content: %s%n",
                     ex.getApiResponse().getStatusCode(), ex.getApiResponse().getContent());
             return ResponseEntity.status(ex.getStatusCode()).build();

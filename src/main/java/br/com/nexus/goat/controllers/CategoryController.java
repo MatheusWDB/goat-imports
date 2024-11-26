@@ -23,7 +23,7 @@ public class CategoryController {
     @GetMapping("/findAll")
     public ResponseEntity<List<CategoryDTO>> findAll(){
         List<Category> results = categoryService.findAll();
-        List<CategoryDTO> categories = results.stream().map(x-> new CategoryDTO(x)).toList();
+        List<CategoryDTO> categories = results.stream().map(CategoryDTO::new).toList();
         return ResponseEntity.ok().body(categories);
     }
 

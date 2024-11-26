@@ -52,7 +52,7 @@ public class OrderController {
             order.getProducts().add(orderProduct);
         }
 
-        order = orderService.save(order);
+        orderService.save(order);
 
         return ResponseEntity.ok().build();
     }

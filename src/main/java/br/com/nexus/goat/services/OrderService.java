@@ -29,9 +29,12 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
+    private final String pedido = "Pedido";
+    private final Random random = new Random();
+
     @Transactional
     public Order findById(Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException(pedido));
 
         Hibernate.initialize(order.getProducts());
 
@@ -41,7 +44,7 @@ public class OrderService {
     @Transactional
     public List<Order> findAllByUserId(Long userId) {
         List<Order> results = orderRepository.findAllByAddressUserId(userId)
-                .orElseThrow(() -> new NotFoundException("Pedido"));
+                .orElseThrow(() -> new NotFoundException(pedido));
 
         for (Order order : results) {
             Hibernate.initialize(order.getProducts());
@@ -52,13 +55,11 @@ public class OrderService {
 
     @Transactional
     public Order save(Order order) {
+        order.setOrderNumber(orderRepository.count());
+        OrderStatus[] status = OrderStatus.values();
+        order.setStatus(status[random.nextInt(status.length)]);
+
         try {
-            Random r = new Random();
-            order.setOrderNumber(orderRepository.count());
-            OrderStatus[] status = OrderStatus.values();
-
-            order.setStatus(status[r.nextInt(status.length)]);
-
             return orderRepository.save(order);
         } catch (Exception e) {
             throw new IncompleteDataException();
@@ -67,8 +68,11 @@ public class OrderService {
 
     @Transactional
     public void deleteById(Long id) {
-        orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido"));
-        orderRepository.deleteById(id);
+        try {
+            orderRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException(pedido);
+        }
     }
 
     public Set<OrderProduct> orderProducts(OrderDTO obj) {

@@ -32,7 +32,7 @@ public class AddressController {
         User user = userService.findById(idUser);
 
         body.setUser(user);
-        body = addressService.save(body);
+        addressService.save(body);
 
         return ResponseEntity.ok().build();
     }

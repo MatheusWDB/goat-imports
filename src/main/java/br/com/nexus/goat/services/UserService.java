@@ -23,7 +23,7 @@ public class UserService {
     public User findById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário"));
         Hibernate.initialize(user.getWishes());
-        if (user.getDeleted()) {
+        if (Boolean.TRUE.equals(user.getDeleted())) {
             throw new UserDeletedException();
         }
         return user;
@@ -35,7 +35,7 @@ public class UserService {
         if (user == null) {
             throw new NotFoundException("Usuário");
         }
-        if (user.getDeleted()) {
+        if (Boolean.TRUE.equals(user.getDeleted())) {
             throw new UserDeletedException();
         }
         return user;
@@ -74,6 +74,7 @@ public class UserService {
      * }
      * }
      */
+    @Transactional
     public User notNull(User user, UserDTO updatedUser) {
         if (updatedUser.getName() != null) {
             user.setName(updatedUser.getName());

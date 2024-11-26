@@ -23,9 +23,11 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    private final String produto = "Produto";
+
     @Transactional
     public Product findById(Long id) {
-        Product product = repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
+        Product product = repository.findById(id).orElseThrow(() -> new NotFoundException(produto));
         Hibernate.initialize(product.getCategories());
         return product;
     }
@@ -37,9 +39,9 @@ public class ProductService {
             Hibernate.initialize(product.getCategories());
         }
         if (results.isEmpty()) {
-            throw new NotFoundException("Produto");
+            throw new NotFoundException(produto);
         }
-        return results.stream().map(x -> new ProductDTO(x)).toList();
+        return results.stream().map(ProductDTO::new).toList();
     }
 
     @Transactional
@@ -53,8 +55,11 @@ public class ProductService {
 
     @Transactional
     public void deleteById(Long id) {
-        this.repository.findById(id).orElseThrow(() -> new NotFoundException("Produto"));
+        try {            
         this.repository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException(produto);
+        }
     }
 
     public Product product(Product obj) {

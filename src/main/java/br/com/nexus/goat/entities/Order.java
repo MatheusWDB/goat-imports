@@ -51,6 +51,14 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderProduct> products = new HashSet<>();
 
+    public Order(Long id, Integer status, Integer paymentMethod, Long orderNumber, Instant orderDate) {
+        this.id = id;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.orderNumber = orderNumber;
+        this.orderDate = orderDate;
+    }
+
     public Order() {
     }
 
