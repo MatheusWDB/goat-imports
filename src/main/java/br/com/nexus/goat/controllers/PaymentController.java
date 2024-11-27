@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,9 @@ import br.com.nexus.goat.dto.PaymentDTO;
 @RestController
 @RequestMapping("/process_payment")
 public class PaymentController {
+
+    @Value("${access.token}")
+    private String accessToken;
 
     @PostMapping
     public ResponseEntity<Payment> payment(@RequestBody PaymentDTO request) {
