@@ -9,31 +9,6 @@ body {
 
 
 
-.navbar a img {
-    width: 70px;
-    height: 70px;
-    border-radius: 100%;
-    border: 1;
-    border-color: white;
-
-
-}
-
-.navimg {
-    width: 72px;
-    height: 98px;
-    border-radius: 100%;
-    margin-right: auto;
-    margin-left: 89px;
-
-
-}
-
-.navimg:hover {
-    scale: (1.1);
-    cursor: pointer;
-}
-
 .navbar {
     background-color: #000;
     color: #fff;
@@ -43,53 +18,64 @@ body {
     align-items: center;
     padding: 10px 0;
     box-shadow: 0 4px 2px -2px gray;
-   
+    position: fixed;
     top: 0;
     left: 0;
-   
-    
-}
-
-.navbar a {
+    z-index: 1000;
+  
+  }
+  
+  .navbar a {
     margin-right: 0;
     color: #fff;
     text-decoration: none;
     padding: 10px 15px;
     transition: all 0.3s ease-in-out;
     margin-right: 1px;
-}
-
-.navbar a:hover {
+    margin-left: 0px;
+  }
+  
+  .navbar a:hover {
     transform: scale(1.1);
     text-decoration: underline;
-}
-
-
-    
-.logo {
+  }
+  
+  
+  
+  .navbar a img {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    border: 1;
+    border-color: white;
+  
+  
+  }
+  
+  .logo {
     display: flex;
     gap: 10px;
     margin-top: 20px;
-    margin-right: 1200px;
-    margin-left: 50px;
-}
-
-.logo img {
+    margin-right: 50%;
+    margin-left: 5%;
+  }
+  
+  .logo img {
     width: 72px;
     height: 78px;
-}
-
-.logo p {
+  }
+  
+  .logo p {
     font-family: "Anton", sans-serif;
     font-size: 36px;
     margin-top: 18px;
-}
-
-.logo:hover {
+  }
+  
+  .logo:hover {
     cursor: pointer;
     transform: scale(1.1);
     transition: transform 0.3s ease;
-}
+  }
 
 .imagem{
     background-color: gray;
@@ -101,8 +87,8 @@ body {
 
 .content{
     justify-self: center;
-    
-    
+    margin-left: 1%;
+    margin-top: 4%;
     
     
    
@@ -119,4 +105,25 @@ body {
     justify-self: center;
 }
 
+.conteudo{
+  display: flex;
+  justify-self: center;
+  margin-top: 2%;
+  
+  
+}
 
+.content input{
+  width: 12%;
+}
+
+.btn{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  justify-content: center;
+  justify-self: center;
+}
+
+.container{
+  margin-top: 12%;
+}

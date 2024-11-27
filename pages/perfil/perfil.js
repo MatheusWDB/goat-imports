@@ -42,7 +42,7 @@ cep.addEventListener('focusout', async () => {
     }
 })
 
-const lista = document.querySelector('#Modal3>.modal-content3')
+const lista = document.querySelector('#modal3>.btnmodal3>.modal-content3')
 
 const button2 = document.createElement('button')
 button2.type = 'button'
@@ -279,13 +279,12 @@ function closeModal2() {
     document.getElementById('Modal2').style.display = 'none';
 }
 
+
 function OpenModal3() {
     buscarTodosEndereçosPorIdUsuario()
-    document.getElementById('Modal3').style.display = 'flex';
+    document.getElementById('modal3').style.display = 'flex';
 }
 
-function closeModal3() {
-    document.getElementById('Modal3').style.display = 'none';
+function closeModal3(){
+    document.getElementById('modal3').style.display = 'none';
 }
-
-

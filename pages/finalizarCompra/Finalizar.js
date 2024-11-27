@@ -1,4 +1,28 @@
 // MERCADO PAGO
+/*
+const cartaoAleatorio = [
+    {
+        numeroDoCartao: "5031 4332 1540 6351",
+        codigoDeSeguranca: "123"
+    },
+    {
+        numeroDoCartao: "4235 6477 2802 5682",
+        codigoDeSeguranca: "123"
+    },
+    {
+        numeroDoCartao: "3753 651535 56885",
+        codigoDeSeguranca: "1234"
+    }
+]
+const titulatAleatorio = ["APRO", "OTHE", "CONT"]
+const cartaoEscolhido = cartaoAleatorio[Math.floor(Math.random() * 3)]
+const titularEscolhido = titulatAleatorio[Math.floor(Math.random() * 3)]
+const numeroDoCartao = document.getElementById('cardNumber')
+const dataDeExpiracao = document.getElementById('expirationDate')
+const codigoDeSeguranca = document.getElementById('securityCode')
+const titularDoCartao = document.getElementById('cardholderName')
+*/
+
 const mp = new MercadoPago("TEST-d5fee87b-795e-4498-97db-e1d2a7782aa5", {
     local: 'pt-BR'
 });
@@ -11,25 +35,24 @@ const renderPaymentBrick = async (bricksBuilder) => {
             "amount" é a quantia total a pagar por todos os meios de pagamento com exceção da Conta Mercado Pago e Parcelas sem cartão de crédito, que têm seus valores de processamento determinados no backend através do "preferenceId"
             */
             amount: 100,
-            preferenceId: "<PREFERENCE_ID>",
             payer: {
                 entityType: "individual",
-                firstName: "",
-                lastName: "",
-                email: "matheus@gmail.com",
+                firstName: "Bianca",
+                lastName: "Santos Carvalho",
+                email: "princesinhalinda123@gmail.com",
                 identification: {
                     type: 'CPF',
                     number: '12345678909',
                 },
                 address: {
-                    zipCode: '<PAYER_ZIP_CODE_HERE>',
-                    federalUnit: '<PAYER_FED_UNIT_HERE>',
-                    city: '<PAYER_CITY_HERE>',
-                    neighborhood: '<PAYER_NEIGHBORHOOD_HERE>',
-                    streetName: '<PAYER_STREET_NAME_HERE>',
-                    streetNumber: '<PAYER_STREET_NUMBER_HERE>',
-                    complement: '<PAYER_COMPLEMENT_HERE>',
-                }
+                    zipCode: '49156631',
+                    federalUnit: 'SE',
+                    city: 'Nossa Senhora do Socorro',
+                    neighborhood: 'São Brás',
+                    streetName: 'Praça da Sé',
+                    streetNumber: '54',
+                    complement: '',
+                },
             }
         },
         customization: {
@@ -67,9 +90,18 @@ const renderPaymentBrick = async (bricksBuilder) => {
                 */
             },
             onSubmit: async ({ selectedPaymentMethod, formData }) => {
+                var url
+                if (selectedPaymentMethod == "debit_card" || selectedPaymentMethod == "credit_card") {
+                    url = "http://localhost:8080/process_payment/card"
+                } else if (selectedPaymentMethod == "ticket") {
+                    url = "http://localhost:8080/process_payment/ticket"
+                } else if (selectedPaymentMethod == "bank_transfer") {
+                    url = "http://localhost:8080/process_payment/pix"
+                }
+
                 // callback chamado quando há click no botão de envio de dados
                 return new Promise((resolve, reject) => {
-                    fetch("http://localhost:8080/process_payment", {
+                    fetch(url, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -101,6 +133,7 @@ const renderPaymentBrick = async (bricksBuilder) => {
             }
         }
     };
+
     window.paymentBrickController = await bricksBuilder.create(
         "payment",
         "paymentBrick_container",
@@ -124,8 +157,8 @@ function renderizarStatusDePagamento(paymentId) {
                     }
                 },
                 backUrls: {
-                    'error': `${window.location.origin}`,
-                    'return': `${window.location.origin}`
+                    'error': `${window.location.origin}/pages/finalizarCompra/Finalizar.html`,
+                    'return': `${window.location.origin}/pages/home/home.html`
                 }
             },
             callbacks: {
@@ -141,44 +174,6 @@ function renderizarStatusDePagamento(paymentId) {
     };
     renderStatusScreenBrick(bricksBuilder);
 }
-
-/* 
-const cartaoAleatorio = [
-    {
-        numeroDoCartao: "5031 4332 1540 6351",
-        dataDeExpiracao: "11/25",
-        codigoDeSeguranca: "123"
-    },
-    {
-        numeroDoCartao: "4235 6477 2802 5682",
-        dataDeExpiracao: "11/25",
-        codigoDeSeguranca: "123"
-    },
-    {
-        numeroDoCartao: "3753 651535 56885",
-        dataDeExpiracao: "11/25",
-        codigoDeSeguranca: "1234"
-    }
-]
- 
-const titulatAleatorio = ["APRO", "OTHE", "CONT", "FUND"]
- 
-const cartaoEscolhido = cartaoAleatorio[Math.floor(Math.random() * 3)]
-const titularEscolhido = titulatAleatorio[Math.floor(Math.random() * 4)]
- 
-const numeroDoCartao = document.getElementById('form-checkout__cardNumber')
-numeroDoCartao.value = cartaoEscolhido.numeroDoCartao
-const dataDeExpiracao = document.getElementById('form-checkout__expirationDate')
-dataDeExpiracao.value = cartaoEscolhido.dataDeExpiracao
-const codigoDeSeguranca = document.getElementById('form-checkout__securityCode')
-codigoDeSeguranca.value = cartaoEscolhido.codigoDeSeguranca
-const titularDoCartao = document.getElementById('form-checkout__cardholderName')
-titularDoCartao.value = titularEscolhido
-const numeroDoDocumento = document.getElementById('form-checkout__identificationNumber')
-numeroDoDocumento.value = "12345678909"
- 
-*/
-
 // MERCADO PAGO
 
 
@@ -199,6 +194,7 @@ var items = {
         }
     ]
 }
+
 // INICIA ANTES DE TUDO
 //checkAuthUserId()
 // INICIA ANTES DE TUDO

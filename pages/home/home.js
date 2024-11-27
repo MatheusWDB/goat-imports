@@ -1,5 +1,19 @@
 // INICIA ANTES DE TUDO
 checkAuthUserId()
+
+function checkAuthUserId() {
+    userId = localStorage.getItem('authUserId');
+    console.log(userId)
+
+    if (!userId) {
+        alert("Usuário não autenticado. Redirecionando para a página de login.")
+        logout()
+    } else {
+        console.log("userId carregado com sucesso")
+        buscarTodasCategorias()
+        buscarTodosProdutos()
+    }
+}
 // INICIA ANTES DE TUDO
 
 var userId
@@ -9,19 +23,7 @@ var categories
 const catalogo = document.getElementById('catalogo');
 const categorias = document.getElementById('categoria');
 
-function checkAuthUserId() {
-    userId = localStorage.getItem('authUserId');
-    console.log(userId)
 
-    if (!userId) {
-        alert("Usuário não autenticado. Redirecionando para a página de login.")
-        window.location.href = "../../index.html";
-    } else {
-        console.log("userId carregado com sucesso")
-        buscarTodasCategorias()
-        buscarTodosProdutos()
-    }
-}
 
 async function buscarTodasCategorias() {
     try {
@@ -71,11 +73,11 @@ const renderizarListaCategorias = (categories) => {
     categories.forEach(category => {
         const button = document.createElement('button')
         button.classList.add('button-categoria')
-        
+
         button.onclick = () => filtro(category.id)
 
         const card = document.createElement('button')
-        card.classList.add('card')
+        card.classList.add('cardcategoria')
         card.textContent = category.name
 
         button.appendChild(card)
@@ -102,7 +104,7 @@ const renderizarListaProdutos = (products) => {
     products.forEach(product => {
         const button = document.createElement('button')
         button.classList.add('button-card')
-        button.onclick = () => selecionarProduto(card.id)
+        button.onclick = () => selecionarProduto(product.id)
 
         const card = document.createElement('div')
         card.id = product.id
@@ -110,19 +112,16 @@ const renderizarListaProdutos = (products) => {
 
         const nome = document.createElement('p')
         nome.textContent = product.name
-        const descricao = document.createElement('p')
-        descricao.textContent = product.description
+        nome.classList.add('nomeProduto')
+
         const preco = document.createElement('p')
         preco.textContent = "R$ " + product.price.toString().replace(".", ",")
-        const tamanho = document.createElement('p')
-        tamanho.textContent = product.size
-        const estoque = document.createElement('p')
-        estoque.textContent = product.stock
+        preco.classList.add('precoProduto')
+
         const imagem = document.createElement('img');
         imagem.src = product.imgUrl;
         imagem.alt = product.name;
-        imagem.style.width = "100%";
-
+        imagem.classList.add('imgProduto');
 
         card.appendChild(imagem);
         card.appendChild(nome);
@@ -164,4 +163,9 @@ function scrollRightCategory() {
         left: 200, // A largura do seu card 
         behavior: 'smooth'
     });
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "../../index.html"
 }

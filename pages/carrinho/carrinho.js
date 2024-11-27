@@ -23,3 +23,7 @@ function confirmarCompra() {
     // Redirecionar para a outra página
     window.location.href = "../finalizarCompra/Finalizar.html";
 }
+
+function voltarHome() {
+    location.href = "../home/home.html"
+}

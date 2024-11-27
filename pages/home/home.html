@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
@@ -12,38 +12,36 @@
 <body>
   <nav class="navbar">
 
-
     <div class="logo">
       <img src="../../imagens/logo2.png" alt="Goat">
       <p>GOAT</p>
     </div>
 
-
-    <a href="../perfil/perfil.html"><img src="../../imagens/perfil.jpeg" alt="perfil"></a>
+    <a href="../perfil/perfil.html"><img src="../../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
     <a href="../carrinho/carrinho.html">Carrinho</a>
-    <a href="../../index.html">Sair</a>
+    <a onclick="logout()" class="logout">Sair</a>
   </nav>
 
   <div class="categoria-container">
-    
-    
+
     <div class="categoria" id="categoria">
       <!--<div class="card">Produto 1</div>-->
     </div>
 
     <p>categoria selecionada:</p>
-    
+
   </div>
 
   <div class="catalogo-container">
-    
+
     <button class="prev" onclick=scrollLeftProduct()>&#10094;</button>
     <div class="catalogo" id="catalogo">
       <!--<div class="card">Produto 1</div>-->
     </div>
     <button class="next" onclick=scrollRightProduct()>&#10095;</button>
-  </div>
 
+  </div>
+  <p class="text-catalago">Outros Produtos:</p>
   <script src="home.js"></script>
 </body>
 

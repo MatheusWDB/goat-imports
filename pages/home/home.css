@@ -9,6 +9,8 @@ body {
 
 }
 
+
+
 .navbar {
   background-color: #000;
   color: #fff;
@@ -18,7 +20,7 @@ body {
   align-items: center;
   padding: 10px 0;
   box-shadow: 0 4px 2px -2px gray;
-  
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -45,10 +47,10 @@ body {
 .navbar a img {
   width: 70px;
   height: 70px;
-  border-radius: 100%;
+  border-radius: 50%;
   border: 1;
   border-color: white;
-
+  object-fit: cover;
 
 }
 
@@ -56,7 +58,8 @@ body {
   display: flex;
   gap: 10px;
   margin-top: 20px;
-  margin-right: 1000px;
+  margin-right: 50%;
+  margin-left: 5%;
 }
 
 .logo img {
@@ -112,6 +115,13 @@ body {
   border-radius: 5px;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 320px;
+}
+
+.card img {
+  width: 200px;
+  height: 216.08px;
+  object-fit: cover;
 }
 
 .prev,
@@ -126,7 +136,7 @@ body {
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
-  border-radius: 0 3px 3px 0; 
+  border-radius: 0 3px 3px 0;
   border: none;
   user-select: none;
   z-index: 1;
@@ -144,55 +154,97 @@ body {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.button-card{
-  margin:10px;
+.button-card {
+
+  margin: 10px;
   background-color: transparent;
   border: none;
-  
-  
+
+
 }
 
-.button-card:hover{
+.button-card:hover {
   cursor: pointer;
   transform: scale(1.02);
   transition: transform 0.3s ease;
 }
 
-.button-card:first-child{
+.button-card:first-child {
   margin-left: 55px;
 }
 
 
-.button{
+.button {
   border: none;
 }
 
 
-.button-categoria{
+.button-categoria {
   margin-inline: 10px;
   border: none;
   background-color: transparent;
-  
-  
+
+
 }
 
-.button-categoria button{
+.button-categoria button {
   cursor: pointer;
- 
-  
-  
+
+
+
 }
 
-.categoria{
-  
-  
+.categoria {
+
+
   justify-self: center;
 }
 
-.categoria-container p{
+.categoria-container p {
   font-size: 30px;
   margin-left: 10px;
   font-family: "Anton", sans-serif;
-  
 
+
+}
+
+.categoria-container {
+  margin-top: 11%;
+}
+
+.text-catalago {
+  font-family: "Anton", sans-serif;
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+.imgProduto {
+  width: 10px;
+}
+
+.cardcategoria {
+  flex: 0 0 auto;
+  width: 200px;
+  margin: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 5%;
+
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.nomeProduto {
+  height: 50px;
+  text-align: center;
+}
+
+.precoProduto {
+  height: 20px;
 }
