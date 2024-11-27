@@ -78,8 +78,12 @@ const renderPaymentBrick = async (bricksBuilder) => {
                     })
                         .then((response) => response.json())
                         .then((response) => {
-                            // receber o resultado do pagamento
+                            // receber o resultado do pagamento                         
                             renderizarStatusDePagamento(response.id)
+                            window.scrollTo({
+                                top: 0,
+                                behavior: "smooth" // Rolagem suave
+                            });
                             resolve();
                         })
                         .catch((error) => {

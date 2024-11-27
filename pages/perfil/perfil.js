@@ -167,17 +167,12 @@ async function renderizarEnderecos() {
     lista.innerHTML = ''
 
     enderecos.forEach(endereco => {
-        endereco.zipCode = endereco.zipCode.replace('-', '')
-
         const div2 = document.createElement('div')
         div2.classList.add('enderecos')
         div2.id = endereco.id
 
         const address = document.createElement('p')
-        address.textContent = `${endereco.streetName}, ${endereco.streetNumber} - ${endereco.neighborhood},  ${endereco.city} -  ${endereco.federalUnit} - ${endereco.zipCode}`
-
-        const complemento = document.createElement('p')
-        complemento.textContent = 'Complemento: ' + endereco.complement
+        address.textContent = `${endereco.streetName}, ${endereco.streetNumber}, ${endereco.complement} - ${endereco.neighborhood}, ${endereco.city} - ${endereco.federalUnit}, ${endereco.zipCode}`
 
         const tipo = document.createElement('p')
         tipo.textContent = 'Tipo de Endereço: ' + endereco.type
@@ -188,7 +183,6 @@ async function renderizarEnderecos() {
         button.onclick = () => deletarEndereçoPorId(div2.id)
 
         div2.appendChild(address)
-        div2.appendChild(complemento)
         div2.appendChild(tipo)
         div2.appendChild(button)
 
