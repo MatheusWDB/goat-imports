@@ -62,10 +62,10 @@ public class PaymentController {
         OffsetDateTime offsetDateTime = expirationDate.atStartOfDay().atOffset(ZoneOffset.UTC);
 
         PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
-                .transactionAmount(request.getTransactionAmount())
+                .transactionAmount(request.getTransaction_amount())
                 .token(request.getToken())
                 .installments(request.getInstallments())
-                .paymentMethodId(request.getPaymentMethodId())
+                .paymentMethodId(request.getPayment_method_id())
                 .dateOfExpiration(offsetDateTime)
                 .payer(
                         PaymentPayerRequest.builder()

@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 public class PaymentDTO {
 
-    private BigDecimal transactionAmount;
+    private BigDecimal transaction_amount;
     private String token;
-    private String issuerId;
-    private String paymentMethodId;
+    private String issuer_id;
+    private String payment_method_id;
     private Integer installments;
     private String description;
     private Payer payer;
@@ -48,20 +48,20 @@ public class PaymentDTO {
         }
     }
 
-    public BigDecimal getTransactionAmount() {
-        return transactionAmount;
+    public BigDecimal getTransaction_amount() {
+        return transaction_amount;
     }
 
     public String getToken() {
         return token;
     }
 
-    public String getIssuerIid() {
-        return issuerId;
+    public String getIssuer_id() {
+        return issuer_id;
     }
 
-    public String getPaymentMethodId() {
-        return paymentMethodId;
+    public String getPayment_method_id() {
+        return payment_method_id;
     }
 
     public Integer getInstallments() {
