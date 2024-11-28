@@ -10,16 +10,16 @@
 </head>
 
 <body>
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
 
-        <div class="logo" onclick="voltarHome()">
+        <div class="logo">
             <img src="../../imagens/logo2.png" alt="Goat">
             <p>GOAT</p>
         </div>
 
-        <a href="#"><img src="/imagens/perfil.jpeg" alt="perfil"></a>
+        <a href="../perfil/perfil.html"><img src="../../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
         <a href="../carrinho/carrinho.html">Carrinho</a>
-        <a href="../index.html">Sair</a>
+        <a onclick="logout()" class="logout">Sair</a>
     </nav>
 
     <main>
@@ -127,13 +127,13 @@
                         </ul>
                         <div class="inputCheck">
 
-                            <input type="radio" id="casa" name="tipo" value="casa">
+                            <input type="radio" id="casa" name="tipo" value="Casa">
                             <label for="casa">Casa</label>
 
-                            <input type="radio" id="apartamento" name="tipo" value="apartamento">
-                            <label for="apartamento">apartamento</label>
+                            <input type="radio" id="apartamento" name="tipo" value="Apartamento">
+                            <label for="apartamento">Apartamento</label>
 
-                            <input type="radio" id="comercio" name="tipo" value="comercio">
+                            <input type="radio" id="comercio" name="tipo" value="Comércio">
                             <label for="comercio">Comércio</label>
 
                         </div>
@@ -152,7 +152,7 @@
         <!-- Listar Endereços -->
         <div class="modal3" id="modal3">
             <div class="btnmodal3">
-                
+
                 <!--NÃO COLOQUE NADA NESSA DIV-->
                 <div class="modal-content3">
                     <div class="enderecos">

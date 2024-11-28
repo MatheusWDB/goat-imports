@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <nav class="navbar">
+  <nav class="navbar" id="navbar">
 
     <div class="logo">
       <img src="../../imagens/logo2.png" alt="Goat">
@@ -28,20 +28,90 @@
       <!--<div class="card">Produto 1</div>-->
     </div>
 
-    <p>categoria selecionada:</p>
+    <p>Produtos:</p>
 
   </div>
 
   <div class="catalogo-container">
 
-    <button class="prev" onclick=scrollLeftProduct()>&#10094;</button>
+
     <div class="catalogo" id="catalogo">
       <!--<div class="card">Produto 1</div>-->
     </div>
-    <button class="next" onclick=scrollRightProduct()>&#10095;</button>
+
 
   </div>
-  <p class="text-catalago">Outros Produtos:</p>
+
+
+  <!--Modal Produto Selecionado-->
+  <div id="modal" class="modal">
+
+    <div id="produtoSelecionado" class="modal-content">
+
+      <div class="conteudoProduto">
+        <img id="imagemProdutoSelecionado" src="../../imagens/perfil.jpeg" alt="" class="imagemProdutoSelecionado">
+
+        <div id="inputProduto" class="inputProduto">
+          <p id="nomeProdutoSelecionado" class="nameProduct"></p>
+          <label for="tamanhoProduto">Selecionar Tamanho:</label>
+
+          <form>
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="P"> <span class="radio-text">P</span>
+            </label>
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="M"> <span class="radio-text">M</span>
+            </label>
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="G"> <span class="radio-text">G</span>
+            </label>
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="GG"> <span class="radio-text">GG</span>
+            </label>
+          </form>
+
+          <p id="precoProdutoSelecionado"></p>
+
+          <label for="quantidade">Quantidade:</label>
+          <input id="quantidade" type="number" name="quantidade" value="0"> <br>
+          <button id="buttonAdicionarAoCarrinho" type="button" class="Addcarrinho">Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="detalheProduto">
+        <table border="1" class="tabela-especifica">
+          <thead>
+            <tr>
+              <th colspan="2">Detalhes:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Marca</td>
+              <td id="marcaProdutoSelecionado"></td>
+            </tr>
+            <tr>
+              <td>Modelo</td>
+              <td id="modeloProdutoSelecionado"></td>
+            </tr>
+            <tr>
+              <td>Cor</td>
+              <td id="corProdutoSelecionado"></td>
+            </tr>
+            <tr>
+              <td>Composição</td>
+              <td id="composicaoProdutoSelecionado"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="buttonExit">
+        <button onclick="closemodal()" class="Exit">Sair</button>
+      </div>
+    </div>
+  </div>
+
   <script src="home.js"></script>
 </body>
 

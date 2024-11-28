@@ -1,5 +1,3 @@
-
-
 const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
@@ -27,7 +25,7 @@ async function Login(event) {
     }
 
     try {
-        const response = await fetch("http://localhost:8080/users/login", {
+        const response = await fetch("https://goatimports.onrender.com/users/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +77,7 @@ async function Registro(event) {
     }
 
     try {
-        const response = await fetch("http://localhost:8080/users/register", {
+        const response = await fetch("https://goatimports.onrender.com/users/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -22,7 +22,7 @@ body {
     top: 0;
     left: 0;
     z-index: 1000;
-  
+    height: 100px;
   }
   
   .navbar a {
@@ -77,13 +77,7 @@ body {
     transition: transform 0.3s ease;
   }
 
-.imagem{
-    background-color: gray;
-    width:300px;   
-    height: 300px;
-    justify-items: center;
-    justify-self: center
-}
+
 
 .content{
     justify-self: center;
@@ -109,6 +103,7 @@ body {
   display: flex;
   justify-self: center;
   margin-top: 2%;
+  border-bottom: 1px solid black;
   
   
 }
@@ -126,4 +121,11 @@ body {
 
 .container{
   margin-top: 12%;
+}
+
+img{
+  height: 200px;
+  width: 200px;
+  border-radius: 15px;
+  margin-right: 10px;
 }

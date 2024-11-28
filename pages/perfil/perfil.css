@@ -19,7 +19,7 @@ h1 {
     align-items: center;
     padding: 10px 0;
     box-shadow: 0 4px 2px -2px gray;
-
+    height: 100px;
     top: 0;
     left: 0;
     z-index: 1000;

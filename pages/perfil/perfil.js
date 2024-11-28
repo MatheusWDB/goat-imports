@@ -78,7 +78,7 @@ function checkAuthUserId() {
 
     if (!userId) {
         alert("Usuário não autenticado. Redirecionando para a página de login.")
-        window.location.href = "../../index.html";
+        logout()
     } else {
         console.log("Token carregado com sucesso")
         buscarUsuarioPorId()
@@ -87,7 +87,7 @@ function checkAuthUserId() {
 
 async function buscarUsuarioPorId() {
     try {
-        const response = await fetch(`http://localhost:8080/users/findById/${userId}`, {
+        const response = await fetch(`https://goatimports.onrender.com/users/findById/${userId}`, {
             method: 'GET',
         })
 
@@ -120,7 +120,7 @@ async function registrarEndereço() {
         type: selected.value
     }
     try {
-        const response = await fetch(`http://localhost:8080/addresses/create/${userId}`, {
+        const response = await fetch(`https://goatimports.onrender.com/addresses/create/${userId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -144,7 +144,7 @@ async function registrarEndereço() {
 
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
-        const response = await fetch(`http://localhost:8080/addresses/findAllByUserId/${userId}`, {
+        const response = await fetch(`https://goatimports.onrender.com/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
         })
 
@@ -192,7 +192,7 @@ async function renderizarEnderecos() {
 
 async function deletarEndereçoPorId(addressId) {
     try {
-        const response = await fetch(`http://localhost:8080/addresses/delete/${addressId}`, {
+        const response = await fetch(`https://goatimports.onrender.com/addresses/delete/${addressId}`, {
             method: 'DELETE'
         })
 
@@ -248,7 +248,7 @@ async function atualizarUsuario() {
         password: password.value
     }
     try {
-        const response = await fetch(`http://localhost:8080/users/update/${userId}`, {
+        const response = await fetch(`https://goatimports.onrender.com/users/update/${userId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -287,4 +287,9 @@ function OpenModal3() {
 
 function closeModal3(){
     document.getElementById('modal3').style.display = 'none';
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "../../index.html"
 }

@@ -49,7 +49,7 @@ const renderPaymentBrick = async (bricksBuilder) => {
                     federalUnit: 'SE',
                     city: 'Nossa Senhora do Socorro',
                     neighborhood: 'São Brás',
-                    streetName: 'Praça da Sé',
+                    streetName: 'Travessa Ayrton Senna',
                     streetNumber: '54',
                     complement: '',
                 },

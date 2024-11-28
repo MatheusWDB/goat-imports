@@ -1,72 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="carrinho.css">
-    <script src="carrinho.js"></script>
 </head>
 
 <body>
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
 
-
-        <div class="logo" onclick="voltarHome()">
+        <div class="logo">
             <img src="../../imagens/logo2.png" alt="Goat">
             <p>GOAT</p>
         </div>
 
-        
-        
-
-            <a href="../perfil/perfil.html"><img src="../../imagens/perfil.jpeg" alt="perfil" ></a>
-        
-            <a href="../carrinho/carrinho.html">Carrinho</a>
-            <a href="../../index.html">Sair</a>
-        
+        <a href="../perfil/perfil.html"><img src="../../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
+        <a href="../carrinho/carrinho.html">Carrinho</a>
+        <a onclick="logout()" class="logout">Sair</a>
     </nav>
 
     <main>
         <div class="container" id="container">
-            <div class="conteudo">
-                <div class="imagem">
-                    <p>olá
+            <div id="listaDeItens" class="">
 
-                    </p>
-                </div>
-                <div class="content">
-                    <p>nome do produto:</p>
-
-                    <label for="quantidade">Quantidade</label>
-                    <input type="number" class="quantidade" name="quantidade"> <br>
-                    <p>preço:</p>
-                    <button class="botao">remover</button>
-                </div>
             </div>
-            <hr>
-            
-                <div class="conteudo">
-                    <div class="imagem">
-                        <p>olá
-
-                        </p>
-                    </div>
-                    <div class="content">
-                        <p>nome do produto:</p>
-
-                        <label for="quantidade">Quantidade</label>
-                        <input type="number" class="quantidade" name="quantidade"> <br>
-                        <p>preço:</p>
-                        <button class="botao">remover</button>
-                    </div>
-                </div>
-                <div class="btn">
-                    <button>finalizar pedido</button>
-                </div>
+            <div class="btn">
+                <button>finalizar pedido</button>
             </div>
+        </div>
     </main>
+
+    <script src="carrinho.js"></script>
 </body>
 
 </html>
