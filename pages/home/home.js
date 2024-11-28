@@ -28,7 +28,7 @@ const categorias = document.getElementById('categoria');
 
 async function buscarTodasCategorias() {
     try {
-        const response = await fetch("http://localhost:8080/categories/findAll", {
+        const response = await fetch("https://goatimports.onrender.com/categories/findAll", {
             method: 'GET'
         })
 
@@ -49,7 +49,7 @@ async function buscarTodasCategorias() {
 
 async function buscarTodosProdutos() {
     try {
-        const response = await fetch("http://localhost:8080/products/findAll", {
+        const response = await fetch("https://goatimports.onrender.com/products/findAll", {
             method: 'GET',
         })
 
@@ -164,7 +164,7 @@ const selecionarProduto = async (produto) => {
     var features
 
     try {
-        const response = await fetch(`http://localhost:8080/features/findByProductId/${produto.id}`, {
+        const response = await fetch(`https://goatimports.onrender.com/features/findByProductId/${produto.id}`, {
             method: 'GET',
         })
 

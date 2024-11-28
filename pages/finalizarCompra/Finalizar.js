@@ -92,11 +92,11 @@ const renderPaymentBrick = async (bricksBuilder) => {
             onSubmit: async ({ selectedPaymentMethod, formData }) => {
                 var url
                 if (selectedPaymentMethod == "debit_card" || selectedPaymentMethod == "credit_card") {
-                    url = "http://localhost:8080/process_payment/card"
+                    url = "https://goatimports.onrender.com/process_payment/card"
                 } else if (selectedPaymentMethod == "ticket") {
-                    url = "http://localhost:8080/process_payment/ticket"
+                    url = "https://goatimports.onrender.com/process_payment/ticket"
                 } else if (selectedPaymentMethod == "bank_transfer") {
-                    url = "http://localhost:8080/process_payment/pix"
+                    url = "https://goatimports.onrender.com/process_payment/pix"
                 }
 
                 // callback chamado quando há click no botão de envio de dados

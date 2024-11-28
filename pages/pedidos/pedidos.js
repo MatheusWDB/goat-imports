@@ -1,12 +1,9 @@
 // INICIA ANTES DE TUDO
+const userId = localStorage.getItem('authUserId');
 checkAuthUserId()
 // INICIA ANTES DE TUDO
-var userId
 
 function checkAuthUserId() {
-    userId = localStorage.getItem('authUserId');
-    console.log(userId)
-
     if (!userId) {
         alert("Usuário não autenticado. Redirecionando para a página de login.")
         window.location.href = "../../index.html";
@@ -18,7 +15,7 @@ function checkAuthUserId() {
 
 async function buscarTodosPedidos() {
     try {
-        const response = await fetch(`http://localhost:8080/orders/findAllByUserId/${userId}`, {
+        const response = await fetch(`https://goatimports.onrender.com/orders/findAllByUserId/${userId}`, {
             method: 'Get'
         })
 
