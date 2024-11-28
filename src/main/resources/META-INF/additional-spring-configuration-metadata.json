@@ -13,5 +13,15 @@
     "name": "cors.origins",
     "type": "java.lang.String",
     "description": "A description for 'cors.origins'"
+  },
+  {
+    "name": "access.token",
+    "type": "java.lang.String",
+    "description": "A description for 'access.token'"
+  },
+  {
+    "name": "user.test",
+    "type": "java.lang.String",
+    "description": "A description for 'user.test'"
   }
 ]}

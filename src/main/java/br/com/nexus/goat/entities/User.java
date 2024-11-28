@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -72,7 +73,7 @@ public class User implements Serializable {
         this.email = email;
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
-        this.password = password;
+        this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());;
     }
 
     public Long getId() {
