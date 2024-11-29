@@ -75,7 +75,7 @@ public class OrderService {
         for (Items x : obj.getItems()) {
             Product product = productService.findById(x.getIdProduct());
 
-            OrderProduct orderProduct = new OrderProduct(null, product, x.getQuantity());
+            OrderProduct orderProduct = new OrderProduct(null, product, x.getSize(), x.getQuantity());
 
             orderProducts.add(orderProduct);
         }

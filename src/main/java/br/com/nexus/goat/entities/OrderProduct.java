@@ -17,14 +17,18 @@ public class OrderProduct implements Serializable {
     private OrderProductPK id = new OrderProductPK();
 
     @Column(nullable = false)
+    private String size;
+
+    @Column(nullable = false)
     private Integer quantity;
 
     public OrderProduct() {
     }
 
-    public OrderProduct(Order order, Product product, Integer quantity) {
+    public OrderProduct(Order order, Product product, String size, Integer quantity) {
         id.setOrder(order);
         id.setProduct(product);
+        this.size = size;
         this.quantity = quantity;
     }
 
@@ -48,6 +52,14 @@ public class OrderProduct implements Serializable {
 
     public void setProduct(Product product) {
         id.setProduct(product);
+    }
+
+    public String getSize() {
+        return size;
+    }
+    
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public Integer getQuantity() {
