@@ -14,6 +14,7 @@ public class OrderDTO {
     public static class Items {
         private Long idProduct;
         private Integer quantity;
+        private String size;
 
         public Long getIdProduct() {
             return idProduct;
@@ -21,6 +22,10 @@ public class OrderDTO {
 
         public Integer getQuantity() {
             return quantity;
+        }
+
+        public String getSize() {
+            return size;
         }
     }
 

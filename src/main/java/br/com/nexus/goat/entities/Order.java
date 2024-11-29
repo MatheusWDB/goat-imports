@@ -30,6 +30,9 @@ public class Order implements Serializable {
     private Long id;
 
     @Column(nullable = false)
+    private String size;
+
+    @Column(nullable = false)
     private Integer status;
 
     @Column(nullable = false)
@@ -64,6 +67,14 @@ public class Order implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public OrderStatus getStatus() {
