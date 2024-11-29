@@ -1,4 +1,7 @@
 // INICIA ANTES DE TUDO
+
+const urlLocal = "http://localhost:8080"
+const urlApi = "https://goatimports.onrender.com"
 checkAuthUserId()
 // INICIA ANTES DE TUDO
 
@@ -90,7 +93,7 @@ function checkAuthUserId() {
 async function buscarUsuarioPorId() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/users/findById/${userId}`, {
+        const response = await fetch(`${urlApi}/users/findById/${userId}`, {
             method: 'GET',
         })
 
@@ -126,7 +129,7 @@ async function registrarEndereço() {
     }
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`http://localhost:8080/addresses/create/${userId}`, {
+        const response = await fetch(`${urlLocal}/addresses/create/${userId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -153,7 +156,7 @@ async function registrarEndereço() {
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/addresses/findAllByUserId/${userId}`, {
+        const response = await fetch(`${urlApi}/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
         })
 
@@ -204,7 +207,7 @@ async function renderizarEnderecos() {
 async function deletarEndereçoPorId(addressId) {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/addresses/delete/${addressId}`, {
+        const response = await fetch(`${urlApi}/addresses/delete/${addressId}`, {
             method: 'DELETE'
         })
 
@@ -263,7 +266,7 @@ async function atualizarUsuario() {
     }
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/users/update/${userId}`, {
+        const response = await fetch(`${urlApi}/users/update/${userId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"

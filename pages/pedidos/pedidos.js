@@ -1,6 +1,8 @@
 // INICIA ANTES DE TUDO
 const userId = localStorage.getItem('authUserId');
 var orders
+const urlLocal = "http://localhost:8080"
+const urlApi = "https://goatimports.onrender.com"
 checkAuthUserId()
 // INICIA ANTES DE TUDO
 
@@ -17,7 +19,7 @@ function checkAuthUserId() {
 async function buscarTodosPedidos() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/orders/findAllByUserId/${userId}`, {
+        const response = await fetch(`${urlApi}/orders/findAllByUserId/${userId}`, {
             method: 'Get'
         })
 

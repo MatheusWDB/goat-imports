@@ -1,3 +1,6 @@
+
+const urlLocal = "http://localhost:8080"
+const urlApi = "https://goatimports.onrender.com"
 var items = JSON.parse(localStorage.getItem('carrinho'))
 console.log(items)
 const order = {}
@@ -132,11 +135,11 @@ const renderPaymentBrick = async (bricksBuilder) => {
                 }
                 var url
                 if (selectedPaymentMethod == "debit_card" || selectedPaymentMethod == "credit_card") {
-                    url = "https://goatimports.onrender.com/process_payment/card"
+                    url = `${urlApi}/process_payment/card`
                 } else if (selectedPaymentMethod == "ticket") {
-                    url = "https://goatimports.onrender.com/process_payment/ticket"
+                    url = `${urlApi}/process_payment/ticket`
                 } else if (selectedPaymentMethod == "bank_transfer") {
-                    url = "https://goatimports.onrender.com/process_payment/pix"
+                    url = `${urlApi}/process_payment/pix`
                 }
 
                 // callback chamado quando há click no botão de envio de dados
@@ -241,7 +244,7 @@ async function finalizarPedido() {
     console.log(order)
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`http://localhost:8080/orders/create/${addressId}`, {
+        const response = await fetch(`${urlLocal}/orders/create/${addressId}`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -267,7 +270,7 @@ async function finalizarPedido() {
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/addresses/findAllByUserId/${userId}`, {
+        const response = await fetch(`${urlApi}/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
         })
 

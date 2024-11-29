@@ -2,7 +2,9 @@
 const userId = localStorage.getItem('authUserId');
 var items = localStorage.getItem('carrinho') === null ?
     [] :
-    JSON.parse(localStorage.getItem('carrinho'))
+    JSON.parse(localStorage.getItem('carrinho'))    
+const urlLocal = "http://localhost:8080"
+const urlApi = "https://goatimports.onrender.com"
 checkAuthUserId()
 const radios = document.querySelectorAll('input[name="tamanho"]');
 
@@ -30,7 +32,7 @@ const categorias = document.getElementById('categoria');
 async function buscarTodasCategorias() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch("https://goatimports.onrender.com/categories/findAll", {
+        const response = await fetch(`${urlApi}/categories/findAll`, {
             method: 'GET'
         })
 
@@ -54,7 +56,7 @@ async function buscarTodasCategorias() {
 async function buscarTodosProdutos() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch("https://goatimports.onrender.com/products/findAll", {
+        const response = await fetch(`${urlApi}/products/findAll`, {
             method: 'GET',
         })
 
@@ -193,7 +195,7 @@ const selecionarProduto = async (produto) => {
 
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/features/findByProductId/${produto.id}`, {
+        const response = await fetch(`${urlApi}/features/findByProductId/${produto.id}`, {
             method: 'GET',
         })
 
