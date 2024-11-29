@@ -1,12 +1,10 @@
 package br.com.nexus.goat.enums;
 
 public enum PaymentMethod {
-    PIX(1),
+    BANK_TRANSFER(1),
     CREDIT_CARD(2),
     DEBIT_CARD(3),
-    CASH(4),
-    BANK_TRANSFER(5),
-    PAYPAL(6);
+    TICKET(4);
 
     private int code;
 

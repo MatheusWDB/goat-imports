@@ -40,6 +40,7 @@ public class OrderController {
         Order order = new Order();        
 
         order.setPaymentMethod(body.getPaymentMethod());
+        order.setStatus(body.getStatus());
         order.setAddress(address);
 
         order = orderService.save(order);

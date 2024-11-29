@@ -2,7 +2,6 @@ package br.com.nexus.goat.services;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import org.hibernate.Hibernate;
@@ -15,7 +14,6 @@ import br.com.nexus.goat.dto.OrderDTO.Items;
 import br.com.nexus.goat.entities.Order;
 import br.com.nexus.goat.entities.OrderProduct;
 import br.com.nexus.goat.entities.Product;
-import br.com.nexus.goat.enums.OrderStatus;
 import br.com.nexus.goat.exceptions.IncompleteDataException;
 import br.com.nexus.goat.exceptions.NotFoundException;
 import br.com.nexus.goat.repositories.OrderRepository;
@@ -30,7 +28,6 @@ public class OrderService {
     private ProductService productService;
 
     private final String pedido = "Pedido";
-    private final Random random = new Random();
 
     @Transactional
     public Order findById(Long id) {
@@ -56,9 +53,6 @@ public class OrderService {
     @Transactional
     public Order save(Order order) {
         order.setOrderNumber(orderRepository.count());
-        OrderStatus[] status = OrderStatus.values();
-        order.setStatus(status[random.nextInt(status.length)]);
-
         try {
             return orderRepository.save(order);
         } catch (Exception e) {
