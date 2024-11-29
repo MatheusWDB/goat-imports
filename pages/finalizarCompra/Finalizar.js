@@ -1,3 +1,29 @@
+var items = JSON.parse(localStorage.getItem('carrinho'))
+console.log(items)
+const order = {}
+order.items = []
+items.forEach(item => {
+    const itemInfo = { idProduct: item.id, size: item.size, quantity: item.quantity }
+    order.items.push(itemInfo)
+});
+console.log(order)
+var addressId = 1
+const userId = localStorage.getItem('authUserId');
+
+
+// INICIA ANTES DE TUDO
+//checkAuthUserId()
+// INICIA ANTES DE TUDO
+
+function checkAuthUserId() {
+    console.log(userId)
+    if (!userId) {
+        alert("Usuário não autenticado. Redirecionando para a página de login.")
+        window.location.href = "../../index.html";
+    } else {
+        buscarTodosEndereçosPorIdUsuario(userId)
+    }
+}
 // MERCADO PAGO
 /*
 const cartaoAleatorio = [
@@ -90,6 +116,20 @@ const renderPaymentBrick = async (bricksBuilder) => {
                 */
             },
             onSubmit: async ({ selectedPaymentMethod, formData }) => {
+                switch (selectedPaymentMethod) {
+                    case "bank_transfer":
+                        order.paymentMethod = 1
+                        break
+                    case "credit_card":
+                        order.paymentMethod = 2
+                        break
+                    case "debit_card":
+                        order.paymentMethod = 3
+                        break
+                    case "ticket":
+                        order.paymentMethod = 4
+                        break
+                }
                 var url
                 if (selectedPaymentMethod == "debit_card" || selectedPaymentMethod == "credit_card") {
                     url = "https://goatimports.onrender.com/process_payment/card"
@@ -100,6 +140,7 @@ const renderPaymentBrick = async (bricksBuilder) => {
                 }
 
                 // callback chamado quando há click no botão de envio de dados
+                document.getElementById('loading-overlay').style.display = 'flex';
                 return new Promise((resolve, reject) => {
                     fetch(url, {
                         method: "POST",
@@ -110,8 +151,24 @@ const renderPaymentBrick = async (bricksBuilder) => {
                     })
                         .then((response) => response.json())
                         .then((response) => {
-                            // receber o resultado do pagamento                         
+                            // receber o resultado do pagamento  
+                            switch (response.status) {
+                                case "in_process":
+                                    order.status = 3
+                                    break
+                                case "approved":
+                                    order.status = 2
+                                    break
+                                case "rejected":
+                                    order.status = 4
+                                    break
+                                case "pending":
+                                    order.status = 1
+                                    break
+                            }
+                            document.getElementById('loading-overlay').style.display = 'none';
                             renderizarStatusDePagamento(response.id)
+                            finalizarPedido()
                             window.scrollTo({
                                 top: 0,
                                 behavior: "smooth" // Rolagem suave
@@ -120,6 +177,7 @@ const renderPaymentBrick = async (bricksBuilder) => {
                         })
                         .catch((error) => {
                             // manejar a resposta de erro ao tentar criar um pagamento
+                            document.getElementById('loading-overlay').style.display = 'none';
                             reject();
                         });
                 });
@@ -177,51 +235,18 @@ function renderizarStatusDePagamento(paymentId) {
 // MERCADO PAGO
 
 
-var userId
-var items = {
-    items: [
-        {
-            "idProduct": 1,
-            "quantity": 10
-        },
-        {
-            "idProduct": 2,
-            "quantity": 5
-        },
-        {
-            "idProduct": 3,
-            "quantity": 15
-        }
-    ]
-}
 
-// INICIA ANTES DE TUDO
-//checkAuthUserId()
-// INICIA ANTES DE TUDO
-
-function checkAuthUserId() {
-    userId = localStorage.getItem('authUserId');
-    console.log(userId)
-
-    if (!userId) {
-        alert("Usuário não autenticado. Redirecionando para a página de login.")
-        window.location.href = "../../index.html";
-    } else {
-        console.log(items)
-    }
-}
 
 async function finalizarPedido() {
-    const addressId = 1
-    items.paymentMethod = 1
-    console.log(items)
+    console.log(order)
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`http://localhost:8080/orders/create/${addressId}`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(items)
+            body: JSON.stringify(order)
         })
 
         if (response.ok) {
@@ -231,9 +256,61 @@ async function finalizarPedido() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
+}
+
+async function buscarTodosEndereçosPorIdUsuario() {
+    try {
+        document.getElementById('loading-overlay').style.display = 'flex';
+        const response = await fetch(`https://goatimports.onrender.com/addresses/findAllByUserId/${userId}`, {
+            method: 'GET'
+        })
+
+        if (response.ok) {
+            const data = await response.json()
+            const enderecos = data;
+            renderizarEnderecos(enderecos)
+        } else {
+            const error = await response.json();
+            console.log(error)
+            alert(error.message);
+        }
+        document.getElementById('loading-overlay').style.display = 'none';
+    } catch (error) {
+        console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
+        alert('Erro no servidor!' + error.message);
+    }
+}
+
+async function renderizarEnderecos(enderecos) {
+    lista.innerHTML = ''
+    enderecos.forEach(endereco => {
+        const div2 = document.createElement('div')
+        div2.classList.add('enderecos')
+        div2.id = endereco.id
+
+        const address = document.createElement('p')
+        address.textContent = `${endereco.streetName}, ${endereco.streetNumber}, ${endereco.complement} - ${endereco.neighborhood}, ${endereco.city} - ${endereco.federalUnit}, ${endereco.zipCode}`
+
+        const tipo = document.createElement('p')
+        tipo.textContent = 'Tipo de Endereço: ' + endereco.type
+
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.textContent = 'Escolher'
+        button.onclick = () =>
+
+            div2.appendChild(address)
+        div2.appendChild(tipo)
+        div2.appendChild(button)
+
+        lista.appendChild(div2)
+    });
 }
 

@@ -4,6 +4,7 @@ var items = localStorage.getItem('carrinho') === null ?
     [] :
     JSON.parse(localStorage.getItem('carrinho'))
 checkAuthUserId()
+const radios = document.querySelectorAll('input[name="tamanho"]');
 
 function checkAuthUserId() {
     if (!userId) {
@@ -28,6 +29,7 @@ const categorias = document.getElementById('categoria');
 
 async function buscarTodasCategorias() {
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch("https://goatimports.onrender.com/categories/findAll", {
             method: 'GET'
         })
@@ -41,14 +43,17 @@ async function buscarTodasCategorias() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }
 
 async function buscarTodosProdutos() {
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch("https://goatimports.onrender.com/products/findAll", {
             method: 'GET',
         })
@@ -62,13 +67,28 @@ async function buscarTodosProdutos() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }
 
 const renderizarListaCategorias = (categories) => {
+    categorias.innerHTML = ''
+
+    const button = document.createElement('button')
+    button.classList.add('button-categoria')
+    button.onclick = () => filtro('all')
+
+    const card = document.createElement('button')
+    card.classList.add('cardcategoria')
+    card.textContent = 'Tudo'
+
+    button.appendChild(card)
+    categorias.appendChild(button)
+
     categories.forEach(category => {
         const button = document.createElement('button')
         button.classList.add('button-categoria')
@@ -80,21 +100,25 @@ const renderizarListaCategorias = (categories) => {
         card.textContent = category.name
 
         button.appendChild(card)
-
         categorias.appendChild(button)
     });
 }
 
 const filtro = (idCategoria) => {
-    let productFilter = []
-    products.forEach(product => {
-        product.categories.forEach(idCategory => {
-            if (idCategory === idCategoria) {
-                productFilter.push(product)
-            }
-        })
-    });
-    renderizarListaProdutos(productFilter)
+    if (idCategoria === 'all') {
+        renderizarListaProdutos(products)
+    } else {
+        let productFilter = []
+        products.forEach(product => {
+            product.categories.forEach(idCategory => {
+                if (idCategory === idCategoria) {
+                    productFilter.push(product)
+                }
+            })
+        });
+        renderizarListaProdutos(productFilter)
+    }
+
 }
 
 const renderizarListaProdutos = (products) => {
@@ -135,6 +159,7 @@ const renderizarListaProdutos = (products) => {
 
 const selecionarProduto = async (produto) => {
     document.getElementById('modal').style.display = 'flex';
+    radios.forEach(radio => radio.checked = false);
     var quantidadeInput = document.getElementById("quantidade")
 
     const button = document.getElementById('buttonAdicionarAoCarrinho')
@@ -143,8 +168,11 @@ const selecionarProduto = async (produto) => {
         var quantidade = parseInt(quantidadeInput.value)
         if (!tamanhoSelecionado) {
             alert("Escolha o tamanho da peça!")
+            quantidadeInput.value = 0            
         } else if (quantidade <= 0) {
             alert("Defina a quantidade!")
+            quantidadeInput.value = 0
+            radios.forEach(radio => radio.checked = false);
         } else {
             adicionarAoCarrinho(produto, quantidade, quantidadeInput, tamanhoSelecionado)
         }
@@ -164,6 +192,7 @@ const selecionarProduto = async (produto) => {
     var features
 
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`https://goatimports.onrender.com/features/findByProductId/${produto.id}`, {
             method: 'GET',
         })
@@ -176,8 +205,10 @@ const selecionarProduto = async (produto) => {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 
@@ -211,8 +242,7 @@ function adicionarAoCarrinho(produto, quantidade, quantidadeInput, tamanhoSeleci
         product.quantity = quantidade
         items.push(product)
     }
-    localStorage.setItem('carrinho', JSON.stringify(items))    
-    const radios = document.querySelectorAll('input[name="tamanho"]');
+    localStorage.setItem('carrinho', JSON.stringify(items))
     radios.forEach(radio => radio.checked = false);
     document.getElementById('modal').style.display = 'none';
 }

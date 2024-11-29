@@ -10,6 +10,10 @@
 </head>
 
 <body>
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <p>Carregando...</p>
+  </div>
   <nav class="navbar" id="navbar">
 
     <div class="logo">
@@ -17,7 +21,7 @@
       <p>GOAT</p>
     </div>
 
-    <a href="../perfil/perfil.html"><img src="../../imagens/logo2.png" alt="perfil" id="imgPerfil"></a>
+    <a href="../perfil/perfil.html"><img src="../../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
     <a href="../carrinho/carrinho.html">Carrinho</a>
     <a onclick="logout()" class="logout">Sair</a>
   </nav>
@@ -25,7 +29,9 @@
   <div class="categoria-container">
 
     <div class="categoria" id="categoria">
-      <!--<div class="card">Produto 1</div>-->
+      <button type="button" class="button-categoria">
+        <div class="cardcategoria">Tudo</div>
+      </button>
     </div>
 
     <p>Produtos:</p>
@@ -33,13 +39,9 @@
   </div>
 
   <div class="catalogo-container">
-
-
     <div class="catalogo" id="catalogo">
       <!--<div class="card">Produto 1</div>-->
     </div>
-
-
   </div>
 
 
@@ -49,7 +51,7 @@
     <div id="produtoSelecionado" class="modal-content">
 
       <div class="conteudoProduto">
-        <img id="imagemProdutoSelecionado" src="" alt="" class="imagemProdutoSelecionado">
+        <img id="imagemProdutoSelecionado" src="../../imagens/perfil.jpeg" alt="" class="imagemProdutoSelecionado">
 
         <div id="inputProduto" class="inputProduto">
           <p id="nomeProdutoSelecionado" class="nameProduct"></p>

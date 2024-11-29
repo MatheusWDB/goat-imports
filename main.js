@@ -25,7 +25,8 @@ async function Login(event) {
     }
 
     try {
-        const response = await fetch("https://goatimports.onrender.com/users/login", {
+        document.getElementById('loading-overlay').style.display = 'flex';
+        const response = await fetch("http://localhost:8080/users/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +37,6 @@ async function Login(event) {
         if (response.ok) {
             const data = await response.json();
             const userId = data.id;
-
             if (userId) {
                 localStorage.setItem('authUserId', userId);
                 window.location.href = "pages/home/home.html";
@@ -47,8 +47,10 @@ async function Login(event) {
             alert(error.message);
         }
 
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 
@@ -77,6 +79,7 @@ async function Registro(event) {
     }
 
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch("https://goatimports.onrender.com/users/register", {
             method: 'POST',
             headers: {
@@ -93,8 +96,10 @@ async function Registro(event) {
             console.log(error)
             alert(error.message)
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }

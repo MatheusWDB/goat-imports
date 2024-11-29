@@ -16,6 +16,7 @@ const complemento = document.querySelector('#complemento')
 
 cep.addEventListener('focusout', async () => {
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const onlyNumbers = /^[0-9]+$/
         const cepValid = /^[0-9]{8}$/
         if (!onlyNumbers.test(cep.value) || !cepValid.test(cep.value)) {
@@ -36,9 +37,10 @@ cep.addEventListener('focusout', async () => {
         cidade.value = responseCep.localidade
         uf.value = responseCep.uf
         complemento.value = responseCep.complemento
-
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log(error)
+        document.getElementById('loading-overlay').style.display = 'none';
     }
 })
 
@@ -87,6 +89,7 @@ function checkAuthUserId() {
 
 async function buscarUsuarioPorId() {
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`https://goatimports.onrender.com/users/findById/${userId}`, {
             method: 'GET',
         })
@@ -101,8 +104,10 @@ async function buscarUsuarioPorId() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }
@@ -120,6 +125,7 @@ async function registrarEndereço() {
         type: selected.value
     }
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`http://localhost:8080/addresses/create/${userId}`, {
             method: 'POST',
             headers: {
@@ -136,14 +142,17 @@ async function registrarEndereço() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }
 
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`https://goatimports.onrender.com/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
         })
@@ -157,8 +166,10 @@ async function buscarTodosEndereçosPorIdUsuario() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }
@@ -192,7 +203,8 @@ async function renderizarEnderecos() {
 
 async function deletarEndereçoPorId(addressId) {
     try {
-        const response = await fetch(`http://localhost:8080/addresses/delete/${addressId}`, {
+        document.getElementById('loading-overlay').style.display = 'flex';
+        const response = await fetch(`https://goatimports.onrender.com/addresses/delete/${addressId}`, {
             method: 'DELETE'
         })
 
@@ -204,8 +216,10 @@ async function deletarEndereçoPorId(addressId) {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }
@@ -248,6 +262,7 @@ async function atualizarUsuario() {
         password: password.value
     }
     try {
+        document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`https://goatimports.onrender.com/users/update/${userId}`, {
             method: 'PUT',
             headers: {
@@ -265,8 +280,10 @@ async function atualizarUsuario() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
 }
@@ -285,7 +302,7 @@ function OpenModal3() {
     document.getElementById('modal3').style.display = 'flex';
 }
 
-function closeModal3(){
+function closeModal3() {
     document.getElementById('modal3').style.display = 'none';
 }
 
