@@ -1,10 +1,16 @@
 // INICIA ANTES DE TUDO
+const valor_quantia = document.querySelector('.quantia');
+var quantia = 0
+var products
+var categories
 const userId = localStorage.getItem('authUserId');
 var items = localStorage.getItem('carrinho') === null ?
     [] :
-    JSON.parse(localStorage.getItem('carrinho'))    
+    JSON.parse(localStorage.getItem('carrinho'))
 const urlLocal = "http://localhost:8080"
 const urlApi = "https://goatimports.onrender.com"
+const catalogo = document.getElementById('catalogo');
+const categorias = document.getElementById('categoria');
 checkAuthUserId()
 const radios = document.querySelectorAll('input[name="tamanho"]');
 
@@ -18,16 +24,6 @@ function checkAuthUserId() {
     }
 }
 // INICIA ANTES DE TUDO
-
-
-var products
-var categories
-
-
-const catalogo = document.getElementById('catalogo');
-const categorias = document.getElementById('categoria');
-
-
 
 async function buscarTodasCategorias() {
     try {
@@ -160,23 +156,23 @@ const renderizarListaProdutos = (products) => {
 }
 
 const selecionarProduto = async (produto) => {
+    quantia = 0
     document.getElementById('modal').style.display = 'flex';
     radios.forEach(radio => radio.checked = false);
-    var quantidadeInput = document.getElementById("quantidade")
 
     const button = document.getElementById('buttonAdicionarAoCarrinho')
     button.onclick = () => {
         var tamanhoSelecionado = document.querySelector('input[name="tamanho"]:checked');
-        var quantidade = parseInt(quantidadeInput.value)
+        var quantidade = parseInt(valor_quantia.textContent)
         if (!tamanhoSelecionado) {
             alert("Escolha o tamanho da peça!")
-            quantidadeInput.value = 0            
+            valor_quantia.textContent = 0
         } else if (quantidade <= 0) {
             alert("Defina a quantidade!")
-            quantidadeInput.value = 0
+            valor_quantia.textContent = 0
             radios.forEach(radio => radio.checked = false);
         } else {
-            adicionarAoCarrinho(produto, quantidade, quantidadeInput, tamanhoSelecionado)
+            adicionarAoCarrinho(produto, quantidade, tamanhoSelecionado)
         }
     }
 
@@ -227,9 +223,9 @@ const selecionarProduto = async (produto) => {
     composicaoProdutoSelecionado.textContent = features.composition
 }
 
-function adicionarAoCarrinho(produto, quantidade, quantidadeInput, tamanhoSelecionado) {
+function adicionarAoCarrinho(produto, quantidade, tamanhoSelecionado) {
     var contador = true
-    quantidadeInput.value = 0
+    valor_quantia.textContent = 0
     const product = { ...produto }
 
     items.forEach(item => {
@@ -246,6 +242,7 @@ function adicionarAoCarrinho(produto, quantidade, quantidadeInput, tamanhoSeleci
     }
     localStorage.setItem('carrinho', JSON.stringify(items))
     radios.forEach(radio => radio.checked = false);
+    console.log(items)
     document.getElementById('modal').style.display = 'none';
 }
 
@@ -283,4 +280,43 @@ function logout() {
 
 function closemodal() {
     document.getElementById('modal').style.display = 'none';
+}
+
+
+
+let intervalId;
+
+function adicionar() {
+    quantia = parseInt(valor_quantia.textContent) + 1; //Acresecenta 1 na quantidade de lanches de indicie 'r'
+
+    valor_quantia.textContent = quantia; //Atualiza o valor final da quantia do lanche de indicie 'r'
+}
+
+function retirar() {
+    if (quantia > 0) {
+        //Se a quantia for maior que zero, então...
+
+        valor_quantia.textContent = quantia - 1; //Captura o valor atual da quantia do lanche de indicie 'r'
+
+        quantia = parseInt(valor_quantia.textContent); //Atualiza o valor final da quantia do lanche de indicie 'r'
+    }
+
+}
+
+function resetar() {
+    if (quantia > 0) {
+        valor_quantia.textContent = 0;
+        quantia = 0;
+    }
+    //Reseta todos os valores do lanche de indicie 'r' para o valor inicial
+}
+
+function startPressing(x) {
+    // Inicia a repetição da função retirar() a cada 200ms (ajuste conforme necessário)
+    intervalId = x == 'retirar' ? setInterval(retirar, 200): setInterval(adicionar, 200);
+}
+
+function stopPressing() {
+    // Para a repetição quando o botão é liberado
+    clearInterval(intervalId);
 }

@@ -28,7 +28,7 @@ async function Login(event) {
 
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/users/login`, {
+        const response = await fetch(`https://goatimports.onrender.com/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ async function Registro(event) {
 
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/users/register`, {
+        const response = await fetch(`https://goatimports.onrender.com/users/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

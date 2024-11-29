@@ -75,7 +75,15 @@
           <p id="precoProdutoSelecionado"></p>
 
           <label for="quantidade">Quantidade:</label>
-          <input id="quantidade" type="number" name="quantidade" value="0"> <br>
+
+          <input class="botao" type="button" value="-" onclick="retirar()" onmousedown="startPressing('retirar')"
+            onmouseup="stopPressing()" onmouseleave="stopPressing()">
+          <b class="quantia">0</b>
+          <input class="botao" type="button" value="+" onclick="adicionar()" onmousedown="startPressing('adicionar')"
+            onmouseup="stopPressing()" onmouseleave="stopPressing()">
+
+          <br>
+
           <button id="buttonAdicionarAoCarrinho" type="button" class="Addcarrinho">Adicionar ao Carrinho</button>
         </div>
       </div>
