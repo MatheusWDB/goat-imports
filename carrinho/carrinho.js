@@ -26,7 +26,7 @@ function renderizarCarrinho() {
 
     if (items.length == 0) {
         document.getElementById("container").innerHTML = ''
-        const vazio = document.createElement("h2")
+        const vazio = document.createElement("h3")
         vazio.textContent = "Você ainda não colocou nenhum produto no carrinho!"
 
         document.getElementById("container").appendChild(vazio)

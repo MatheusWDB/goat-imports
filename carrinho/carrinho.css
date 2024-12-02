@@ -14,7 +14,7 @@ body {
   align-items: center;
   padding: 10px 0;
   box-shadow: 0 4px 2px -2px gray;
-
+  margin-bottom: 10px;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -114,7 +114,8 @@ body {
 }
 
 .container {
-  margin-top: 12%;
+  display: flex;
+  justify-content: center;
 }
 
 .imgProduto {
@@ -122,6 +123,7 @@ body {
   width: 200px;
   border-radius: 15px;
   margin-right: 10px;
+  object-fit: cover;
 }
 
 button {
