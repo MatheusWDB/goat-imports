@@ -31,7 +31,7 @@ public class Address implements Serializable {
     private String zipCode;
 
     @Column(nullable = false)
-    private String streetNumber;
+    private String number;
 
     @Column(nullable = false)
     private String streetName;
@@ -63,10 +63,10 @@ public class Address implements Serializable {
     @OneToMany(mappedBy = "address")
     private Set<Order> orders = new HashSet<>();
 
-    public Address(String zipCode, String streetNumber, String streetName, String neighborhood, String city,
+    public Address(String zipCode, String number, String streetName, String neighborhood, String city,
             String federalUnit, String complement, String type, User user) {
         this.zipCode = zipCode;
-        this.streetNumber = streetNumber;
+        this.number = number;
         this.streetName = streetName;
         this.neighborhood = neighborhood;
         this.city = city;
@@ -95,12 +95,12 @@ public class Address implements Serializable {
         this.zipCode = zipCode;
     }
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getStreetName() {
