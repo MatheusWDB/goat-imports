@@ -16,13 +16,38 @@
         <div class="spinner"></div>
         <p>Carregando...</p>
     </div>
+
+    <nav class="navbar" id="navbar">
+
+        <div class="logo" onclick="voltarHome()">
+            <img src="../imagens/logo2.png" alt="Goat">
+            <p>GOAT</p>
+        </div>
+
+        <a href="../perfil/perfil.html"><img src="../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
+        <a href="../pedidos/pedidos.html">Ver pedidos</a>
+        <a href="../carrinho/carrinho.html">Carrinho</a>
+
+        <a onclick="logout()" class="logout">Sair</a>
+    </nav>
+
     <main id="main" class="main_container">
         <!--NÃO MEXA NESSA-->
         <div id="statusScreenBrick_container"></div>
         <!--NÃO MEXA NESSA-->
 
         <!--ETAPA SELECIONAR O ENDEREÇO-->
-        <div></div>
+        <div class="modal" id="modal">
+            <div class="modaldiv">
+
+                <div class="modal-content">
+                    <div id="enderecos" class="enderecos">
+
+                    </div>
+                </div>
+                <button onclick="closeModal()">Confirmar</button>
+            </div>
+        </div>
         <!--ETAPA 1-->
 
         <!--ETAPA REVISAR OS ITENS-->
@@ -35,17 +60,7 @@
         <!--ETAPA 3-->
 
         <!--Modal de escolher endereço-->
-        <div class="modal">
-            <div class="modaldiv">
 
-                <div class="modal-content">
-                    <div class="enderecos">
-
-                    </div>
-                </div>
-                <button>Confirmar</button>
-            </div>
-        </div>
     </main>
 
     <script src="Finalizar.js"></script>

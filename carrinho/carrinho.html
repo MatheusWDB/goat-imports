@@ -9,15 +9,21 @@
 </head>
 
 <body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+    </div>
     <nav class="navbar" id="navbar">
 
         <div class="logo" onclick="voltarHome()">
-            <img src="../../imagens/logo2.png" alt="Goat">
+            <img src="../imagens/logo2.png" alt="Goat">
             <p>GOAT</p>
         </div>
 
-        <a href="../perfil/perfil.html"><img src="../../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
-        <a href="../carrinho/carrinho.html">Carrinho</a>
+        <a href="../perfil/perfil.html"><img src="../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
+        <a href="../pedidos/pedidos.html">Ver pedidos</a>
+        <a href="#">Carrinho</a>
+
         <a onclick="logout()" class="logout">Sair</a>
     </nav>
 
@@ -26,8 +32,8 @@
             <div id="listaDeItens" class="">
 
             </div>
-            <div class="btn">
-                <button>finalizar pedido</button>
+            <div id="botaoFinalizarCompra" class="btn">
+                <a href="../finalizarCompra/Finalizar.html"><button>finalizar pedido</button></a>
             </div>
         </div>
     </main>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+    </div>
+    
+    <nav class="navbar" id="navbar">
+
+        <div class="logo" onclick="voltarHome()">
+            <img src="../imagens/logo2.png" alt="Goat">
+            <p>GOAT</p>
+        </div>
+
+        <a href="../perfil/perfil.html"><img src="../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
+        <a href="#">Ver pedidos</a>
+        <a href="../carrinho/carrinho.html">Carrinho</a>
+
+        <a onclick="logout()" class="logout">Sair</a>
+    </nav>
+
+    <main>
+        <div id="content" class="content">
+        </div>
+
+        <div class="modal" id="modal">
+            <div class="content-modal">
+                <div id="modal-content" class="modal-content">
+                    <!--INFO DO PEDIDO-->
+                    
+                    <div>
+                        <!--RENDERIZAÇÃO DOS PORDUTOS-->
+                    </div>
+                </div>
+                <button onclick="closemodal()">fechar</button>
+            </div>
+        </div>
+    </main>
+    <script src="pedidos.js"></script>
+</body>
+
+</html>

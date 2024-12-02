@@ -1,16 +1,19 @@
 
 const urlLocal = "http://localhost:8080"
-const urlApi = "https://goatimports.onrender.com"
+const url = "https://goatimports.onrender.com"
+var amount = 0
 var items = JSON.parse(localStorage.getItem('carrinho'))
-console.log(items)
+items.forEach(item => {
+    amount += (item.price * item.quantity)
+});
+console.log(amount)
 const order = {}
 order.items = []
 items.forEach(item => {
     const itemInfo = { idProduct: item.id, size: item.size, quantity: item.quantity }
     order.items.push(itemInfo)
 });
-console.log(order)
-var addressId = 1
+var addressId = 8
 const userId = localStorage.getItem('authUserId');
 
 
@@ -22,36 +25,12 @@ function checkAuthUserId() {
     console.log(userId)
     if (!userId) {
         alert("Usuário não autenticado. Redirecionando para a página de login.")
-        window.location.href = "../../index.html";
+        logout()
     } else {
         buscarTodosEndereçosPorIdUsuario(userId)
     }
 }
 // MERCADO PAGO
-/*
-const cartaoAleatorio = [
-    {
-        numeroDoCartao: "5031 4332 1540 6351",
-        codigoDeSeguranca: "123"
-    },
-    {
-        numeroDoCartao: "4235 6477 2802 5682",
-        codigoDeSeguranca: "123"
-    },
-    {
-        numeroDoCartao: "3753 651535 56885",
-        codigoDeSeguranca: "1234"
-    }
-]
-const titulatAleatorio = ["APRO", "OTHE", "CONT"]
-const cartaoEscolhido = cartaoAleatorio[Math.floor(Math.random() * 3)]
-const titularEscolhido = titulatAleatorio[Math.floor(Math.random() * 3)]
-const numeroDoCartao = document.getElementById('cardNumber')
-const dataDeExpiracao = document.getElementById('expirationDate')
-const codigoDeSeguranca = document.getElementById('securityCode')
-const titularDoCartao = document.getElementById('cardholderName')
-*/
-
 const mp = new MercadoPago("TEST-d5fee87b-795e-4498-97db-e1d2a7782aa5", {
     local: 'pt-BR'
 });
@@ -63,7 +42,7 @@ const renderPaymentBrick = async (bricksBuilder) => {
             /*
             "amount" é a quantia total a pagar por todos os meios de pagamento com exceção da Conta Mercado Pago e Parcelas sem cartão de crédito, que têm seus valores de processamento determinados no backend através do "preferenceId"
             */
-            amount: 100,
+            amount: amount,
             payer: {
                 entityType: "individual",
                 firstName: "Bianca",
@@ -133,19 +112,19 @@ const renderPaymentBrick = async (bricksBuilder) => {
                         order.paymentMethod = 4
                         break
                 }
-                var url
+                var urlPagamento
                 if (selectedPaymentMethod == "debit_card" || selectedPaymentMethod == "credit_card") {
-                    url = `${urlApi}/process_payment/card`
+                    urlPagamento = `${url}/process_payment/card`
                 } else if (selectedPaymentMethod == "ticket") {
-                    url = `${urlApi}/process_payment/ticket`
+                    urlPagamento = `${url}/process_payment/ticket`
                 } else if (selectedPaymentMethod == "bank_transfer") {
-                    url = `${urlApi}/process_payment/pix`
+                    urlPagamento = `${url}/process_payment/pix`
                 }
 
                 // callback chamado quando há click no botão de envio de dados
                 document.getElementById('loading-overlay').style.display = 'flex';
                 return new Promise((resolve, reject) => {
-                    fetch(url, {
+                    fetch(urlPagamento, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -170,8 +149,7 @@ const renderPaymentBrick = async (bricksBuilder) => {
                                     break
                             }
                             document.getElementById('loading-overlay').style.display = 'none';
-                            renderizarStatusDePagamento(response.id)
-                            finalizarPedido()
+                            finalizarPedido(response.id)
                             window.scrollTo({
                                 top: 0,
                                 behavior: "smooth" // Rolagem suave
@@ -240,11 +218,11 @@ function renderizarStatusDePagamento(paymentId) {
 
 
 
-async function finalizarPedido() {
+async function finalizarPedido(id) {
     console.log(order)
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlLocal}/orders/create/${addressId}`, {
+        const response = await fetch(`${url}/orders/create/${addressId}`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -253,7 +231,9 @@ async function finalizarPedido() {
         })
 
         if (response.ok) {
-            alert("Pedido realizado com sucesso!")
+            alert("Pedido realizado com sucesso!")            
+            renderizarStatusDePagamento(id)
+            localStorage.removeItem('carrinho');
         } else {
             const error = await response.json();
             console.log(error)
@@ -270,13 +250,17 @@ async function finalizarPedido() {
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/addresses/findAllByUserId/${userId}`, {
+        const response = await fetch(`${url}/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
         })
 
         if (response.ok) {
             const data = await response.json()
             const enderecos = data;
+            if (enderecos.length == 0) {
+                alert("Você não possui endereços cadastrados, iremos redirecioná-lo!")
+                window.location.href = "../perfil/perfil.html"
+            }
             renderizarEnderecos(enderecos)
         } else {
             const error = await response.json();
@@ -292,14 +276,16 @@ async function buscarTodosEndereçosPorIdUsuario() {
 }
 
 async function renderizarEnderecos(enderecos) {
-    lista.innerHTML = ''
+    const divEndereco = document.getElementById("enderecos")
+    divEndereco.innerHTML = ''
+
     enderecos.forEach(endereco => {
         const div2 = document.createElement('div')
         div2.classList.add('enderecos')
         div2.id = endereco.id
 
         const address = document.createElement('p')
-        address.textContent = `${endereco.streetName}, ${endereco.streetNumber}, ${endereco.complement} - ${endereco.neighborhood}, ${endereco.city} - ${endereco.federalUnit}, ${endereco.zipCode}`
+        address.textContent = `${endereco.streetName}, ${endereco.number}, ${endereco.complement} - ${endereco.neighborhood}, ${endereco.city} - ${endereco.federalUnit}, ${endereco.zipCode}`
 
         const tipo = document.createElement('p')
         tipo.textContent = 'Tipo de Endereço: ' + endereco.type
@@ -309,11 +295,23 @@ async function renderizarEnderecos(enderecos) {
         button.textContent = 'Escolher'
         button.onclick = () =>
 
-            div2.appendChild(address)
+        div2.appendChild(address)
         div2.appendChild(tipo)
         div2.appendChild(button)
 
-        lista.appendChild(div2)
+        divEndereco.appendChild(div2)
     });
 }
 
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "../index.html"
+}
+
+function voltarHome() {
+    location.href = "../home/home.html"
+}

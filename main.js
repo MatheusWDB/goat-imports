@@ -2,7 +2,7 @@ const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
 const urlLocal = "http://localhost:8080"
-const urlApi = "https://goatimports.onrender.com"
+const url = "https://goatimports.onrender.com"
 
 registerBtn.addEventListener('click', () => {
     container.classList.add("active");
@@ -28,7 +28,7 @@ async function Login(event) {
 
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/users/login`, {
+        const response = await fetch(`${url}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ async function Login(event) {
             const userId = data.id;
             if (userId) {
                 localStorage.setItem('authUserId', userId);
-                window.location.href = "pages/home/home.html";
+                window.location.href = "home/home.html";
             }
         } else {
             const error = await response.json();
@@ -82,7 +82,7 @@ async function Registro(event) {
 
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`https://goatimports.onrender.com/users/register`, {
+        const response = await fetch(`${url}/users/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

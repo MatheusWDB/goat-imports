@@ -4,10 +4,83 @@ body {
 
 }
 
+.navbar {
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 4px 2px -2px gray;
+
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 100px;
+
+}
+
+.navbar a {
+  margin-right: 0;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: all 0.3s ease-in-out;
+  margin-right: 1px;
+  margin-left: 0px;
+}
+
+.navbar a:hover {
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+
+
+
+.navbar a img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1;
+  border-color: white;
+  object-fit: cover;
+
+}
+
+.logo {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-right: 50%;
+  margin-left: 5%;
+}
+
+.logo img {
+  width: 72px;
+  height: 78px;
+}
+
+.logo p {
+  font-family: "Anton", sans-serif;
+  font-size: 36px;
+  margin-top: 18px;
+}
+
+.logo:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.logout {
+  cursor: pointer;
+}
+
 
 .modal {
         /* Escondido por padrão */
-        display: none;
+    
     position: fixed;
     z-index: 1;
     left: 0;
@@ -111,4 +184,16 @@ body {
     margin-top: 10px;
     font-size: 18px;
 }
-/* LOADING
+.modal button{
+    background-color: black;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+}

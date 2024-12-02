@@ -8,7 +8,7 @@ var items = localStorage.getItem('carrinho') === null ?
     [] :
     JSON.parse(localStorage.getItem('carrinho'))
 const urlLocal = "http://localhost:8080"
-const urlApi = "https://goatimports.onrender.com"
+const url = "https://goatimports.onrender.com"
 const catalogo = document.getElementById('catalogo');
 const categorias = document.getElementById('categoria');
 checkAuthUserId()
@@ -28,7 +28,7 @@ function checkAuthUserId() {
 async function buscarTodasCategorias() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/categories/findAll`, {
+        const response = await fetch(`${url}/categories/findAll`, {
             method: 'GET'
         })
 
@@ -52,7 +52,7 @@ async function buscarTodasCategorias() {
 async function buscarTodosProdutos() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/products/findAll`, {
+        const response = await fetch(`${url}/products/findAll`, {
             method: 'GET',
         })
 
@@ -136,7 +136,7 @@ const renderizarListaProdutos = (products) => {
         nome.classList.add('nomeProduto')
 
         const preco = document.createElement('p')
-        preco.textContent = "R$ " + product.price.toString().replace(".", ",")
+        preco.textContent = "R$ " + product.price.toFixed(2).toString().replace(".", ",");
         preco.classList.add('precoProduto')
 
         const imagem = document.createElement('img');
@@ -185,13 +185,13 @@ const selecionarProduto = async (produto) => {
     nomeProdutoSelecionado.textContent = produto.name
 
     const precoProdutoSelecionado = document.getElementById('precoProdutoSelecionado')
-    precoProdutoSelecionado.textContent = `Preço: R$${produto.price.toString().replace(".", ",")}`
+    precoProdutoSelecionado.textContent = `Preço: R$${produto.price.toFixed(2).toString().replace(".", ",")}`
 
     var features
 
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/features/findByProductId/${produto.id}`, {
+        const response = await fetch(`${url}/features/findByProductId/${produto.id}`, {
             method: 'GET',
         })
 
@@ -275,7 +275,7 @@ function scrollRightCategory() {
 
 function logout() {
     localStorage.clear();
-    window.location.href = "../../index.html"
+    window.location.href = "../index.html"
 }
 
 function closemodal() {
@@ -302,7 +302,6 @@ function retirar() {
     }
 
 }
-
 function resetar() {
     if (quantia > 0) {
         valor_quantia.textContent = 0;
@@ -319,4 +318,8 @@ function startPressing(x) {
 function stopPressing() {
     // Para a repetição quando o botão é liberado
     clearInterval(intervalId);
+}
+
+function voltarHome() {
+    location.href = "#"
 }

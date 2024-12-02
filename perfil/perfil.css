@@ -19,10 +19,11 @@ h1 {
     align-items: center;
     padding: 10px 0;
     box-shadow: 0 4px 2px -2px gray;
-    height: 100px;
+
     top: 0;
     left: 0;
     z-index: 1000;
+    height: 100px;
 
 }
 
@@ -46,7 +47,7 @@ h1 {
 .navbar a img {
     width: 70px;
     height: 70px;
-    border-radius: 100%;
+    border-radius: 50%;
     border: 1;
     border-color: white;
     object-fit: cover;
@@ -76,6 +77,10 @@ h1 {
     cursor: pointer;
     transform: scale(1.1);
     transition: transform 0.3s ease;
+}
+
+.logout {
+    cursor: pointer;
 }
 
 .modal {
@@ -244,7 +249,7 @@ h1 {
     justify-content: center;
     align-items: center;
     align-self: center;
-   
+
 
 }
 
@@ -356,4 +361,5 @@ h1 {
     margin-top: 10px;
     font-size: 18px;
 }
+
 /* LOADING

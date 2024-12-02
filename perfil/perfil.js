@@ -1,7 +1,7 @@
 // INICIA ANTES DE TUDO
 
 const urlLocal = "http://localhost:8080"
-const urlApi = "https://goatimports.onrender.com"
+const url = "https://goatimports.onrender.com"
 checkAuthUserId()
 // INICIA ANTES DE TUDO
 
@@ -93,14 +93,13 @@ function checkAuthUserId() {
 async function buscarUsuarioPorId() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/users/findById/${userId}`, {
+        const response = await fetch(`${url}/users/findById/${userId}`, {
             method: 'GET',
         })
 
         if (response.ok) {
             const data = await response.json();
             user = data
-            console.log(user)
             infoUser()
         } else {
             const error = await response.json();
@@ -120,16 +119,17 @@ async function registrarEndereço() {
     const body = {
         zipCode: cep.value, //49156631
         streetName: rua.value,
-        streetNumber: document.getElementById('number').value,
+        number: document.getElementById('number').value,
         neighborhood: bairro.value,
         city: cidade.value,
         federalUnit: uf.value,
         complement: document.getElementById('complemento').value,
         type: selected.value
     }
+    console.log(body)
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlLocal}/addresses/create/${userId}`, {
+        const response = await fetch(`${url}/addresses/create/${userId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -156,7 +156,7 @@ async function registrarEndereço() {
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/addresses/findAllByUserId/${userId}`, {
+        const response = await fetch(`${url}/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
         })
 
@@ -180,13 +180,20 @@ async function buscarTodosEndereçosPorIdUsuario() {
 async function renderizarEnderecos() {
     lista.innerHTML = ''
 
+    if (enderecos.length == 0){
+        const vazio = document.createElement("p")
+        vazio.textContent = "Nenhum endereço cadastrado!"
+
+        lista.appendChild(vazio)
+    }
+
     enderecos.forEach(endereco => {
         const div2 = document.createElement('div')
         div2.classList.add('enderecos')
         div2.id = endereco.id
 
         const address = document.createElement('p')
-        address.textContent = `${endereco.streetName}, ${endereco.streetNumber}, ${endereco.complement} - ${endereco.neighborhood}, ${endereco.city} - ${endereco.federalUnit}, ${endereco.zipCode}`
+        address.textContent = `${endereco.streetName}, ${endereco.number}, ${endereco.complement} - ${endereco.neighborhood}, ${endereco.city} - ${endereco.federalUnit}, ${endereco.zipCode}`
 
         const tipo = document.createElement('p')
         tipo.textContent = 'Tipo de Endereço: ' + endereco.type
@@ -207,7 +214,7 @@ async function renderizarEnderecos() {
 async function deletarEndereçoPorId(addressId) {
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/addresses/delete/${addressId}`, {
+        const response = await fetch(`${url}/addresses/delete/${addressId}`, {
             method: 'DELETE'
         })
 
@@ -266,7 +273,7 @@ async function atualizarUsuario() {
     }
     try {
         document.getElementById('loading-overlay').style.display = 'flex';
-        const response = await fetch(`${urlApi}/users/update/${userId}`, {
+        const response = await fetch(`${url}/users/update/${userId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -311,5 +318,5 @@ function closeModal3() {
 
 function logout() {
     localStorage.clear();
-    window.location.href = "../../index.html"
+    window.location.href = "../index.html"
 }
