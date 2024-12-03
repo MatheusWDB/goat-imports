@@ -1,10 +1,9 @@
 // INICIA ANTES DE TUDO
 const urlLocal = "http://localhost:8080"
 const url = "https://goatimports.onrender.com"
+const userId = localStorage.getItem('authUserId');
 checkAuthUserId()
 // INICIA ANTES DE TUDO
-
-var userId
 var user
 var enderecos
 
@@ -80,9 +79,6 @@ const dateOfBirth = document.getElementById('dateOfBirth')
 const password = document.getElementById('password')
 
 function checkAuthUserId() {
-    userId = localStorage.getItem('authUserId');
-    console.log(userId)
-
     if (!userId) {
         alert("Usuário não autenticado. Redirecionando para a página de login.")
         logout()

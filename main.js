@@ -4,6 +4,16 @@ const loginBtn = document.getElementById('login');
 const urlLocal = "http://localhost:8080"
 const url = "https://goatimports.onrender.com"
 
+var userId = localStorage.getItem('authUserId');
+checkAuthUserId()
+function checkAuthUserId() {
+    if (userId) {
+        window.location.href = "./home/home.html"
+    } else {
+        localStorage.clear();
+    }
+}
+
 
 registerBtn.addEventListener('click', () => {
     container.classList.add("active");
