@@ -14,6 +14,7 @@ const categorias = document.getElementById('categoria');
 checkAuthUserId()
 const radios = document.querySelectorAll('input[name="tamanho"]');
 
+
 function checkAuthUserId() {
     if (!userId) {
         alert("Usuário não autenticado. Redirecionando para a página de login.")
@@ -27,6 +28,7 @@ function checkAuthUserId() {
 
 async function buscarTodasCategorias() {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/categories/findAll`, {
             method: 'GET'
@@ -41,9 +43,11 @@ async function buscarTodasCategorias() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -51,6 +55,7 @@ async function buscarTodasCategorias() {
 
 async function buscarTodosProdutos() {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/products/findAll`, {
             method: 'GET',
@@ -65,10 +70,12 @@ async function buscarTodosProdutos() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
         document.getElementById('loading-overlay').style.display = 'none';
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         alert('Erro no servidor!' + error.message);
     }
 }
@@ -190,6 +197,7 @@ const selecionarProduto = async (produto) => {
     var features
 
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/features/findByProductId/${produto.id}`, {
             method: 'GET',
@@ -203,9 +211,11 @@ const selecionarProduto = async (produto) => {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }

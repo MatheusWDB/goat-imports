@@ -4,6 +4,7 @@ const loginBtn = document.getElementById('login');
 const urlLocal = "http://localhost:8080"
 const url = "https://goatimports.onrender.com"
 
+
 registerBtn.addEventListener('click', () => {
     container.classList.add("active");
 });
@@ -27,6 +28,7 @@ async function Login(event) {
     }
 
     try {
+        document.getElementById('favicon').setAttribute('href', './imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/users/login`, {
             method: 'POST',
@@ -49,9 +51,11 @@ async function Login(event) {
             alert(error.message);
         }
 
+        document.getElementById('favicon').setAttribute('href', './imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', './imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -81,6 +85,7 @@ async function Registro(event) {
     }
 
     try {
+        document.getElementById('favicon').setAttribute('href', './imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/users/register`, {
             method: 'POST',
@@ -98,9 +103,11 @@ async function Registro(event) {
             console.log(error)
             alert(error.message)
         }
+        document.getElementById('favicon').setAttribute('href', './imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', './imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }

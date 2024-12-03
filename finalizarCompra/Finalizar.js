@@ -124,6 +124,7 @@ function renderizarMetodosDePagamento() {
                     }
 
                     // callback chamado quando há click no botão de envio de dados
+                    document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
                     document.getElementById('loading-overlay').style.display = 'flex';
                     return new Promise((resolve, reject) => {
                         fetch(urlPagamento, {
@@ -150,6 +151,7 @@ function renderizarMetodosDePagamento() {
                                         order.status = 1
                                         break
                                 }
+                                document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
                                 document.getElementById('loading-overlay').style.display = 'none';
                                 finalizarPedido(response.id)
                                 window.scrollTo({
@@ -160,6 +162,7 @@ function renderizarMetodosDePagamento() {
                             })
                             .catch((error) => {
                                 // manejar a resposta de erro ao tentar criar um pagamento
+                                document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
                                 document.getElementById('loading-overlay').style.display = 'none';
                                 reject();
                             });
@@ -220,6 +223,7 @@ function renderizarStatusDePagamento(paymentId) {
 
 async function buscarUsuarioPorId() {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/users/findById/${userId}`, {
             method: 'GET',
@@ -233,9 +237,11 @@ async function buscarUsuarioPorId() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -244,6 +250,7 @@ async function buscarUsuarioPorId() {
 async function finalizarPedido(id) {
     console.log(order)
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/orders/create/${addressId}`, {
             method: 'POST',
@@ -263,9 +270,11 @@ async function finalizarPedido(id) {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -273,6 +282,7 @@ async function finalizarPedido(id) {
 
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
@@ -291,9 +301,11 @@ async function buscarTodosEndereçosPorIdUsuario() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }

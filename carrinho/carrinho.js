@@ -4,6 +4,8 @@ var items = localStorage.getItem('carrinho') === null ?
     [] :
     JSON.parse(localStorage.getItem('carrinho'))
 console.log(items)
+atualizarTotal()
+
 let intervalId;
 document.addEventListener('DOMContentLoaded', () => {
     checkAuthUserId()
@@ -134,8 +136,17 @@ function atualizarQuantidade(produto, delta) {
 
         // Atualize o localStorage
         localStorage.setItem("carrinho", JSON.stringify(items));
+        atualizarTotal()
 
         // Atualize o texto da quantidade
         return items[index].quantity;
     }
+}
+
+function atualizarTotal() {
+    var amount = 0
+    items.forEach(item => {
+        amount += (item.price * item.quantity)
+    });
+    document.getElementById("total").textContent = `Valor Total: R$ ${amount}`
 }

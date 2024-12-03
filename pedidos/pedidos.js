@@ -21,6 +21,7 @@ function checkAuthUserId() {
 
 async function buscarTodosPedidos() {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/orders/findAllByUserId/${userId}`, {
             method: 'Get'
@@ -35,9 +36,11 @@ async function buscarTodosPedidos() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }

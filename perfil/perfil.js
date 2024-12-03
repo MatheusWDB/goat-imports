@@ -1,5 +1,4 @@
 // INICIA ANTES DE TUDO
-
 const urlLocal = "http://localhost:8080"
 const url = "https://goatimports.onrender.com"
 checkAuthUserId()
@@ -19,6 +18,7 @@ const complemento = document.querySelector('#complemento')
 
 cep.addEventListener('focusout', async () => {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const onlyNumbers = /^[0-9]+$/
         const cepValid = /^[0-9]{8}$/
@@ -40,9 +40,11 @@ cep.addEventListener('focusout', async () => {
         cidade.value = responseCep.localidade
         uf.value = responseCep.uf
         complemento.value = responseCep.complemento
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log(error)
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     }
 })
@@ -92,6 +94,7 @@ function checkAuthUserId() {
 
 async function buscarUsuarioPorId() {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/users/findById/${userId}`, {
             method: 'GET',
@@ -106,9 +109,11 @@ async function buscarUsuarioPorId() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -128,6 +133,7 @@ async function registrarEndereço() {
     }
     console.log(body)
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/addresses/create/${userId}`, {
             method: 'POST',
@@ -145,9 +151,11 @@ async function registrarEndereço() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -155,6 +163,7 @@ async function registrarEndereço() {
 
 async function buscarTodosEndereçosPorIdUsuario() {
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/addresses/findAllByUserId/${userId}`, {
             method: 'GET'
@@ -169,9 +178,11 @@ async function buscarTodosEndereçosPorIdUsuario() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -180,7 +191,7 @@ async function buscarTodosEndereçosPorIdUsuario() {
 async function renderizarEnderecos() {
     lista.innerHTML = ''
 
-    if (enderecos.length == 0){
+    if (enderecos.length == 0) {
         const vazio = document.createElement("p")
         vazio.textContent = "Nenhum endereço cadastrado!"
 
@@ -201,7 +212,7 @@ async function renderizarEnderecos() {
         const button = document.createElement('button')
         button.type = 'button'
         button.textContent = 'Excluir'
-        button.onclick = () => deletarEndereçoPorId(div2.id)
+        button.onclick = () => deletarEndereçoPorId(endereco.id)
 
         div2.appendChild(address)
         div2.appendChild(tipo)
@@ -213,6 +224,8 @@ async function renderizarEnderecos() {
 
 async function deletarEndereçoPorId(addressId) {
     try {
+        console.log(addressId)
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/addresses/delete/${addressId}`, {
             method: 'DELETE'
@@ -226,9 +239,11 @@ async function deletarEndereçoPorId(addressId) {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -272,6 +287,7 @@ async function atualizarUsuario() {
         password: password.value
     }
     try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/users/update/${userId}`, {
             method: 'PUT',
@@ -290,9 +306,11 @@ async function atualizarUsuario() {
             console.log(error)
             alert(error.message);
         }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
     } catch (error) {
         console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
         document.getElementById('loading-overlay').style.display = 'none';
         alert('Erro no servidor!' + error.message);
     }
@@ -305,7 +323,6 @@ function OpenModal2() {
 function closeModal2() {
     document.getElementById('Modal2').style.display = 'none';
 }
-
 
 function OpenModal3() {
     buscarTodosEndereçosPorIdUsuario()
