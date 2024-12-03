@@ -7,7 +7,6 @@ var items = JSON.parse(localStorage.getItem('carrinho'))
 items.forEach(item => {
     amount += (item.price * item.quantity)
 });
-console.log(amount)
 const order = {}
 order.items = []
 items.forEach(item => {
@@ -24,7 +23,6 @@ checkAuthUserId()
 // INICIA ANTES DE TUDO
 
 function checkAuthUserId() {
-    console.log(userId)
     if (!userId) {
         alert("Usuário não autenticado. Redirecionando para a página de login.")
         logout()
@@ -248,7 +246,6 @@ async function buscarUsuarioPorId() {
 }
 
 async function finalizarPedido(id) {
-    console.log(order)
     try {
         document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';

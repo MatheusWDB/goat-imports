@@ -3,7 +3,6 @@ const userId = localStorage.getItem('authUserId');
 var items = localStorage.getItem('carrinho') === null ?
     [] :
     JSON.parse(localStorage.getItem('carrinho'))
-console.log(items)
 atualizarTotal()
 
 let intervalId;
@@ -148,5 +147,5 @@ function atualizarTotal() {
     items.forEach(item => {
         amount += (item.price * item.quantity)
     });
-    document.getElementById("total").textContent = `Valor Total: R$ ${amount}`
+    document.getElementById("total").textContent = `Valor Total: R$ ${amount.toFixed(2).toString().replace(".", ",")}`
 }

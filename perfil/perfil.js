@@ -135,7 +135,6 @@ async function registrarEndereço() {
         complement: document.getElementById('complemento').value,
         type: selected.value
     }
-    console.log(body)
     try {
         document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
@@ -207,7 +206,7 @@ async function renderizarEnderecos() {
         div2.classList.add('enderecos')
         div2.id = endereco.id
 
-        if(!endereco.complement){
+        if (!endereco.complement) {
             endereco.complement = 'N/A'
         }
 
@@ -232,7 +231,6 @@ async function renderizarEnderecos() {
 
 async function deletarEndereçoPorId(addressId) {
     try {
-        console.log(addressId)
         document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';
         const response = await fetch(`${url}/addresses/delete/${addressId}`, {
@@ -358,3 +356,46 @@ function logout() {
     localStorage.clear();
     window.location.href = "../index.html"
 }
+
+
+
+// Abrir o modal
+const modalPerfil = document.getElementById("modalPerfil");
+const openModalPerfil = document.getElementById("openModalPerfil");
+const closeModalPerfil = document.getElementById("closeModalPerfil");
+const prevBtnPerfil = document.getElementById("prevBtnPerfil");
+const nextBtnPerfil = document.getElementById("nextBtnPerfil");
+
+openModalPerfil.addEventListener("click", function (event) {
+    event.preventDefault(); // Impede o comportamento padrão do link
+    modalPerfil.style.display = "flex";
+    showImagePerfil(currentIndex); // Exibe a primeira imagem
+});
+
+// Fechar o modal
+closeModalPerfil.addEventListener("click", function () {
+    modalPerfil.style.display = "none";
+});
+
+// Carrossel
+let currentIndex = 0;
+const imagesPerfil = document.querySelectorAll(".carouselImgPerfil");
+
+function showImagePerfil(index) {
+    imagesPerfil.forEach((img, i) => {
+        img.classList.remove("active");
+        if (i === index) {
+            img.classList.add("active");
+        }
+    });
+}
+
+prevBtnPerfil.addEventListener("click", function () {
+    currentIndex = (currentIndex === 0) ? imagesPerfil.length - 1 : currentIndex - 1;
+    showImagePerfil(currentIndex);
+});
+
+nextBtnPerfil.addEventListener("click", function () {
+    currentIndex = (currentIndex === imagesPerfil.length - 1) ? 0 : currentIndex + 1;
+    showImagePerfil(currentIndex);
+});

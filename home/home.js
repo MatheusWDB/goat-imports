@@ -167,6 +167,61 @@ const selecionarProduto = async (produto) => {
     document.getElementById('modal').style.display = 'flex';
     radios.forEach(radio => radio.checked = false);
 
+    const radioContainer = document.getElementById('formTamanho');
+    radioContainer.innerHTML = ''; // Limpa os tamanhos existentes
+
+    var categories = []
+
+    try {
+        document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
+        document.getElementById('loading-overlay').style.display = 'flex';
+        const response = await fetch(`${url}/categories/findAllByIdProduct/${produto.id}`, {
+            method: 'GET'
+        })
+
+        if (response.ok) {
+            const data = await response.json();
+            categories = data
+        } else {
+            const error = await response.json();
+            console.log(error)
+            alert(error.message);
+        }
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
+        document.getElementById('loading-overlay').style.display = 'none';
+    } catch (error) {
+        console.log('Erro ao fazer a requisição: ', error);
+        document.getElementById('favicon').setAttribute('href', '../imagens/logo2.png');
+        document.getElementById('loading-overlay').style.display = 'none';
+        alert('Erro no servidor!' + error.message);
+    }
+
+    let tamanhos = [];
+    categories.forEach(category => {
+        if (category.name === 'Roupa') {
+            tamanhos = ['P', 'M', 'G', 'GG', 'XG', 'XGG'];
+        } else if (category.name === 'Calçados') {
+            tamanhos = ['35', '36', '37', '38', '39', '40', '41', '42'];
+        } else if (category.name === 'Bonés') {
+            tamanhos = ['PP', 'P', 'M', 'G', 'GG'];
+        }
+    });
+
+    // Verificar se tamanhos foram definidos para a categoria
+    if (tamanhos.length > 0) {
+        tamanhos.forEach(tamanho => {
+            const label = document.createElement('label');
+            label.classList.add('radio-container');
+            label.innerHTML = `
+                <input type="radio" name="tamanho" value="${tamanho}">
+                <span class="radio-text">${tamanho}</span>
+            `;
+            radioContainer.appendChild(label);
+        });
+    } else {
+        console.error('Categoria não reconhecida para tamanhos.');
+    }
+
     const button = document.getElementById('buttonAdicionarAoCarrinho')
     button.onclick = () => {
         var tamanhoSelecionado = document.querySelector('input[name="tamanho"]:checked');
@@ -252,7 +307,6 @@ function adicionarAoCarrinho(produto, quantidade, tamanhoSelecionado) {
     }
     localStorage.setItem('carrinho', JSON.stringify(items))
     radios.forEach(radio => radio.checked = false);
-    console.log(items)
     document.getElementById('modal').style.display = 'none';
 }
 
@@ -322,7 +376,7 @@ function resetar() {
 
 function startPressing(x) {
     // Inicia a repetição da função retirar() a cada 200ms (ajuste conforme necessário)
-    intervalId = x == 'retirar' ? setInterval(retirar, 200): setInterval(adicionar, 200);
+    intervalId = x == 'retirar' ? setInterval(retirar, 200) : setInterval(adicionar, 200);
 }
 
 function stopPressing() {

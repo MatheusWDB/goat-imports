@@ -15,7 +15,6 @@ function checkAuthUserId() {
         logout()
     } else {
         console.log("userId carregado com sucesso")
-        console.log(userId)
         buscarTodosPedidos()
     }
 }

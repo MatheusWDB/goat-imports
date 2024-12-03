@@ -15,21 +15,35 @@
         <div class="spinner"></div>
         <p>Carregando...</p>
     </div>
-    
+
     <nav class="navbar" id="navbar">
         <div class="logo" onclick="voltarHome()">
             <img src="../imagens/logo2.png" alt="Goat">
             <p>GOAT</p>
         </div>
 
-        <a href="#"><img src="../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
+        <a href="#" id="openModalPerfil"><img src="../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
         <a href="../pedidos/pedidos.html">Ver pedidos</a>
         <a href="../carrinho/carrinho.html">Carrinho</a>
 
         <a onclick="logout()" class="logout">Sair</a>
     </nav>
 
-    
+    <!-- Modal do Carrossel de Imagens de Perfil -->
+    <div id="modalPerfil" class="modalPerfil">
+        <div class="modalContentPerfil">
+            <!-- Carrossel -->
+            <div class="carouselPerfil">
+                <img src="../imagens/logo.png" alt="Imagem 1" class="carouselImgPerfil">
+                <img src="../imagens/logo2.png" alt="Imagem 2" class="carouselImgPerfil">
+                <img src="../imagens/perfil.jpeg" alt="Imagem 3" class="carouselImgPerfil">
+            </div>
+            <!-- Botões para navegação -->
+            <button class="prevPerfil" id="prevBtnPerfil">❮</button>
+            <button class="nextPerfil" id="nextBtnPerfil">❯</button>
+            <span class="closePerfil" id="closeModalPerfil">&times;</span>
+        </div>
+    </div>
 
     <main>
         <div class="textInputContainer">
