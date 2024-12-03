@@ -14,6 +14,14 @@ const cidade = document.querySelector('#cidade')
 const uf = document.querySelector('#uf')
 const complemento = document.querySelector('#complemento')
 
+const telefoneInput = document.getElementById('phone');
+
+telefoneInput.addEventListener('input', () => {
+    let value = telefoneInput.value.replace(/\D/g, '');
+    value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+    value = value.replace(/(\d{1})(\d{4})(\d{4})/, '$1 $2-$3');
+    telefoneInput.value = value.slice(0, 16);
+});
 
 cep.addEventListener('focusout', async () => {
     try {
@@ -199,6 +207,10 @@ async function renderizarEnderecos() {
         div2.classList.add('enderecos')
         div2.id = endereco.id
 
+        if(!endereco.complement){
+            endereco.complement = 'N/A'
+        }
+
         const address = document.createElement('p')
         address.textContent = `${endereco.streetName}, ${endereco.number}, ${endereco.complement} - ${endereco.neighborhood}, ${endereco.city} - ${endereco.federalUnit}, ${endereco.zipCode}`
 
@@ -282,6 +294,19 @@ async function atualizarUsuario() {
         dateOfBirth: dateOfBirth.value,
         password: password.value
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email.value)) {
+        alert("Por favor, insira um email válido.");
+        return;
+    }
+
+    if (phone.value.length < 16) {
+        alert('Por favor, insira um número de telefone válido.');
+        return
+    }
+
     try {
         document.getElementById('favicon').setAttribute('href', '../imagens/spinner.gif');
         document.getElementById('loading-overlay').style.display = 'flex';

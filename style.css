@@ -15,7 +15,11 @@ body {
     justify-content: center;
     flex-direction: column;
     height: 100vh;
+}
 
+#LOGO {
+    width: 100px;
+    margin-bottom: 20px;
 }
 
 .container {
@@ -249,4 +253,5 @@ sign-in a {
     margin-top: 10px;
     font-size: 18px;
 }
+
 /* LOADING

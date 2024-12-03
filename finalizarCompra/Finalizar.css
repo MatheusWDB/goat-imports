@@ -2,6 +2,8 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 
+  background-color: #c9d6ff;
+  background: linear-gradient(to right, #e2e2e2, #b9bbbe);
 }
 
 .navbar {

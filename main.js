@@ -72,6 +72,15 @@ async function Login(event) {
 
 }
 
+const telefoneInput = document.getElementById('telefone');
+
+telefoneInput.addEventListener('input', () => {
+    let value = telefoneInput.value.replace(/\D/g, '');
+    value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+    value = value.replace(/(\d{1})(\d{4})(\d{4})/, '$1 $2-$3');
+    telefoneInput.value = value.slice(0, 16);
+});
+
 async function Registro(event) {
     event.preventDefault();
     const nome = document.getElementById('nome').value;
@@ -81,8 +90,24 @@ async function Registro(event) {
     const confirmeSenha = document.getElementById('confirmarSenha').value;
     const telefone = document.getElementById('telefone').value;
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Por favor, insira um email válido.");
+        return;
+    }
+
+    if (telefone.length < 16) {
+        alert('Por favor, insira um número de telefone válido.');
+        return
+    }
+
+    if (senha.length < 8) {
+        alert("A senha deve ter no mínimo 8 caracteres.");
+        return;
+    }
+
     if (senha !== confirmeSenha) {
-        alert('As senhas não coincidem!');
+        alert('As senhas não coincidem.');
         return;
     }
 
