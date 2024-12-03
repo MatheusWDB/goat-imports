@@ -171,24 +171,14 @@ flex: 0 0 auto;
 
 }
 
-.modal-content {
-    background-color: #fff;
-    margin: auto;
-    padding: 20px;
-    
-    width: 80%;
-    max-width: 200px;
-    text-align: center;
-    
 
-}
 
 .content-modal{
     background-color: #fff;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 600px;
+    width: 800px;
     text-align: center;
 
 }
@@ -254,4 +244,72 @@ flex: 0 0 auto;
   margin-top: 10px;
   font-size: 18px;
 }
-/* LOADING
+
+/* Estilizando a imagem dos produtos */
+/* Estilizando a imagem dos produtos */
+.imagemProduto img, .PedidosSelecionado img {
+  width: 200px;
+  height: 219px;
+  border-radius: 15px;
+  margin-bottom: 10px;  /* Espaço entre a imagem e o texto */
+}
+
+/* Alteração para os produtos ficarem em coluna */
+.PedidosSelecionado {
+  display: flex;
+  flex-direction: column;  /* Alinha os itens em coluna */
+  gap: 16px;  /* Adiciona espaçamento entre os produtos */
+  padding: 16px;
+  max-width: 100%;
+  overflow-y: auto;  /* Adiciona rolagem se necessário */
+  margin-left: 1px;
+  border-bottom: 1px solid black;
+  align-items: flex-start;  /* Alinha os itens à esquerda */
+}
+
+/* Estilo do conteúdo de cada produto */
+.contentProduto {
+  
+  max-width: 200px;  /* Limita a largura do produto */
+  padding: 1px;
+ 
+  border-bottom: 1px solid;
+  
+  flex-direction: column;  /* Organiza as informações do produto em coluna */
+  justify-content: center;
+  align-items: center;  /* Alinha os itens ao centro */
+  text-align: center;  /* Centraliza o texto */
+}
+
+/* Alinha a imagem e as informações do produto */
+.contentProduto .imagemProduto {
+  display: flex;
+  justify-content: center;  /* Alinha a imagem ao centro */
+  align-items: center;  /* Alinha verticalmente a imagem */
+  margin-bottom: 10px;
+}
+
+/* A primeira linha (nome do produto) recebe um espaçamento superior */
+.contentProduto p:first-child {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Modal com conteúdo ajustado */
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  width: 90%;  /* Aumenta a largura do modal */
+  max-width: 600px;  /* Limita a largura máxima */
+  text-align: center;
+  justify-content: center;
+  align-items: flex-start;  /* Alinha os itens do modal ao topo */
+  max-height: 80vh;  /* Limita a altura do modal */
+  overflow-y: auto;  /* Adiciona rolagem no modal */
+}
+
+
+
+
