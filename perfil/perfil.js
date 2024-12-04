@@ -126,7 +126,7 @@ async function buscarUsuarioPorId() {
 async function registrarEndereço() {
     const selected = document.querySelector('input[name="tipo"]:checked');
     const body = {
-        zipCode: cep.value, //49156631
+        zipCode: cep.value,
         streetName: rua.value,
         number: document.getElementById('number').value,
         neighborhood: bairro.value,
@@ -273,7 +273,6 @@ function voltarHome() {
     location.href = "../home/home.html"
 }
 
-//
 
 function OpenModal() {
     document.getElementById('confirmationModal').style.display = 'flex';
@@ -287,7 +286,7 @@ async function atualizarUsuario() {
     const body = {
         name: name.value,
         surname: surname.value,
-        phone: phone.value, //(79) 9 8814-3425
+        phone: phone.value,
         email: email.value,
         dateOfBirth: dateOfBirth.value,
         password: password.value
