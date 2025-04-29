@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>Finalizar Pedido | Goat</title>
+    <link id="favicon" rel="shortcut icon" href="../imagens/logo2.png" type="image/gif">
+    <link rel="stylesheet" href="Finalizar.css">
+
+    <script src="https://sdk.mercadopago.com/js/v2">
+    </script>
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <nav class="navbar" id="navbar">
+
+        <div class="logo" onclick="voltarHome()">
+            <img src="../imagens/logo2.png" alt="Goat">
+            <p>GOAT</p>
+        </div>
+
+        <a href="../perfil/perfil.html"><img src="../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
+        <a href="../pedidos/pedidos.html">Ver pedidos</a>
+        <a href="../carrinho/carrinho.html">Carrinho</a>
+
+        <a onclick="logout()" class="logout">Sair</a>
+    </nav>
+
+    <main id="main" class="main_container">
+        <!--NÃO MEXA NESSA-->
+        <div id="statusScreenBrick_container"></div>
+        <!--NÃO MEXA NESSA-->
+        <div class="modal" id="modal">
+            <!--ETAPA SELECIONAR O ENDEREÇO-->
+            <div id="modalEnderecos" class="modaldiv">
+                <div class="modal-content">
+                    <div id="enderecos" class="enderecos">
+                    </div>
+                </div>
+                <button onclick="passarParaPagamento()">Confirmar</button>
+            </div>
+            <!--ETAPA SELECIONAR O ENDEREÇO-->
+
+            <!--ETAPA FINALIZAR COMPRA-->
+            <div id="modalPagamento">
+                <div id="paymentBrick_container" class="pagamento"></div>
+            </div>
+            <!--ETAPA FINALIZAR COMPRA-->
+        </div>
+    </main>
+
+    <script src="Finalizar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>Home | Goat</title>
+  <link id="favicon" rel="shortcut icon" href="../imagens/logo2.png" type="image/gif">
+  <link rel="stylesheet" href="./home.css">
+</head>
+
+<body>
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <p>Carregando...</p>
+  </div>
+
+  <nav class="navbar" id="navbar">
+
+    <div class="logo" onclick="voltarHome()">
+      <img src="../imagens/logo2.png" alt="Goat">
+      <p>GOAT</p>
+    </div>
+
+    <a href="../perfil/perfil.html"><img src="../imagens/perfil.jpeg" alt="perfil" id="imgPerfil"></a>
+    <a href="../pedidos/pedidos.html">Ver pedidos</a>
+    <a href="../carrinho/carrinho.html">Carrinho</a>
+
+    <a onclick="logout()" class="logout">Sair</a>
+  </nav>
+
+  <div class="categoria-container">
+
+    <div class="categoria" id="categoria">
+      <button type="button" class="button-categoria">
+        <div class="cardcategoria">Tudo</div>
+      </button>
+    </div>
+
+    <p>Produtos:</p>
+
+  </div>
+
+  <div class="catalogo-container">
+    <div class="catalogo" id="catalogo">
+      <!--<div class="card">Produto 1</div>-->
+    </div>
+  </div>
+
+
+  <!--Modal Produto Selecionado-->
+  <div id="modal" class="modal">
+
+    <div id="produtoSelecionado" class="modal-content">
+
+      <div class="conteudoProduto">
+        <img id="imagemProdutoSelecionado" src="../imagens/perfil.jpeg" alt="" class="imagemProdutoSelecionado">
+
+        <div id="inputProduto" class="inputProduto">
+          <p id="nomeProdutoSelecionado" class="nameProduct"></p>
+          <label for="tamanhoProduto">Selecionar Tamanho:</label>
+
+          <form id="formTamanho">
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="P"> <span class="radio-text">P</span>
+            </label>
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="M"> <span class="radio-text">M</span>
+            </label>
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="G"> <span class="radio-text">G</span>
+            </label>
+            <label class="radio-container">
+              <input type="radio" name="tamanho" value="GG"> <span class="radio-text">GG</span>
+            </label>
+          </form>
+
+          <p id="precoProdutoSelecionado"></p>
+
+          <label for="quantidade">Quantidade:</label>
+
+          <input class="botao" type="button" value="-" onclick="retirar()" onmousedown="startPressing('retirar')"
+            onmouseup="stopPressing()" onmouseleave="stopPressing()">
+          <b class="quantia">0</b>
+          <input class="botao" type="button" value="+" onclick="adicionar()" onmousedown="startPressing('adicionar')"
+            onmouseup="stopPressing()" onmouseleave="stopPressing()">
+
+          <br>
+
+          <button id="buttonAdicionarAoCarrinho" type="button" class="Addcarrinho">Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="detalheProduto">
+        <table border="1" class="tabela-especifica">
+          <thead>
+            <tr>
+              <th colspan="2">Detalhes:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Marca</td>
+              <td id="marcaProdutoSelecionado"></td>
+            </tr>
+            <tr>
+              <td>Modelo</td>
+              <td id="modeloProdutoSelecionado"></td>
+            </tr>
+            <tr>
+              <td>Cor</td>
+              <td id="corProdutoSelecionado"></td>
+            </tr>
+            <tr>
+              <td>Composição</td>
+              <td id="composicaoProdutoSelecionado"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="buttonExit">
+        <button onclick="closemodal()" class="Exit">Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="home.js"></script>
+</body>
+
+</html>
