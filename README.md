@@ -4,7 +4,14 @@
 # Sobre o projeto
 Goat Imports é uma aplicação web full stack desenvolvida como MVP (Produto Mínimo Viável) para um trabalho acadêmico em grupo. O projeto simula uma loja virtual de roupas e acessórios, onde usuários podem se cadastrar e realizar compras fictícias, oferecendo uma experiência básica de e-commerce.
 
-# Layout web
+## Funcionalidades:
+- Cadastro, login e atualização de usuário.
+- Adicionar, atualizar e apagar endereço.
+- Selecionar e adicionar produto no carrinho.
+- Realizar compra (fictícia).
+- Visualizar pedidos feitos e seus status.
+
+# Layout
 ![Web 1]
 
 ![Web 2]
@@ -22,10 +29,10 @@ Goat Imports é uma aplicação web full stack desenvolvida como MVP (Produto M�
 ## Backend
 - Java
 - Spring Boot
-- JPA / Hibernate
 - Postman (para testar as API's)
  
 ## Banco de dados
+- JPA / Hibernate
 - Postgresql
 
 # Implantação em produção
