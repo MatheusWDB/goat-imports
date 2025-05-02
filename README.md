@@ -54,7 +54,9 @@ start index.html
 ```
 
 ## Backend
-Pré-requisitos: Java 21
+Pré-requisitos: 
+- Java 21
+- Atualizar as informações do banco de dados
 
 ```bash
 # clonar repositório
