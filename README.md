@@ -12,9 +12,13 @@ Goat Imports é uma aplicação web full stack desenvolvida como MVP (Produto M�
 - Visualizar pedidos feitos e seus status.
 
 # Layout
-![Web 1]
 
-![Web 2]
+| ![0](https://github.com/user-attachments/assets/454b2841-3eed-4d73-8ae1-7d025121ba80) | ![1](https://github.com/user-attachments/assets/a902d73a-ebe7-44da-bacf-f68a24e7c2cf) | ![2](https://github.com/user-attachments/assets/2295fe8c-394e-4758-9984-4e9b04e56ee8) |
+|:-------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------:|
+| ![3](https://github.com/user-attachments/assets/2a046634-28f0-449c-94de-3cb9c0d3cea0) | ![4](https://github.com/user-attachments/assets/5d8fe6ba-5a1f-4cc6-97e9-49d38ef522b7) | ![5](https://github.com/user-attachments/assets/a6c3c185-9327-43c5-8c13-c110169dc708) |
+| ![6](https://github.com/user-attachments/assets/a965c1d2-2487-4a25-8002-5e81d926275e) | ![7](https://github.com/user-attachments/assets/3082f6b6-e76d-4d89-9839-8ecd81b69553) | ![8](https://github.com/user-attachments/assets/7356cae0-7935-477c-acb8-d40fe01d2465) |
+| ![9](https://github.com/user-attachments/assets/45962354-ae67-41c2-bf93-a9035d2ffb7b) | ![10](https://github.com/user-attachments/assets/c5e373ed-cf2c-4359-b76e-69eccb73c479) | ![11](https://github.com/user-attachments/assets/f744e1ef-17ab-493c-a965-a7a02ecae29c) |
+| ![12](https://github.com/user-attachments/assets/bc670421-d6f4-40a6-a646-6d0c3ab7d18e) |
 
 # DER
 ![GOAT drawio](https://github.com/user-attachments/assets/e754d029-b2eb-4798-991c-bfa03b9740d8)
@@ -36,8 +40,8 @@ Goat Imports é uma aplicação web full stack desenvolvida como MVP (Produto M�
 - Postgresql
 
 # Implantação em produção
-- Backend: [Render](https://goatimports.onrender.com)
 - Frontend: [Render](https://goat-imports.onrender.com)
+- Backend: [Render](https://goatimports.onrender.com)
 - Banco de dados: [Instância expirada]()
 
 # Como executar o projeto
@@ -56,7 +60,7 @@ start index.html
 ## Backend
 Pré-requisitos: 
 - Java 21
-- Atualizar as informações do banco de dados
+- Configurar .env
 
 ```bash
 # clonar repositório
@@ -73,14 +77,16 @@ cd goat-imports/backend
 ```
 
 # Autores
-## Frontend
-Luiz Felipe Dantas Bezerra:  
+## Gustavo Santana Barreto
+- [GitHub](https://github.com/gustavostna)
 
+## Luiz Felipe Dantas Bezerra
+- [GitHub](https://github.com/LuizFDB)
 - [LinkedIn](https://www.linkedin.com/in/luiz-felipe-dantas-2385aa268/)
 
-## Backend
-Matheus Wendell Dantas Bezerra:
-
+## Matheus Wendell Dantas Bezerra
 - [LinkedIn](https://www.linkedin.com/in/mwdb1703)
 - [Portfólio](https://portfolio-vwy3.onrender.com/)
 
+## Ruan Oliveira Andrade
+- [GitHub](https://github.com/RuanOliveiraAndrade)
